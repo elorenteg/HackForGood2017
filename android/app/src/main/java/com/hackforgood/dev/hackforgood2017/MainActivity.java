@@ -17,8 +17,10 @@ import android.view.MenuItem;
 
 import com.hackforgood.dev.hackforgood2017.controllers.ImageOCRController;
 import com.hackforgood.dev.hackforgood2017.model.ImageOCR;
+import com.hackforgood.dev.hackforgood2017.model.Medicine;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -57,6 +59,12 @@ public class MainActivity extends AppCompatActivity
         imageOCRController = new ImageOCRController(this);
 
         String url = "http://omicrono.elespanol.com/wp-content/uploads/2015/05/ibuprofeno.jpg";
+        imageOCRController.imageOCRRequest(url, imageOCRResolvedCallback);
+
+        url = "http://elfarmaceutico.es/images/stories/546/Ibuprofeno_400mg_cinfa.jpg";
+        imageOCRController.imageOCRRequest(url, imageOCRResolvedCallback);
+
+        url = "http://www.elcorreo.com/noticias/201407/24/media/cortadas/paracetamol--575x323.jpg";
         imageOCRController.imageOCRRequest(url, imageOCRResolvedCallback);
     }
 
@@ -121,7 +129,14 @@ public class MainActivity extends AppCompatActivity
     public void onImageOCRResolved(ImageOCR imageOCR) {
         Log.e(TAG, "onImageOCRResolved");
 
-        if (imageOCR != null) Log.e(TAG, imageOCR.getParsedText());
-        else Log.e(TAG, "ImageOCR is null :(");
+        if (imageOCR == null) Log.e(TAG, "ImageOCR is null :(");
+        else {
+            String parsedText = imageOCR.getParsedText();
+            //Log.e(TAG, parsedText.replace("\n",""));
+
+            Medicine medicine = new Medicine();
+            medicine.parseInfo(parsedText);
+            Log.e(TAG, medicine.toString());
+        }
     }
 }
