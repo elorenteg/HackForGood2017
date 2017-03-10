@@ -1,8 +1,10 @@
 package com.hackforgood.dev.hackforgood2017;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,8 +15,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.hackforgood.dev.hackforgood2017.controllers.ImageOCRController;
+import com.hackforgood.dev.hackforgood2017.model.ImageOCR;
+
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        ImageOCRController.ImageOCRResolvedCallback {
+
+    private final String TAG = MainActivity.class.getSimpleName();
+
+    private final ImageOCRController.ImageOCRResolvedCallback imageOCRResolvedCallback = this;
+    private ImageOCRController imageOCRController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +53,11 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        imageOCRController = new ImageOCRController(this);
+
+        String url = "http://omicrono.elespanol.com/wp-content/uploads/2015/05/ibuprofeno.jpg";
+        imageOCRController.imageOCRRequest(url, imageOCRResolvedCallback);
     }
 
     @Override
@@ -97,5 +115,13 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onImageOCRResolved(ImageOCR imageOCR) {
+        Log.e(TAG, "onImageOCRResolved");
+
+        if (imageOCR != null) Log.e(TAG, imageOCR.getParsedText());
+        else Log.e(TAG, "ImageOCR is null :(");
     }
 }
