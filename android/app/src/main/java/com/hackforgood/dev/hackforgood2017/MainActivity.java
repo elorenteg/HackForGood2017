@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,12 +17,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.hackforgood.dev.hackforgood2017.controllers.ImageOCRController;
+import com.hackforgood.dev.hackforgood2017.model.ImageOCR;
+import com.hackforgood.dev.hackforgood2017.model.Medicine;
+
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        ImageOCRController.ImageOCRResolvedCallback {
+    public static final String TAG = MainActivity.class.getSimpleName();
     public static final int CAMERA_PERMISSION_CODE = 200;
     public static final int WRITE_SD_PERMISSION_CODE = 201;
+    private final ImageOCRController.ImageOCRResolvedCallback imageOCRResolvedCallback = this;
+    private ImageOCRController imageOCRController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +59,17 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        imageOCRController = new ImageOCRController(this);
+
+        String url = "http://omicrono.elespanol.com/wp-content/uploads/2015/05/ibuprofeno.jpg";
+        imageOCRController.imageOCRRequest(url, imageOCRResolvedCallback);
+
+        url = "http://elfarmaceutico.es/images/stories/546/Ibuprofeno_400mg_cinfa.jpg";
+        imageOCRController.imageOCRRequest(url, imageOCRResolvedCallback);
+
+        url = "http://www.elcorreo.com/noticias/201407/24/media/cortadas/paracetamol--575x323.jpg";
+        imageOCRController.imageOCRRequest(url, imageOCRResolvedCallback);
     }
 
     @Override
@@ -122,19 +142,34 @@ public class MainActivity extends AppCompatActivity
         if (requestCode == CAMERA_PERMISSION_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 PhotoSearchFragment fragment = (PhotoSearchFragment) getSupportFragmentManager().findFragmentByTag(PhotoSearchFragment.TAG);
-                if (fragment != null){
+                if (fragment != null) {
                     fragment.makePhotoCamera();
                 }
             }
-        } else if (requestCode == WRITE_SD_PERMISSION_CODE){
+        } else if (requestCode == WRITE_SD_PERMISSION_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 PhotoSearchFragment fragment = (PhotoSearchFragment) getSupportFragmentManager().findFragmentByTag(PhotoSearchFragment.TAG);
-                if (fragment != null){
+                if (fragment != null) {
                     fragment.setUpPhotoCamera();
                 }
             }
         }
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+    }
+
+    public void onImageOCRResolved(ImageOCR imageOCR) {
+        Log.e(TAG, "onImageOCRResolved");
+
+        if (imageOCR == null) Log.e(TAG, "ImageOCR is null :(");
+        else {
+            String parsedText = imageOCR.getParsedText();
+            //Log.e(TAG, parsedText.replace("\n",""));
+
+            Medicine medicine = new Medicine();
+            medicine.parseInfo(parsedText);
+            Log.e(TAG, medicine.toString());
+        }
     }
 }
