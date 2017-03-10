@@ -3,26 +3,33 @@
  */
 
 var express = require("express"),
-  app = express(),
-  bodyParser  = require("body-parser"),
-  methodOverride = require("method-override"),
-  mongoose = require('mongoose');
+    app = express(),
+    bodyParser  = require("body-parser"),
+    methodOverride = require("method-override"),
+    xml2js = require('xml2js'),
+    mongoose = require('mongoose'),
+    path = require('path'),
+    fs = require('fs');
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(methodOverride());
-
-var xml2js = require('xml2js');
-var fs = require('fs');
 var json_preinscripciones = "";
 
+//var XMLFILE = './data/Prescripcion.xml';
+var XMLFILE = './data/Prescripcion_lite.xml';
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(methodOverride());
+app.use(bodyParser({uploadDir:'./uploads'}));
+
+var router = express.Router();
+
 //Load file
-fs.readFile('./data/Prescripcion.xml', 'utf8', function (err,data) {
+fs.readFile(XMLFILE, 'utf8', function (err,data) {
   if (err) {
     return console.log(err);
   }
   data;
-  console.log("preinscripciones leidas");
+  console.log(XMLFILE + " preinscripciones leidas");
   //parse file into Json
   xml2js.parseString(data, function (err, result) {
     if (err) {
@@ -33,14 +40,29 @@ fs.readFile('./data/Prescripcion.xml', 'utf8', function (err,data) {
   });
 });
 
-
-
 //get by code function
 function getByCode(code) {
   console.log(json_preinscripciones);
 }
 
-var router = express.Router();
+
+
+/**************************************************ROUTERS************************************************************/
+
+router.post('/upload', function (req, res) {
+  var tempPath = req.files.file.path,
+      targetPath = path.resolve('./uploads/image.png');
+
+  fs.rename(tempPath, targetPath, function(err) {
+      if (err) throw err;
+      console.log("http://c3cce9a9.ngrok.io/getimage/" + filename);
+  });
+});
+
+app.get('/getimage/:image', function (req, res) {
+  var imagePath = req.params.image;
+  res.sendfile(path.resolve('./uploads/' + imagePath));
+});
 
 router.get('/:code', function(req, res) {
   //var code = req.body.code; //post
@@ -55,8 +77,9 @@ router.get('/', function(req, res) {
   res.send("por favor, usa la api bien... MIAU");
 });
 
-app.use(router);
 
+/**************************************************WEB SERVER**********************************************************/
+app.use(router);
 app.listen(80, function() {
   console.log("Node server running on http://c3cce9a9.ngrok.io/");
 });
