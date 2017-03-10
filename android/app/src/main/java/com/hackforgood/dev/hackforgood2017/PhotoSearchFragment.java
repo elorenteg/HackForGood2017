@@ -2,18 +2,18 @@ package com.hackforgood.dev.hackforgood2017;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,11 +22,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.hackforgood.dev.hackforgood2017.model.MultipartUtility;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * Created by LaQuay on 10/03/2017.
@@ -131,7 +132,7 @@ public class PhotoSearchFragment extends Fragment {
                     InputStream imageStream = getActivity().getContentResolver().openInputStream(imageUri);
                     Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
-                    uploadImageToAPI(selectedImage);
+                    uploadImageToAPI(selectedImage, imageUri);
                 } catch (IOException e) {
                     e.printStackTrace();
                     Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
@@ -140,7 +141,7 @@ public class PhotoSearchFragment extends Fragment {
                 try {
                     Bitmap selectedImage = readImageFromResources(outputFileUri);
 
-                    uploadImageToAPI(selectedImage);
+                    uploadImageToAPI(selectedImage, outputFileUri);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
@@ -155,9 +156,46 @@ public class PhotoSearchFragment extends Fragment {
         return MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uriToRead);
     }
 
-    public void uploadImageToAPI(Bitmap imageToUpload) {
+    public void uploadImageToAPI(Bitmap imageToUpload, Uri uriToUpload) {
         Toast.makeText(getActivity(), "Uploading PHOTO", Toast.LENGTH_SHORT).show();
 
         //TODO Marc: Upload commit
+
+        MultipartAsync multipartAsync = new MultipartAsync();
+        multipartAsync.execute(uriToUpload.toString());
+    }
+
+    private class MultipartAsync extends AsyncTask<String, Void, List<String>> {
+        @Override
+        protected List<String> doInBackground(String... params) {
+            try {
+                String uriName = params[0];
+                Log.e(TAG, "FileURIName: " + uriName);
+                MultipartUtility multipart = new MultipartUtility("URL", "UTF-8");
+
+                multipart.addFilePart("PHOTO", new File(uriName));
+
+                return multipart.finish();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<String> response) {
+            Log.e(TAG, "SERVER REPLIED:");
+            for (String line : response) {
+                Log.e(TAG, "Upload Files Response: " + line);
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
     }
 }
