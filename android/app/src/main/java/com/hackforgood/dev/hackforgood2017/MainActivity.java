@@ -16,20 +16,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.hackforgood.dev.hackforgood2017.controllers.ImageOCRController;
+import com.hackforgood.dev.hackforgood2017.controllers.WikiAPIController;
 import com.hackforgood.dev.hackforgood2017.model.ImageOCR;
 import com.hackforgood.dev.hackforgood2017.model.Medicine;
+import com.hackforgood.dev.hackforgood2017.model.WikiContent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        ImageOCRController.ImageOCRResolvedCallback {
+        ImageOCRController.ImageOCRResolvedCallback,
+        WikiAPIController.WikiAPIResolvedCallback {
 
     private final String TAG = MainActivity.class.getSimpleName();
 
     private final ImageOCRController.ImageOCRResolvedCallback imageOCRResolvedCallback = this;
+    private final WikiAPIController.WikiAPIResolvedCallback wikiAPIResolvedCallback = this;
     private ImageOCRController imageOCRController;
+    private WikiAPIController wikiAPIController;
+
+    private Medicine medicine = null;
+    private int possibleNames = Integer.MAX_VALUE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +65,16 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         imageOCRController = new ImageOCRController(this);
+        wikiAPIController = new WikiAPIController(this);
 
         String url = "http://omicrono.elespanol.com/wp-content/uploads/2015/05/ibuprofeno.jpg";
-        imageOCRController.imageOCRRequest(url, imageOCRResolvedCallback);
+        //imageOCRController.imageOCRRequest(url, imageOCRResolvedCallback);
 
-        url = "http://elfarmaceutico.es/images/stories/546/Ibuprofeno_400mg_cinfa.jpg";
+        url = "http://carolinayh.com/image/cache/finalizado/2014_01_28/19-98web-780x600.jpg";
         imageOCRController.imageOCRRequest(url, imageOCRResolvedCallback);
 
         url = "http://www.elcorreo.com/noticias/201407/24/media/cortadas/paracetamol--575x323.jpg";
-        imageOCRController.imageOCRRequest(url, imageOCRResolvedCallback);
+        //imageOCRController.imageOCRRequest(url, imageOCRResolvedCallback);
     }
 
     @Override
@@ -127,16 +136,47 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onImageOCRResolved(ImageOCR imageOCR) {
-        Log.e(TAG, "onImageOCRResolved");
+        //Log.e(TAG, "onImageOCRResolved");
 
         if (imageOCR == null) Log.e(TAG, "ImageOCR is null :(");
         else {
             String parsedText = imageOCR.getParsedText();
-            //Log.e(TAG, parsedText.replace("\n",""));
 
-            Medicine medicine = new Medicine();
+            medicine = new Medicine();
             medicine.parseInfo(parsedText);
-            Log.e(TAG, medicine.toString());
+
+            if (!medicine.hasACode()) {
+                Log.e(TAG, parsedText.replace("\n",""));
+                Log.e(TAG, medicine.toString());
+
+                String text = medicine.getName();
+                WikiAPIController wikiAPIController = new WikiAPIController(this);
+                ArrayList<String> words = new ArrayList<String>(Arrays.asList(text.split(" ")));
+                possibleNames = words.size();
+                for (int i = 0; i < words.size(); ++i) {
+                    String word = words.get(i);
+                    Log.e(TAG, "Calling WikiAPI with " + word);
+                    wikiAPIController.wikiAPIRequest(word, wikiAPIResolvedCallback);
+                }
+            }
         }
+    }
+
+    @Override
+    public void onWikiAPIResolved(WikiContent wikiContent) {
+        if (medicine != null) {
+            if (wikiContent.isAMedicine()) {
+                medicine.setName(wikiContent.getQueryText());
+                //Log.e(TAG, wikiContent.getQueryText() + " is a medicine");
+            }
+            if (wikiContent.redirects()) {
+                Log.e(TAG, "Redirection from " + wikiContent.getRedirectionText() + " to " + wikiContent.getRedirectionText());
+                possibleNames++;
+                wikiAPIController.wikiAPIRequest(wikiContent.getRedirectionText(), wikiAPIResolvedCallback);
+            }
+            //else Log.e(TAG, wikiContent.getQueryText() + " is NOT a medicine");
+        }
+        possibleNames--;
+        if (possibleNames == 0) Log.e(TAG, medicine.toString());
     }
 }

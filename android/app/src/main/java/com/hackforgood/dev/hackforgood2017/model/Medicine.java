@@ -3,6 +3,7 @@ package com.hackforgood.dev.hackforgood2017.model;
 import android.util.Log;
 
 import com.hackforgood.dev.hackforgood2017.MainActivity;
+import com.hackforgood.dev.hackforgood2017.controllers.WikiAPIController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -103,6 +104,7 @@ public class Medicine {
         }
 
         if (!parseByCode) {
+            Log.e(TAG, "No code");
             if (parsedText.contains("comprimidos")) {
                 // Dosis
                 if (parsedText.contains(" mg ")) setDosisUnit("mg");
@@ -127,26 +129,27 @@ public class Medicine {
                     String content = m.group().replace("comprimidos", "").trim();
                     setContent(Integer.parseInt(content));
                 }
-
-                parsedText = parsedText.replace("comprimidos","");
-                parsedText = parsedText.replace("recubiertos","");
-                parsedText = parsedText.replace("pelicula","");
-                parsedText = parsedText.replace(" EFG ","");
-                parsedText = parsedText.replaceAll("\\d","");
-                parsedText = parsedText.replaceAll("\n"," ");
-
-                parsedText = parsedText.toLowerCase();
-
-                if (parsedText.contains("oral")) {
-                    setType("oral");
-                    parsedText = parsedText.replace("oral","");
-                }
-
-                parsedText = parsedText.replaceAll("\\b\\w{1,3}\\b\\s?", "");
-                parsedText = parsedText.replaceAll("\\s{2,}", " ").trim();
-
-                setName(parsedText);
             }
+
+            parsedText = parsedText.replace("comprimidos","");
+            parsedText = parsedText.replace("recubiertos","");
+            parsedText = parsedText.replace("pelicula","");
+            parsedText = parsedText.replace(" EFG ","");
+            parsedText = parsedText.replaceAll("\\d","");
+            parsedText = parsedText.replaceAll("\n"," ");
+
+            parsedText = parsedText.toLowerCase();
+
+            if (parsedText.contains("oral")) {
+                setType("oral");
+                parsedText = parsedText.replace("oral","");
+            }
+
+            parsedText = parsedText.replaceAll("\\b\\w{1,3}\\b\\s?", "");
+            parsedText = parsedText.replaceAll("\\s{2,}", " ").trim();
+
+            // Name
+            setName(parsedText);
         }
     }
 
@@ -178,5 +181,10 @@ public class Medicine {
             if (!type.equals("")) str += "Type: " + type + "\n";
         }
         return str;
+    }
+
+    public boolean hasACode() {
+        if (getCode() >= 0) return true;
+        else return false;
     }
 }
