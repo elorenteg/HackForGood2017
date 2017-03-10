@@ -1,34 +1,16 @@
 {
-  "name": "hfgbackend",
+  "name": "backend",
   "version": "0.1.0",
   "main": "app.js",
   "dependencies": {
-    "bluebird": "^3.5.0",
     "hoek": "^4.1.0",
     "lodash": "^4.17.4",
     "pluralize": "^4.0.0",
-    "rc": "1.1.6",
-    "sails": "0.11.4",
-    "sails-disk": "^0.10.10",
-    "sails-memory": "^0.10.5",
-    "sails-service-image": "^3.1.1",
-    "sails-service-location": "^3.3.1",
-    "sails-service-mailer": "^3.2.1",
-    "sails-service-storage": "^3.2.1"
+    "rc": "1.1.6"
   },
-  "devDependencies": {
-    "esdoc": "0.4.3",
-    "chai": "3.4.1",
-    "istanbul": "0.4.2",
-    "mocha": "2.3.4",
-    "sails-memory": "0.10.5",
-    "sinon": "1.17.2"
-  },
+  "devDependencies": {},
   "scripts": {
-    "clean": "rm -rf ./.tmp",
     "debug": "node debug app.js",
-    "docs": "esdoc -c esdoc.json",
-    "start": "node app.js",
-    "test": "istanbul cover _mocha"
+    "start": "node app.js"
   }
 }
