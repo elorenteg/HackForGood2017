@@ -1,8 +1,11 @@
 package com.hackforgood.dev.hackforgood2017;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,12 +16,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.beardedhen.androidbootstrap.TypefaceProvider;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    public static final int CAMERA_PERMISSION_CODE = 200;
+    public static final int WRITE_SD_PERMISSION_CODE = 201;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        TypefaceProvider.registerDefaultIconSets();
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -77,25 +87,54 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
+        Fragment fragment = null;
+        String fragmentTAG = null;
+        if (id == R.id.nav_home) {
+            fragment = MainFragmentActivity.newInstance();
+            fragmentTAG = MainFragmentActivity.TAG;
         } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
+            fragment = PhotoSearchFragment.newInstance();
+            fragmentTAG = PhotoSearchFragment.TAG;
+        } else if (id == R.id.nav_keyboard) {
+            fragment = KeyboardSearchFragment.newInstance();
+            fragmentTAG = KeyboardSearchFragment.TAG;
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
+        }
 
-        } else if (id == R.id.nav_send) {
-
+        if (fragment != null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.main_container, fragment, fragmentTAG);
+            if (id != R.id.nav_home)
+                ft.addToBackStack(null);
+            ft.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == CAMERA_PERMISSION_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                PhotoSearchFragment fragment = (PhotoSearchFragment) getSupportFragmentManager().findFragmentByTag(PhotoSearchFragment.TAG);
+                if (fragment != null){
+                    fragment.makePhotoCamera();
+                }
+            }
+        } else if (requestCode == WRITE_SD_PERMISSION_CODE){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                PhotoSearchFragment fragment = (PhotoSearchFragment) getSupportFragmentManager().findFragmentByTag(PhotoSearchFragment.TAG);
+                if (fragment != null){
+                    fragment.setUpPhotoCamera();
+                }
+            }
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

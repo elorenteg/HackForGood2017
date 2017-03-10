@@ -28,4 +28,6 @@ dependencies {
     compile 'com.android.support:design:25.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
     testCompile 'junit:junit:4.12'
+
+    compile 'com.beardedhen:androidbootstrap:2.3.1'
 }
