@@ -7,13 +7,17 @@
     android:orientation="vertical"
     android:padding="30dp">
 
-    <com.beardedhen.androidbootstrap.BootstrapEditText
+    <EditText
         android:id="@+id/keyboard_search_edit_text"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        app:bootstrapBrand="info"
-        app:bootstrapSize="md" />
+        android:text=""
+        android:textSize="40sp"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:padding="16dp"
+        android:background="@drawable/border"/>
 
     <View
         android:layout_width="match_parent"
