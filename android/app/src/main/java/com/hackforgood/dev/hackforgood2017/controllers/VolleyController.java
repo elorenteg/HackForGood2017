@@ -7,14 +7,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-public class VolleyController {
+class VolleyController {
     private static VolleyController instance;
-    protected RequestQueue fRequestQueue;
-    private Context ctx;
+    private RequestQueue fRequestQueue;
     private VolleyCore volley;
 
     private VolleyController(Context ctx) {
-        this.ctx = ctx;
         volley = new VolleyCore(ctx);
         fRequestQueue = volley.getRequestQueue();
     }
