@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.ImageRequest;
@@ -37,9 +38,9 @@ public class ResultScreenFragment extends Fragment {
     private CardView codeLayout;
     private CardView leafletLayout;
     private ImageView imageView;
-    private AwesomeTextView medNameText;
-    private AwesomeTextView medCodeText;
-    private AwesomeTextView medLeafletText;
+    private TextView medNameText;
+    private TextView medCodeText;
+    private TextView medLeafletText;
 
     private String imageUrl;
     private Medicine medicine;
@@ -111,9 +112,9 @@ public class ResultScreenFragment extends Fragment {
         imageLayout = (LinearLayout) rootview.findViewById(R.id.linear_result_image_screen);
         imageView = (ImageView) rootview.findViewById(R.id.result_screen_med_result_image);
 
-        medNameText = (AwesomeTextView) rootview.findViewById(R.id.result_screen_med_name_text);
-        medCodeText = (AwesomeTextView) rootview.findViewById(R.id.result_screen_med_code_text);
-        medLeafletText = (AwesomeTextView) rootview.findViewById(R.id.result_screen_med_leaflet_text);
+        medNameText = (TextView) rootview.findViewById(R.id.result_screen_med_name_text);
+        medCodeText = (TextView) rootview.findViewById(R.id.result_screen_med_code_text);
+        medLeafletText = (TextView) rootview.findViewById(R.id.result_screen_med_leaflet_text);
 
         nameLayout = (CardView) rootview.findViewById(R.id.result_screen_name_layout);
         codeLayout = (CardView) rootview.findViewById(R.id.result_screen_code_layout);
