@@ -19,15 +19,14 @@
         android:layout_width="match_parent"
         android:layout_height="30dp" />
 
-    <com.beardedhen.androidbootstrap.BootstrapButton
+    <Button
         android:id="@+id/keyboard_search_button"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
         android:text="Buscar"
-        app:bootstrapBrand="success"
-        app:bootstrapSize="lg"
-        app:buttonMode="regular"
-        app:roundedCorners="true"
-        app:showOutline="false" />
+        android:textColor="#FFF"
+        android:drawableLeft="@drawable/magnifying_glass_finder"
+        android:background="#0175D8"
+        android:textSize="24sp"/>
 </LinearLayout>

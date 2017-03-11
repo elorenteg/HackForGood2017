@@ -7,31 +7,30 @@
     android:orientation="vertical"
     android:padding="30dp">
 
-    <com.beardedhen.androidbootstrap.BootstrapButton
+
+    <Button
         android:id="@+id/camera_search_camera_button"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="Cámara"
-        app:bootstrapBrand="primary"
-        app:bootstrapSize="lg"
-        app:buttonMode="regular"
-        app:roundedCorners="true"
-        app:showOutline="false" />
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="Foto"
+        android:textColor="#FFF"
+        android:drawableLeft="@drawable/photo_camera"
+        android:background="#0175D8"
+        android:textSize="24sp"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="30dp" />
 
-    <com.beardedhen.androidbootstrap.BootstrapButton
+    <Button
         android:id="@+id/camera_search_gallery_button"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
         android:text="Galería"
-        app:bootstrapBrand="success"
-        app:bootstrapSize="lg"
-        app:buttonMode="regular"
-        app:roundedCorners="true"
-        app:showOutline="false" />
+        android:textColor="#FFF"
+        android:drawableLeft="@drawable/gallery"
+        android:background="#5BB85D"
+        android:textSize="24sp"/>
 </LinearLayout>

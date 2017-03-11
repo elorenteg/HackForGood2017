@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
@@ -50,8 +51,8 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
     private final ImageOCRController.ImageOCRResolvedCallback imageOCRResolvedCallback = this;
     private final WikiAPIController.WikiAPIResolvedCallback wikiAPIResolvedCallback = this;
     private View rootview;
-    private BootstrapButton buttonCamera;
-    private BootstrapButton buttonGallery;
+    private Button buttonCamera;
+    private Button buttonGallery;
     private String cameraDir;
     private Uri outputFileUri;
     private ImageOCRController imageOCRController;
@@ -82,8 +83,8 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
     }
 
     private void setUpElements() {
-        buttonCamera = (BootstrapButton) rootview.findViewById(R.id.camera_search_camera_button);
-        buttonGallery = (BootstrapButton) rootview.findViewById(R.id.camera_search_gallery_button);
+        buttonCamera = (Button) rootview.findViewById(R.id.camera_search_camera_button);
+        buttonGallery = (Button) rootview.findViewById(R.id.camera_search_gallery_button);
     }
 
     private void setUpListeners() {
