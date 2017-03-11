@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
-import com.hackforgood.dev.hackforgood2017.controllers.TextToSpeechController;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity
     protected void onStop() {
         super.onStop();
 
-        TextToSpeechController.getInstance(this).shutdown();
+        //TextToSpeechController.getInstance(this).shutdown();
     }
 
     @Override

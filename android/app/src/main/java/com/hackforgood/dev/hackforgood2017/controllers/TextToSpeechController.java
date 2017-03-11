@@ -14,7 +14,7 @@ import java.util.Locale;
 
 public class TextToSpeechController {
     private static TextToSpeechController instance;
-    Handler handler = new Handler();
+    private Handler handler = new Handler();
     private TextToSpeech textToSpeech;
     private boolean textToSpeechInitialized;
 
@@ -47,10 +47,10 @@ public class TextToSpeechController {
     }
 
     public void speak(final CharSequence textToSpeak, final int QUEUE_MODE) {
-        int waitTimeToSpeak = 1;
+        int waitTimeToSpeak = 10;
 
         if (!textToSpeechInitialized) {
-            waitTimeToSpeak = 250;
+            waitTimeToSpeak = 150;
         }
 
         final int finalWaitTimeToSpeak = waitTimeToSpeak;
@@ -86,7 +86,7 @@ public class TextToSpeechController {
     }
 
     public void shutdown() {
-        textToSpeechInitialized = true;
+        textToSpeechInitialized = false;
         textToSpeech.shutdown();
     }
 }

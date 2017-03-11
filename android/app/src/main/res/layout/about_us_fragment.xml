@@ -24,33 +24,11 @@
         android:textSize="20sp" />
 
     <LinearLayout
-        android:id="@+id/dialog_about_us_marc_dialog"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center"
-            android:text="Marc Vila Gómez"
-            android:textSize="17sp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/linked_in_icon" />
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/dialog_about_us_ester_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -94,6 +72,7 @@
         android:id="@+id/dialog_about_us_oriol_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
         android:orientation="horizontal">
 
         <TextView
@@ -103,6 +82,27 @@
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:text="Oriol Serch Muni"
+            android:textSize="17sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/linked_in_icon" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialog_about_us_marc_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:text="Marc Vila Gómez"
             android:textSize="17sp" />
 
         <ImageView

@@ -2,18 +2,21 @@ package com.hackforgood.dev.hackforgood2017;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.ImageRequest;
-import com.beardedhen.androidbootstrap.AwesomeTextView;
+import com.hackforgood.dev.hackforgood2017.controllers.TextToSpeechController;
 import com.hackforgood.dev.hackforgood2017.controllers.VolleyController;
 import com.hackforgood.dev.hackforgood2017.model.Medicine;
 
@@ -30,12 +33,18 @@ public class ResultScreenFragment extends Fragment {
     private static final String ARG_TEXTTOSEARCH = "user_text";
     private View rootview;
     private LinearLayout imageLayout;
+    private CardView nameLayout;
+    private CardView codeLayout;
+    private CardView leafletLayout;
     private ImageView imageView;
-    private AwesomeTextView medTextResult;
+    private TextView medNameText;
+    private TextView medCodeText;
+    private TextView medLeafletText;
 
     private String imageUrl;
     private Medicine medicine;
     private String textToSearch;
+    private String medicineLeaflet;
 
     public static ResultScreenFragment newInstance(String imageUrl, Medicine medicine, String textToSearch) {
         ResultScreenFragment fragment = new ResultScreenFragment();
@@ -85,11 +94,21 @@ public class ResultScreenFragment extends Fragment {
             imageLayout.setVisibility(View.GONE);
         }
 
+        //TODO Futura implementación con servidor
+        medicineLeaflet = "Paracetamol Pensa pertenece al grupo de medicamentos llamados analgésicos y antipiréticos. \n" +
+                " \n" +
+                "Este medicamento está indicado para el tratamiento sintomático del dolor de intensidad leve o moderada, y \n" +
+                "para reducir la fiebre. ";
+
         if (medicine != null) {
             //TODO Send Volley to load the med XML
-            medTextResult.setText(medicine.getName());
+            medNameText.setText(medicine.getName());
+            medCodeText.setText("" + medicine.getCode());
+            medLeafletText.setText(medicineLeaflet);
         } else if (textToSearch != null) {
             //TODO Send Volley to load the med XML
+            medNameText.setText(textToSearch);
+            medCodeText.setText("-----");
         }
 
         return rootview;
@@ -99,11 +118,39 @@ public class ResultScreenFragment extends Fragment {
         imageLayout = (LinearLayout) rootview.findViewById(R.id.linear_result_image_screen);
         imageView = (ImageView) rootview.findViewById(R.id.result_screen_med_result_image);
 
-        medTextResult = (AwesomeTextView) rootview.findViewById(R.id.result_screen_med_name_text);
+        medNameText = (TextView) rootview.findViewById(R.id.result_screen_med_name_text);
+        medCodeText = (TextView) rootview.findViewById(R.id.result_screen_med_code_text);
+        medLeafletText = (TextView) rootview.findViewById(R.id.result_screen_med_leaflet_text);
+
+        nameLayout = (CardView) rootview.findViewById(R.id.result_screen_name_layout);
+        codeLayout = (CardView) rootview.findViewById(R.id.result_screen_code_layout);
+        leafletLayout = (CardView) rootview.findViewById(R.id.result_screen_leaflet_layout);
     }
 
     private void setUpListeners() {
+        nameLayout.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (medicine != null) {
+                    TextToSpeechController.getInstance(getContext()).speak(medicine.getName(), TextToSpeech.QUEUE_FLUSH);
+                }
+            }
+        });
 
+        codeLayout.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (medicine != null) {
+                    TextToSpeechController.getInstance(getContext()).speak("" + medicine.getCode(), TextToSpeech.QUEUE_FLUSH);
+                }
+            }
+        });
+
+        leafletLayout.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (medicine != null) {
+                    TextToSpeechController.getInstance(getContext()).speak(medicineLeaflet, TextToSpeech.QUEUE_FLUSH);
+                }
+            }
+        });
     }
 
     private void loadImage(String url) {
