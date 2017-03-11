@@ -4,6 +4,526 @@
     <listprescriptiondate>2017-03-10</listprescriptiondate>
   </header>
   <prescription>
+    <cod_nacion>712786</cod_nacion>
+    <nro_definitivo>2011</nro_definitivo>
+    <des_nomco>ASPIRINA 500 mg COMPRIMIDOS</des_nomco>
+    <des_prese>ASPIRINA 500 mg COMPRIMIDOS , 20 comprimidos</des_prese>
+    <cod_dcsa>7947003</cod_dcsa>
+    <cod_dcp>60591000140105</cod_dcp>
+    <cod_dcpf>60601000140101</cod_dcpf>
+    <des_dosific>500 mg</des_dosific>
+    <cod_envase>5</cod_envase>
+    <contenido>20</contenido>
+    <unid_contenido>12</unid_contenido>
+    <nro_conte>20 comprimidos</nro_conte>
+    <sw_psicotropo>0</sw_psicotropo>
+    <sw_estupefaciente>0</sw_estupefaciente>
+    <sw_afecta_conduccion>0</sw_afecta_conduccion>
+    <sw_triangulo_negro>0</sw_triangulo_negro>
+    <url_fictec>http://www.aemps.gob.es/cima/pdfs/es/ft/2011/2011_ft.pdf</url_fictec>
+    <url_prosp>http://www.aemps.gob.es/cima/pdfs/es/p/2011/2011_p.pdf</url_prosp>
+    <sw_receta>0</sw_receta>
+    <sw_generico>0</sw_generico>
+    <sw_sustituible>1</sw_sustituible>
+    <sw_envase_clinico>0</sw_envase_clinico>
+    <sw_uso_hospitalario>0</sw_uso_hospitalario>
+    <sw_diagnostico_hospitalario>0</sw_diagnostico_hospitalario>
+    <sw_tld>0</sw_tld>
+    <sw_especial_control_medico>0</sw_especial_control_medico>
+    <sw_huerfano>0</sw_huerfano>
+    <sw_base_a_plantas>0</sw_base_a_plantas>
+    <laboratorio_titular>11424</laboratorio_titular>
+    <laboratorio_comercializador>11424</laboratorio_comercializador>
+    <fecha_autorizacion>1922-07-01</fecha_autorizacion>
+    <sw_comercializado>1</sw_comercializado>
+    <fec_comer>2011-10-11</fec_comer>
+    <cod_sitreg>1</cod_sitreg>
+    <cod_sitreg_presen>1</cod_sitreg_presen>
+    <fecha_situacion_registro>1922-07-01</fecha_situacion_registro>
+    <fec_sitreg_presen>1922-07-01</fec_sitreg_presen>
+    <sw_tiene_excipientes_decl_obligatoria>1</sw_tiene_excipientes_decl_obligatoria>
+    <biosimilar>0</biosimilar>
+    <importacion_paralela>0</importacion_paralela>
+    <formasfarmaceuticas>
+      <cod_forfar>40</cod_forfar>
+      <cod_forfar_simplificada>10</cod_forfar_simplificada>
+      <nro_pactiv>1</nro_pactiv>
+      <composicion_pa>
+        <cod_principio_activo>2738</cod_principio_activo>
+        <orden_colacion>1</orden_colacion>
+        <dosis_pa>500</dosis_pa>
+        <unidad_dosis_pa>mg</unidad_dosis_pa>
+        <dosis_composicion>1</dosis_composicion>
+        <unidad_composicion>comprimido</unidad_composicion>
+        <dosis_administracion>1</dosis_administracion>
+        <unidad_administracion>comprimido</unidad_administracion>
+        <dosis_prescripcion>500</dosis_prescripcion>
+        <unidad_prescripcion>mg</unidad_prescripcion>
+      </composicion_pa>
+      <excipientes>
+        <cod_excipiente>1025</cod_excipiente>
+      </excipientes>
+      <viasadministracion>
+        <cod_via_admin>54</cod_via_admin>
+      </viasadministracion>
+    </formasfarmaceuticas>
+    <atc>
+      <cod_atc>N02BA01</cod_atc>
+      <teratogenia>D - Medicamento desaconsejado en cualquier etapa del embarazo. Valorar la relación beneficio riesgo</teratogenia>
+      <interacciones_atc>
+        <atc_interaccion>M01AE</atc_interaccion>
+        <descripcion_atc_interaccion>Derivados del ácido propiónico</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>M01AX02</atc_interaccion>
+        <descripcion_atc_interaccion>ácido niflúmico</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>M01AC</atc_interaccion>
+        <descripcion_atc_interaccion>Oxicams</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>M01AX01</atc_interaccion>
+        <descripcion_atc_interaccion>nabumetona</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>M01AX22</atc_interaccion>
+        <descripcion_atc_interaccion>morniflumato</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>M01AX93</atc_interaccion>
+        <descripcion_atc_interaccion>Isonixina</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>M04AB03</atc_interaccion>
+        <descripcion_atc_interaccion>benzbromarona</descripcion_atc_interaccion>
+        <efecto_interaccion>Disminución del efecto uricosúrico.</efecto_interaccion>
+        <recomendacion_interaccion>Disminución del efecto uricosúrico.</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>B01AA</atc_interaccion>
+        <descripcion_atc_interaccion>Antagonistas de la vitamina K</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de hemorragias (especialmente gastrointestinales).</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de hemorragias (especialmente gastrointestinales).</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>M01AB</atc_interaccion>
+        <descripcion_atc_interaccion>Derivados del ácido acético y sustancias relacionadas</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>M01AG</atc_interaccion>
+        <descripcion_atc_interaccion>Fenamatos</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>M01AH</atc_interaccion>
+        <descripcion_atc_interaccion>Coxibs</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</recomendacion_interaccion>
+      </interacciones_atc>
+      <duplicidades>
+        <atc_duplicidad>B01AC06</atc_duplicidad>
+        <descripcion_atc_duplicidad>ácido acetilsalicílico</descripcion_atc_duplicidad>
+        <efecto_duplicidad>Prescripción de dos o más medicamentos con el mismo principio activo o la misma actividad farmacológica.</efecto_duplicidad>
+        <recomendacion_duplicidad>Suspender el principio(s) activo(s) con la misma actividad farmacológica.</recomendacion_duplicidad>
+      </duplicidades>
+      <duplicidades>
+        <atc_duplicidad>N02BA01</atc_duplicidad>
+        <descripcion_atc_duplicidad>ácido acetilsalicílico</descripcion_atc_duplicidad>
+        <efecto_duplicidad>Prescripción de dos o más medicamentos con el mismo principio activo o la misma actividad farmacológica.</efecto_duplicidad>
+        <recomendacion_duplicidad>Suspender el principio(s) activo(s) con la misma actividad farmacológica.</recomendacion_duplicidad>
+      </duplicidades>
+      <duplicidades>
+        <atc_duplicidad>B01AC30</atc_duplicidad>
+        <descripcion_atc_duplicidad>combinaciones</descripcion_atc_duplicidad>
+        <efecto_duplicidad>Prescripción de dos o más medicamentos con el mismo principio activo o la misma actividad farmacológica.</efecto_duplicidad>
+        <recomendacion_duplicidad>Suspender el principio(s) activo(s) con la misma actividad farmacológica.</recomendacion_duplicidad>
+      </duplicidades>
+      <duplicidades>
+        <atc_duplicidad>N02BA51</atc_duplicidad>
+        <descripcion_atc_duplicidad>ácido acetilsalicílico, combinaciones con, psicolépticos excl.</descripcion_atc_duplicidad>
+        <efecto_duplicidad>Prescripción de dos o más medicamentos con el mismo principio activo o la misma actividad farmacológica.</efecto_duplicidad>
+        <recomendacion_duplicidad>Suspender el principio(s) activo(s) con la misma actividad farmacológica.</recomendacion_duplicidad>
+      </duplicidades>
+      <duplicidades>
+        <atc_duplicidad>B01AC18</atc_duplicidad>
+        <descripcion_atc_duplicidad>triflusal</descripcion_atc_duplicidad>
+        <efecto_duplicidad>Prescripción de dos o más medicamentos con el mismo principio activo o la misma actividad farmacológica.</efecto_duplicidad>
+        <recomendacion_duplicidad>Suspender el principio(s) activo(s) con la misma actividad farmacológica.</recomendacion_duplicidad>
+      </duplicidades>
+    </atc>
+  </prescription>
+  <prescription>
+    <cod_nacion>672769</cod_nacion>
+    <nro_definitivo>72983</nro_definitivo>
+    <des_nomco>IBUPROFENO ALMUS 600 mg COMPRIMIDOS RECUBIERTOS CON PELICULA EFG</des_nomco>
+    <des_prese>IBUPROFENO ALMUS 600 mg COMPRIMIDOS RECUBIERTOS CON PELICULA EFG, 40 comprimidos</des_prese>
+    <cod_dcsa>38268001</cod_dcsa>
+    <cod_dcp>329654002</cod_dcp>
+    <cod_dcpf>22001000140103</cod_dcpf>
+    <des_dosific>600 mg</des_dosific>
+    <cod_envase>5</cod_envase>
+    <contenido>40</contenido>
+    <unid_contenido>12</unid_contenido>
+    <nro_conte>40 comprimidos</nro_conte>
+    <sw_psicotropo>0</sw_psicotropo>
+    <sw_estupefaciente>0</sw_estupefaciente>
+    <sw_afecta_conduccion>0</sw_afecta_conduccion>
+    <sw_triangulo_negro>0</sw_triangulo_negro>
+    <url_fictec>http://www.aemps.gob.es/cima/pdfs/es/ft/72983/72983_ft.pdf</url_fictec>
+    <url_prosp>http://www.aemps.gob.es/cima/pdfs/es/p/72983/72983_p.pdf</url_prosp>
+    <sw_receta>1</sw_receta>
+    <sw_generico>1</sw_generico>
+    <sw_sustituible>1</sw_sustituible>
+    <sw_envase_clinico>0</sw_envase_clinico>
+    <sw_uso_hospitalario>0</sw_uso_hospitalario>
+    <sw_diagnostico_hospitalario>0</sw_diagnostico_hospitalario>
+    <sw_tld>0</sw_tld>
+    <sw_especial_control_medico>0</sw_especial_control_medico>
+    <sw_huerfano>0</sw_huerfano>
+    <sw_base_a_plantas>0</sw_base_a_plantas>
+    <laboratorio_titular>10245</laboratorio_titular>
+    <laboratorio_comercializador>10245</laboratorio_comercializador>
+    <fecha_autorizacion>2010-11-10</fecha_autorizacion>
+    <sw_comercializado>1</sw_comercializado>
+    <fec_comer>2012-11-22</fec_comer>
+    <cod_sitreg>1</cod_sitreg>
+    <cod_sitreg_presen>1</cod_sitreg_presen>
+    <fecha_situacion_registro>2010-11-10</fecha_situacion_registro>
+    <fec_sitreg_presen>2010-11-10</fec_sitreg_presen>
+    <sw_tiene_excipientes_decl_obligatoria>1</sw_tiene_excipientes_decl_obligatoria>
+    <biosimilar>0</biosimilar>
+    <importacion_paralela>0</importacion_paralela>
+    <formasfarmaceuticas>
+      <cod_forfar>42</cod_forfar>
+      <cod_forfar_simplificada>10</cod_forfar_simplificada>
+      <nro_pactiv>1</nro_pactiv>
+      <composicion_pa>
+        <cod_principio_activo>2765</cod_principio_activo>
+        <orden_colacion>1</orden_colacion>
+        <dosis_pa>600</dosis_pa>
+        <unidad_dosis_pa>mg</unidad_dosis_pa>
+        <dosis_composicion>1</dosis_composicion>
+        <unidad_composicion>comprimido</unidad_composicion>
+        <dosis_administracion>1</dosis_administracion>
+        <unidad_administracion>comprimido</unidad_administracion>
+        <dosis_prescripcion>600</dosis_prescripcion>
+        <unidad_prescripcion>mg</unidad_prescripcion>
+      </composicion_pa>
+      <excipientes>
+        <cod_excipiente>1025</cod_excipiente>
+      </excipientes>
+      <excipientes>
+        <cod_excipiente>9142</cod_excipiente>
+      </excipientes>
+      <excipientes>
+        <cod_excipiente>15547</cod_excipiente>
+      </excipientes>
+      <viasadministracion>
+        <cod_via_admin>54</cod_via_admin>
+      </viasadministracion>
+    </formasfarmaceuticas>
+    <notaseguridad>
+      <numero_nota_seguridad>04/2015</numero_nota_seguridad>
+      <referencia_nota_seguridad>MUH (FV) 04/2015</referencia_nota_seguridad>
+      <asunto_nota_seguridad>RIESGO CARDIOVASCULAR DE DOSIS ALTAS DE IBUPROFENO O DEXIBUPROFENO: RECOMENDACIONES DE USO</asunto_nota_seguridad>
+      <fecha_nota_seguridad>13/04/2015</fecha_nota_seguridad>
+      <url_nota_seguridad>http://www.aemps.gob.es/informa/notasInformativas/medicamentosUsoHumano/seguridad/2015/NI-MUH_FV_04-ibuprofeno-dexibuprofeno.htm</url_nota_seguridad>
+    </notaseguridad>
+    <atc>
+      <cod_atc>M01AE01</cod_atc>
+      <teratogenia>A,B o C (D) - Medicamento desaconsejado en alguna etapa del embarazo o en alguna circunstancia determinada. Consultar ficha técnica.</teratogenia>
+      <interacciones_atc>
+        <atc_interaccion>M01AC</atc_interaccion>
+        <descripcion_atc_interaccion>Oxicams</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>M01AG</atc_interaccion>
+        <descripcion_atc_interaccion>Fenamatos</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>N05AN01</atc_interaccion>
+        <descripcion_atc_interaccion>litio</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de toxicidad por litio.</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de toxicidad por litio.</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>B01AF</atc_interaccion>
+        <descripcion_atc_interaccion>Inhibidores directos del factor Xa</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de hemorragias (especialmente gastrointestinales).</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de hemorragias (especialmente gastrointestinales).</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>M01AX93</atc_interaccion>
+        <descripcion_atc_interaccion>Isonixina</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>M01AH</atc_interaccion>
+        <descripcion_atc_interaccion>Coxibs</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>M01AX01</atc_interaccion>
+        <descripcion_atc_interaccion>nabumetona</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>B01AE07</atc_interaccion>
+        <descripcion_atc_interaccion>Dabigatrán,  etexilato de</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de hemorragias (especialmente gastrointestinales).</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de hemorragias (especialmente gastrointestinales).</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>M01AB</atc_interaccion>
+        <descripcion_atc_interaccion>Derivados del ácido acético y sustancias relacionadas</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>M01AX02</atc_interaccion>
+        <descripcion_atc_interaccion>ácido niflúmico</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>B01AA</atc_interaccion>
+        <descripcion_atc_interaccion>Antagonistas de la vitamina K</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de hemorragias (especialmente gastrointestinales).</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de hemorragias (especialmente gastrointestinales).</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>M01AX22</atc_interaccion>
+        <descripcion_atc_interaccion>morniflumato</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</recomendacion_interaccion>
+      </interacciones_atc>
+      <interacciones_atc>
+        <atc_interaccion>N02BA01</atc_interaccion>
+        <descripcion_atc_interaccion>ácido acetilsalicílico</descripcion_atc_interaccion>
+        <efecto_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</efecto_interaccion>
+        <recomendacion_interaccion>Aumento del riesgo de úlcera péptica y hemorragia digestiva.</recomendacion_interaccion>
+      </interacciones_atc>
+      <desaconsejados_geriatria>
+        <alerta_geriatria>Pacientes con hipertensión grave</alerta_geriatria>
+        <riesgo_pacience_geriatria>Riesgo de aumento de las cifras de tensión arterial</riesgo_pacience_geriatria>
+        <recomendacion_geriatria>Evitar su uso o bien utilizar otras alternativas para el tratamiento del dolor como el paracetamol.</recomendacion_geriatria>
+      </desaconsejados_geriatria>
+      <desaconsejados_geriatria>
+        <alerta_geriatria>Utilización superior a 3 meses sin  contraindicación al alopurinol</alerta_geriatria>
+        <riesgo_pacience_geriatria>Aumento del riesgo de hemorragia gastrointestinal y úlcera péptica.</riesgo_pacience_geriatria>
+        <recomendacion_geriatria>Se recomienda utilizar  alopurinol ya que  es el tratamiento de elección en la profilaxis de la gota.</recomendacion_geriatria>
+      </desaconsejados_geriatria>
+      <desaconsejados_geriatria>
+        <alerta_geriatria>Utilización superior a 3 meses, en  dolor articular sin haber utilizado paracetamol previamente.</alerta_geriatria>
+        <riesgo_pacience_geriatria>Aumento del riesgo de hemorragia gastrointestinal.</riesgo_pacience_geriatria>
+        <recomendacion_geriatria>Evitar su uso y utilizar otros analgésicos con eficacia similar como el paracetamol.</recomendacion_geriatria>
+      </desaconsejados_geriatria>
+      <desaconsejados_geriatria>
+        <alerta_geriatria>Historia de úlcera péptica o sangrado gastrointestinal sin tratamiento gastroprotector </alerta_geriatria>
+        <riesgo_pacience_geriatria>Riesgo de reaparición de la úlcera péptica o sangrado gástrico.</riesgo_pacience_geriatria>
+        <recomendacion_geriatria>Evitar el uso del AINE, si fuese imprescindible su utilización, utilizarlo el menor tiempo posible y añadir un gastoprotector (IBP o antiH2).</recomendacion_geriatria>
+      </desaconsejados_geriatria>
+      <desaconsejados_geriatria>
+        <alerta_geriatria>Pacientes con insuficiencia cardiaca grave</alerta_geriatria>
+        <riesgo_pacience_geriatria>Riesgo de descompensación de la insuficiencia cardiaca.</riesgo_pacience_geriatria>
+        <recomendacion_geriatria>Evitar su uso o bien utilizar otras alternativas para el tratamiento del dolor como el paracetamol.</recomendacion_geriatria>
+      </desaconsejados_geriatria>
+      <desaconsejados_geriatria>
+        <alerta_geriatria>Uso concomitante con antiagregantes</alerta_geriatria>
+        <riesgo_pacience_geriatria>Aumento del riesgo de hemorragia gastrointestinal.</riesgo_pacience_geriatria>
+        <recomendacion_geriatria>Evitar el uso del AINE, y si fuese imprescindible su utilización, utilizarlo el menor tiempo posible y añadir un gastoprotector (IBP o antiH2).</recomendacion_geriatria>
+      </desaconsejados_geriatria>
+      <desaconsejados_geriatria>
+        <alerta_geriatria>Uso concomitante con anticoagulantes orales (G_ACO)</alerta_geriatria>
+        <riesgo_pacience_geriatria>Aumento del riesgo de hemorragia gastrointestinal.</riesgo_pacience_geriatria>
+        <recomendacion_geriatria>Evitar el uso del AINE, y si fuese imprescindible su utilización, utilizarlo el menor tiempo posible y añadir un gastoprotector (IBP o antiH2).</recomendacion_geriatria>
+      </desaconsejados_geriatria>
+      <desaconsejados_geriatria>
+        <alerta_geriatria>Uso concomitante con corticoides sistémicos </alerta_geriatria>
+        <riesgo_pacience_geriatria>Aumento del riesgo de hemorragia gastrointestinal.</riesgo_pacience_geriatria>
+        <recomendacion_geriatria>Evitar el uso del AINE, y si fuese imprescindible su utilización, utilizarlo el menor tiempo posible y añadir un gastoprotector (IBP o antiH2).</recomendacion_geriatria>
+      </desaconsejados_geriatria>
+      <duplicidades>
+        <atc_duplicidad>M01AB</atc_duplicidad>
+        <descripcion_atc_duplicidad>Derivados del ácido acético y sustancias relacionadas</descripcion_atc_duplicidad>
+        <efecto_duplicidad>Prescripción de dos o más medicamentos con el mismo principio activo o la misma actividad farmacológica.</efecto_duplicidad>
+        <recomendacion_duplicidad>Suspender el principio(s) activo(s) con la misma actividad farmacológica.</recomendacion_duplicidad>
+      </duplicidades>
+      <duplicidades>
+        <atc_duplicidad>M01AX93</atc_duplicidad>
+        <descripcion_atc_duplicidad>isonixina</descripcion_atc_duplicidad>
+        <efecto_duplicidad>Prescripción de dos o más medicamentos con el mismo principio activo o la misma actividad farmacológica.</efecto_duplicidad>
+        <recomendacion_duplicidad>Suspender el principio(s) activo(s) con la misma actividad farmacológica.</recomendacion_duplicidad>
+      </duplicidades>
+      <duplicidades>
+        <atc_duplicidad>M01AX01</atc_duplicidad>
+        <descripcion_atc_duplicidad>nabumetona</descripcion_atc_duplicidad>
+        <efecto_duplicidad>Prescripción de dos o más medicamentos con el mismo principio activo o la misma actividad farmacológica.</efecto_duplicidad>
+        <recomendacion_duplicidad>Suspender el principio(s) activo(s) con la misma actividad farmacológica.</recomendacion_duplicidad>
+      </duplicidades>
+      <duplicidades>
+        <atc_duplicidad>M01AG</atc_duplicidad>
+        <descripcion_atc_duplicidad>Fenamatos</descripcion_atc_duplicidad>
+        <efecto_duplicidad>Prescripción de dos o más medicamentos con el mismo principio activo o la misma actividad farmacológica.</efecto_duplicidad>
+        <recomendacion_duplicidad>Suspender el principio(s) activo(s) con la misma actividad farmacológica.</recomendacion_duplicidad>
+      </duplicidades>
+      <duplicidades>
+        <atc_duplicidad>M01AH</atc_duplicidad>
+        <descripcion_atc_duplicidad>Coxibs</descripcion_atc_duplicidad>
+        <efecto_duplicidad>Prescripción de dos o más medicamentos con el mismo principio activo o la misma actividad farmacológica.</efecto_duplicidad>
+        <recomendacion_duplicidad>Suspender el principio(s) activo(s) con la misma actividad farmacológica.</recomendacion_duplicidad>
+      </duplicidades>
+      <duplicidades>
+        <atc_duplicidad>M01AX22</atc_duplicidad>
+        <descripcion_atc_duplicidad>morniflumato</descripcion_atc_duplicidad>
+        <efecto_duplicidad>Prescripción de dos o más medicamentos con el mismo principio activo o la misma actividad farmacológica.</efecto_duplicidad>
+        <recomendacion_duplicidad>Suspender el principio(s) activo(s) con la misma actividad farmacológica.</recomendacion_duplicidad>
+      </duplicidades>
+      <duplicidades>
+        <atc_duplicidad>M01AX24</atc_duplicidad>
+        <descripcion_atc_duplicidad>oxaceprol</descripcion_atc_duplicidad>
+        <efecto_duplicidad>Prescripción de dos o más medicamentos con el mismo principio activo o la misma actividad farmacológica.</efecto_duplicidad>
+        <recomendacion_duplicidad>Suspender el principio(s) activo(s) con la misma actividad farmacológica.</recomendacion_duplicidad>
+      </duplicidades>
+      <duplicidades>
+        <atc_duplicidad>M01AC</atc_duplicidad>
+        <descripcion_atc_duplicidad>Oxicams</descripcion_atc_duplicidad>
+        <efecto_duplicidad>Prescripción de dos o más medicamentos con el mismo principio activo o la misma actividad farmacológica.</efecto_duplicidad>
+        <recomendacion_duplicidad>Suspender el principio(s) activo(s) con la misma actividad farmacológica.</recomendacion_duplicidad>
+      </duplicidades>
+      <duplicidades>
+        <atc_duplicidad>M01AX02</atc_duplicidad>
+        <descripcion_atc_duplicidad>ácido niflúmico</descripcion_atc_duplicidad>
+        <efecto_duplicidad>Prescripción de dos o más medicamentos con el mismo principio activo o la misma actividad farmacológica.</efecto_duplicidad>
+        <recomendacion_duplicidad>Suspender el principio(s) activo(s) con la misma actividad farmacológica.</recomendacion_duplicidad>
+      </duplicidades>
+      <duplicidades>
+        <atc_duplicidad>M01BA</atc_duplicidad>
+        <descripcion_atc_duplicidad>Agentes antiinflamatorios/antirreumáticos en combinación con corticosteroides</descripcion_atc_duplicidad>
+        <efecto_duplicidad>Prescripción de dos o más medicamentos con el mismo principio activo o la misma actividad farmacológica.</efecto_duplicidad>
+        <recomendacion_duplicidad>Suspender el principio(s) activo(s) con la misma actividad farmacológica.</recomendacion_duplicidad>
+      </duplicidades>
+      <duplicidades>
+        <atc_duplicidad>M01AA</atc_duplicidad>
+        <descripcion_atc_duplicidad>Butilpirazolidinas</descripcion_atc_duplicidad>
+        <efecto_duplicidad>Prescripción de dos o más medicamentos con el mismo principio activo o la misma actividad farmacológica.</efecto_duplicidad>
+        <recomendacion_duplicidad>Suspender el principio(s) activo(s) con la misma actividad farmacológica.</recomendacion_duplicidad>
+      </duplicidades>
+      <duplicidades>
+        <atc_duplicidad>M01AE</atc_duplicidad>
+        <descripcion_atc_duplicidad>Derivados del ácido propiónico</descripcion_atc_duplicidad>
+        <efecto_duplicidad>Prescripción de dos o más medicamentos con el mismo principio activo o la misma actividad farmacológica.</efecto_duplicidad>
+        <recomendacion_duplicidad>Suspender el principio(s) activo(s) con la misma actividad farmacológica.</recomendacion_duplicidad>
+      </duplicidades>
+    </atc>
+  </prescription>
+  <prescription>
+    <cod_nacion>685362</cod_nacion>
+    <nro_definitivo>63647</nro_definitivo>
+    <des_nomco>PARACETAMOL PENSA 650 mg COMPRIMIDOS EFG</des_nomco>
+    <des_prese>PARACETAMOL PENSA 650 mg COMPRIMIDOS EFG, 20 comprimidos</des_prese>
+    <cod_dcsa>90332006</cod_dcsa>
+    <cod_dcp>370151002</cod_dcp>
+    <cod_dcpf>17181000140100</cod_dcpf>
+    <des_dosific>650 mg</des_dosific>
+    <cod_envase>5</cod_envase>
+    <contenido>20</contenido>
+    <unid_contenido>12</unid_contenido>
+    <nro_conte>20 comprimidos</nro_conte>
+    <sw_psicotropo>0</sw_psicotropo>
+    <sw_estupefaciente>0</sw_estupefaciente>
+    <sw_afecta_conduccion>0</sw_afecta_conduccion>
+    <sw_triangulo_negro>0</sw_triangulo_negro>
+    <url_fictec>http://www.aemps.gob.es/cima/pdfs/es/ft/63647/63647_ft.pdf</url_fictec>
+    <url_prosp>http://www.aemps.gob.es/cima/pdfs/es/p/63647/63647_p.pdf</url_prosp>
+    <sw_receta>1</sw_receta>
+    <sw_generico>1</sw_generico>
+    <sw_sustituible>1</sw_sustituible>
+    <sw_envase_clinico>0</sw_envase_clinico>
+    <sw_uso_hospitalario>0</sw_uso_hospitalario>
+    <sw_diagnostico_hospitalario>0</sw_diagnostico_hospitalario>
+    <sw_tld>0</sw_tld>
+    <sw_especial_control_medico>0</sw_especial_control_medico>
+    <sw_huerfano>0</sw_huerfano>
+    <sw_base_a_plantas>0</sw_base_a_plantas>
+    <laboratorio_titular>9751</laboratorio_titular>
+    <laboratorio_comercializador>9751</laboratorio_comercializador>
+    <fecha_autorizacion>2001-02-06</fecha_autorizacion>
+    <sw_comercializado>1</sw_comercializado>
+    <fec_comer>2011-06-16</fec_comer>
+    <cod_sitreg>1</cod_sitreg>
+    <cod_sitreg_presen>1</cod_sitreg_presen>
+    <fecha_situacion_registro>2001-02-06</fecha_situacion_registro>
+    <fec_sitreg_presen>2001-02-06</fec_sitreg_presen>
+    <sw_tiene_excipientes_decl_obligatoria>1</sw_tiene_excipientes_decl_obligatoria>
+    <biosimilar>0</biosimilar>
+    <importacion_paralela>0</importacion_paralela>
+    <formasfarmaceuticas>
+      <cod_forfar>40</cod_forfar>
+      <cod_forfar_simplificada>10</cod_forfar_simplificada>
+      <nro_pactiv>1</nro_pactiv>
+      <composicion_pa>
+        <cod_principio_activo>350</cod_principio_activo>
+        <orden_colacion>1</orden_colacion>
+        <dosis_pa>650</dosis_pa>
+        <unidad_dosis_pa>mg</unidad_dosis_pa>
+        <dosis_composicion>1</dosis_composicion>
+        <unidad_composicion>comprimido</unidad_composicion>
+        <dosis_administracion>1</dosis_administracion>
+        <unidad_administracion>comprimido</unidad_administracion>
+        <dosis_prescripcion>650</dosis_prescripcion>
+        <unidad_prescripcion>mg</unidad_prescripcion>
+      </composicion_pa>
+      <excipientes>
+        <cod_excipiente>4755</cod_excipiente>
+      </excipientes>
+      <excipientes>
+        <cod_excipiente>7316</cod_excipiente>
+      </excipientes>
+      <viasadministracion>
+        <cod_via_admin>54</cod_via_admin>
+      </viasadministracion>
+    </formasfarmaceuticas>
+    <atc>
+      <cod_atc>N02BE01</cod_atc>
+      <duplicidades>
+        <atc_duplicidad>N02BE01</atc_duplicidad>
+        <descripcion_atc_duplicidad>Paracetamol (acetaminofeno)</descripcion_atc_duplicidad>
+        <efecto_duplicidad>Prescripción de dos o más medicamentos con el mismo principio activo o la misma actividad farmacológica.</efecto_duplicidad>
+        <recomendacion_duplicidad>Suspender el principio(s) activo(s) con la misma actividad farmacológica.</recomendacion_duplicidad>
+      </duplicidades>
+      <duplicidades>
+        <atc_duplicidad>N02BE51</atc_duplicidad>
+        <descripcion_atc_duplicidad>paracetamol, combinaciones con, psicolépticos excl.</descripcion_atc_duplicidad>
+        <efecto_duplicidad>Prescripción de dos o más medicamentos con el mismo principio activo o la misma actividad farmacológica.</efecto_duplicidad>
+        <recomendacion_duplicidad>Suspender el principio(s) activo(s) con la misma actividad farmacológica.</recomendacion_duplicidad>
+      </duplicidades>
+    </atc>
+  </prescription>
+  <prescription>
     <cod_nacion>600000</cod_nacion>
     <nro_definitivo>66337</nro_definitivo>
     <des_nomco>AMOXICILINA /ACIDO CLAVULANICO SALA 500/50 mg POLVO PARA SOLUCION INYECTABLE Y PARA PERFUSION EFG</des_nomco>
