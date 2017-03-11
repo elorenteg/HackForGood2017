@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -25,6 +26,8 @@ import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.hackforgood.dev.hackforgood2017.model.MultipartUtility;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -132,7 +135,12 @@ public class PhotoSearchFragment extends Fragment {
                     InputStream imageStream = getActivity().getContentResolver().openInputStream(imageUri);
                     Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
-                    uploadImageToAPI(selectedImage, imageUri);
+                    Log.e(TAG, "SIZE BEFORE: " + selectedImage.getWidth() + "_" + selectedImage.getWidth() + "_" + selectedImage.getByteCount());
+                    Bitmap scaledBitmap = scaleBitmap(selectedImage, 1280, 720);
+                    Bitmap compressedBitmap = compressBitmap(new File(getRealPathFromUri(imageUri)), scaledBitmap);
+                    Log.e(TAG, "SIZE AFTER: " + compressedBitmap.getWidth() + "_" + compressedBitmap.getWidth() + "_" + compressedBitmap.getByteCount());
+
+                    uploadImageToAPI(compressedBitmap, imageUri);
                 } catch (IOException e) {
                     e.printStackTrace();
                     Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
@@ -141,7 +149,12 @@ public class PhotoSearchFragment extends Fragment {
                 try {
                     Bitmap selectedImage = readImageFromResources(outputFileUri);
 
-                    uploadImageToAPI(selectedImage, outputFileUri);
+                    Log.e(TAG, "SIZE BEFORE: " + selectedImage.getWidth() + "_" + selectedImage.getWidth() + "_" + selectedImage.getByteCount());
+                    Bitmap scaledBitmap = scaleBitmap(selectedImage, 1280, 720);
+                    Bitmap compressedBitmap = compressBitmap(new File(outputFileUri.getPath()), scaledBitmap);
+                    Log.e(TAG, "SIZE AFTER: " + compressedBitmap.getWidth() + "_" + compressedBitmap.getWidth() + "_" + compressedBitmap.getByteCount());
+
+                    uploadImageToAPI(compressedBitmap, outputFileUri);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
@@ -150,6 +163,46 @@ public class PhotoSearchFragment extends Fragment {
         } else {
             Toast.makeText(getActivity(), "You haven't picked Image", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private Bitmap scaleBitmap(Bitmap bitmap, int maxWidth, int maxHeight) {
+        if (maxHeight > 0 && maxWidth > 0) {
+            int width = bitmap.getWidth();
+            int height = bitmap.getHeight();
+            float ratioBitmap = (float) width / (float) height;
+            float ratioMax = (float) maxWidth / (float) maxHeight;
+
+            int finalWidth = maxWidth;
+            int finalHeight = maxHeight;
+            if (ratioMax > 1) {
+                finalWidth = (int) ((float) maxHeight * ratioBitmap);
+            } else {
+                finalHeight = (int) ((float) maxWidth / ratioBitmap);
+            }
+            return Bitmap.createScaledBitmap(bitmap, finalWidth, finalHeight, true);
+        }
+        return bitmap;
+    }
+
+    private Bitmap compressBitmap(File file, Bitmap bitmap) throws FileNotFoundException {
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+
+            return bitmap;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return bitmap;
     }
 
     private Bitmap readImageFromResources(Uri uriToRead) throws IOException {
@@ -161,8 +214,23 @@ public class PhotoSearchFragment extends Fragment {
 
         //TODO Marc: Upload commit
 
-        MultipartAsync multipartAsync = new MultipartAsync();
-        multipartAsync.execute(uriToUpload.toString());
+        //MultipartAsync multipartAsync = new MultipartAsync();
+        //multipartAsync.execute(uriToUpload.getPath());
+    }
+
+    private String getRealPathFromUri(Uri contentUri) {
+        Cursor cursor = null;
+        try {
+            String[] proj = {MediaStore.Images.Media.DATA};
+            cursor = getContext().getContentResolver().query(contentUri, proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
     }
 
     private class MultipartAsync extends AsyncTask<String, Void, List<String>> {
