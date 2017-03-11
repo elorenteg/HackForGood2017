@@ -10,10 +10,6 @@ import android.view.ViewGroup;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.BootstrapEditText;
 
-/**
- * Created by LaQuay on 10/03/2017.
- */
-
 public class KeyboardSearchFragment extends Fragment {
     public static final String TAG = KeyboardSearchFragment.class.getSimpleName();
     private View rootview;
