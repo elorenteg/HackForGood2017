@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 import com.hackforgood.dev.hackforgood2017.controllers.TextToSpeechController;
@@ -48,6 +49,10 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Check first item
+        navigationView.getMenu().getItem(0).setChecked(true);
+        onNavigationItemSelected(navigationView.getMenu().getItem(0));
     }
 
     @Override
@@ -84,17 +89,18 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment = null;
         String fragmentTAG = null;
-        if (id == R.id.nav_home) {
-            fragment = MainFragmentActivity.newInstance();
-            fragmentTAG = MainFragmentActivity.TAG;
-        } else if (id == R.id.nav_gallery) {
+        //if (id == R.id.nav_home) {
+        //    fragment = MainFragmentActivity.newInstance();
+        //    fragmentTAG = MainFragmentActivity.TAG;
+        //} else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_gallery) {
             fragment = PhotoSearchFragment.newInstance();
             fragmentTAG = PhotoSearchFragment.TAG;
         } else if (id == R.id.nav_keyboard) {
             fragment = KeyboardSearchFragment.newInstance();
             fragmentTAG = KeyboardSearchFragment.TAG;
         } else if (id == R.id.nav_manage) {
-
+            Toast.makeText(this, "Función no implementada", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_about_us) {
             fragment = AboutUsFragment.newInstance();
             fragmentTAG = AboutUsFragment.TAG;
@@ -103,7 +109,7 @@ public class MainActivity extends AppCompatActivity
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.main_container, fragment, fragmentTAG);
-            if (id != R.id.nav_home)
+            //if (id != R.id.nav_home)
                 ft.addToBackStack(null);
             ft.commit();
         }
