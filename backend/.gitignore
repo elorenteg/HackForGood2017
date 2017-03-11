@@ -1,0 +1,5 @@
+# Generated files
+uploads/
+data/
+.idea/
+ngrok.exe
