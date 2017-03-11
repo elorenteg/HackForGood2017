@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
-        <item
+        <!--<item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Menú principal" />
+            android:title="Menú principal" />-->
 
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Cámara" />
+            android:title="Imagen" />
 
         <item
             android:id="@+id/nav_keyboard"
@@ -17,12 +17,15 @@
             android:title="Teclado" />
     </group>
 
-    <item android:title="Ajustes">
-        <menu>
-            <item
-                android:id="@+id/nav_manage"
-                android:icon="@drawable/ic_menu_manage"
-                android:title="Ajustes" />
-        </menu>
-    </item>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Ajustes" />
+
+        <item
+            android:id="@+id/nav_about_us"
+            android:icon="@drawable/ic_information_black_24dp"
+            android:title="Acerca de" />
+    </group>
 </menu>

@@ -2,9 +2,7 @@ package com.hackforgood.dev.hackforgood2017;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -12,24 +10,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
-import com.hackforgood.dev.hackforgood2017.controllers.ImageOCRController;
 import com.hackforgood.dev.hackforgood2017.controllers.TextToSpeechController;
-import com.hackforgood.dev.hackforgood2017.controllers.WikiAPIController;
-import com.hackforgood.dev.hackforgood2017.model.ImageOCR;
-import com.hackforgood.dev.hackforgood2017.model.Medicine;
-import com.hackforgood.dev.hackforgood2017.model.WikiContent;
-
-import java.text.Normalizer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -55,15 +41,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -72,6 +49,10 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Check first item
+        navigationView.getMenu().getItem(0).setChecked(true);
+        onNavigationItemSelected(navigationView.getMenu().getItem(0));
     }
 
     @Override
@@ -98,11 +79,6 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -113,23 +89,27 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment = null;
         String fragmentTAG = null;
-        if (id == R.id.nav_home) {
-            fragment = MainFragmentActivity.newInstance();
-            fragmentTAG = MainFragmentActivity.TAG;
-        } else if (id == R.id.nav_gallery) {
+        //if (id == R.id.nav_home) {
+        //    fragment = MainFragmentActivity.newInstance();
+        //    fragmentTAG = MainFragmentActivity.TAG;
+        //} else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_gallery) {
             fragment = PhotoSearchFragment.newInstance();
             fragmentTAG = PhotoSearchFragment.TAG;
         } else if (id == R.id.nav_keyboard) {
             fragment = KeyboardSearchFragment.newInstance();
             fragmentTAG = KeyboardSearchFragment.TAG;
         } else if (id == R.id.nav_manage) {
-
+            Toast.makeText(this, "Función no implementada", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_about_us) {
+            fragment = AboutUsFragment.newInstance();
+            fragmentTAG = AboutUsFragment.TAG;
         }
 
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.main_container, fragment, fragmentTAG);
-            if (id != R.id.nav_home)
+            //if (id != R.id.nav_home)
                 ft.addToBackStack(null);
             ft.commit();
         }
@@ -158,6 +138,5 @@ public class MainActivity extends AppCompatActivity
         }
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
     }
 }
