@@ -2,6 +2,7 @@ package com.hackforgood.dev.hackforgood2017;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -24,15 +25,26 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.hackforgood.dev.hackforgood2017.controllers.ImageOCRController;
 import com.hackforgood.dev.hackforgood2017.controllers.PhotoToServerController;
+import com.hackforgood.dev.hackforgood2017.controllers.WikiAPIController;
+import com.hackforgood.dev.hackforgood2017.model.ImageOCR;
+import com.hackforgood.dev.hackforgood2017.model.Medicine;
+import com.hackforgood.dev.hackforgood2017.model.WikiContent;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.Normalizer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
-public class PhotoSearchFragment extends Fragment implements PhotoToServerController.PhotoToServerCallback {
+public class PhotoSearchFragment extends Fragment implements PhotoToServerController.PhotoToServerCallback,
+        ImageOCRController.ImageOCRResolvedCallback,WikiAPIController.WikiAPIResolvedCallback {
     public static final String TAG = PhotoSearchFragment.class.getSimpleName();
     private static final int GALLERY_PHOTO_CODE = 100;
     private static final int CAMERA_PHOTO_CODE = 101;
@@ -41,6 +53,16 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
     private BootstrapButton buttonGallery;
     private String cameraDir;
     private Uri outputFileUri;
+
+    private Context context;
+    private final ImageOCRController.ImageOCRResolvedCallback imageOCRResolvedCallback = this;
+    private final WikiAPIController.WikiAPIResolvedCallback wikiAPIResolvedCallback = this;
+    private ImageOCRController imageOCRController;
+    private WikiAPIController wikiAPIController;
+
+    private Medicine medicine = null;
+    private int possibleNames = Integer.MAX_VALUE;
+    private Map<String, String> medNameRedirections;
 
     public static PhotoSearchFragment newInstance() {
         return new PhotoSearchFragment();
@@ -55,6 +77,11 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
         setUpListeners();
 
         setUpPhotoCamera();
+
+        context = getActivity();
+
+        imageOCRController = new ImageOCRController(context);
+        wikiAPIController = new WikiAPIController(context);
 
         return rootview;
     }
@@ -245,5 +272,78 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
     @Override
     public void onPhotoToServerSent(String message) {
         Log.e(TAG, "FINALIZANDO ACK RECIBIDO; " + message);
+        medNameRedirections = new HashMap<String, String>();
+
+        String url = "";
+        url = "http://omicrono.elespanol.com/wp-content/uploads/2015/05/ibuprofeno.jpg";
+        url = "http://carolinayh.com/image/cache/finalizado/2014_01_28/19-98web-780x600.jpg";
+        //url = "http://www.elcorreo.com/noticias/201407/24/media/cortadas/paracetamol--575x323.jpg";
+
+        //TextToSpeechController.getInstance(this).speak("Hola Mundo!", TextToSpeech.QUEUE_FLUSH);
+
+        url = message;
+
+        imageOCRController.imageOCRRequest(url, imageOCRResolvedCallback);
+    }
+
+    public void onImageOCRResolved(ImageOCR imageOCR) {
+        //Log.e(TAG, "onImageOCRResolved");
+
+        if (imageOCR == null) Log.e(TAG, "ImageOCR is null :(");
+        else {
+            String parsedText = imageOCR.getParsedText();
+
+            medicine = new Medicine();
+            medicine.parseInfo(parsedText);
+
+            if (!medicine.hasACode()) {
+                //Log.e(TAG, parsedText.replace("\n",""));
+                //Log.e(TAG, medicine.toString());
+
+                String text = medicine.getName();
+                WikiAPIController wikiAPIController = new WikiAPIController(context);
+                ArrayList<String> words = new ArrayList<String>(Arrays.asList(text.split(" ")));
+
+                possibleNames = words.size();
+                for (int i = 0; i < words.size(); ++i) {
+                    String word = words.get(i);
+                    //Log.e(TAG, "Calling WikiAPI with " + word);
+                    wikiAPIController.wikiAPIRequest(word, wikiAPIResolvedCallback);
+                }
+            } else Log.e(TAG, medicine.toString());
+        }
+    }
+
+    @Override
+    public void onWikiAPIResolved(WikiContent wikiContent) {
+        if (medicine != null) {
+            if (wikiContent.isAMedicine()) {
+                medicine.setName(wikiContent.getQueryText());
+            } else {
+                if (wikiContent.redirects()) {
+                    String queryText = Normalizer.normalize(wikiContent.getQueryText(), Normalizer.Form.NFD).replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+                    String redirText = Normalizer.normalize(wikiContent.getRedirectionText(), Normalizer.Form.NFD).replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+                    if (!queryText.contains(redirText) && !redirText.contains(queryText)) {
+                        //Log.e(TAG, "Redirection from " + queryText + " to " + redirText);
+                        possibleNames++;
+                        medNameRedirections.put(wikiContent.getRedirectionText(), wikiContent.getQueryText());
+                        wikiAPIController.wikiAPIRequest(wikiContent.getRedirectionText(), wikiAPIResolvedCallback);
+                    }
+                }
+            }
+        }
+        possibleNames--;
+        if (possibleNames == 0) {
+            String name = medicine.getName();
+
+            String prevName = medNameRedirections.get(name);
+            while (prevName != null) {
+                Log.e(TAG, name + "->" + prevName);
+                name = prevName;
+                prevName = medNameRedirections.get(name);
+            }
+            medicine.setName(name);
+            Log.e(TAG, medicine.toString());
+        }
     }
 }
