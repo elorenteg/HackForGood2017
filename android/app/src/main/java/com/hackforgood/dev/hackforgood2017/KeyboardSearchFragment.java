@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.BootstrapEditText;
@@ -14,7 +15,7 @@ import com.beardedhen.androidbootstrap.BootstrapEditText;
 public class KeyboardSearchFragment extends Fragment {
     public static final String TAG = KeyboardSearchFragment.class.getSimpleName();
     private View rootview;
-    private BootstrapButton buttonSearch;
+    private Button buttonSearch;
     private BootstrapEditText editText;
 
     public static KeyboardSearchFragment newInstance() {
@@ -34,7 +35,7 @@ public class KeyboardSearchFragment extends Fragment {
 
     private void setUpElements() {
         editText = (BootstrapEditText) rootview.findViewById(R.id.keyboard_search_edit_text);
-        buttonSearch = (BootstrapButton) rootview.findViewById(R.id.keyboard_search_button);
+        buttonSearch = (Button) rootview.findViewById(R.id.keyboard_search_button);
     }
 
     private void setUpListeners() {
