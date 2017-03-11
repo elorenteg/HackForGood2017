@@ -18,6 +18,9 @@ El usuario únicamente debe cargar una foto del frontal de la caja del medicamen
 ## COMPONENTES DEL GRUPO ##
 
 Ester Lorente
+
 Juan Salmerón
+
 Oriol Serch
+
 Marc Vila
