@@ -2,7 +2,6 @@ package com.hackforgood.dev.hackforgood2017;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -48,15 +47,13 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
     public static final String TAG = PhotoSearchFragment.class.getSimpleName();
     private static final int GALLERY_PHOTO_CODE = 100;
     private static final int CAMERA_PHOTO_CODE = 101;
+    private final ImageOCRController.ImageOCRResolvedCallback imageOCRResolvedCallback = this;
+    private final WikiAPIController.WikiAPIResolvedCallback wikiAPIResolvedCallback = this;
     private View rootview;
     private BootstrapButton buttonCamera;
     private BootstrapButton buttonGallery;
     private String cameraDir;
     private Uri outputFileUri;
-
-    private Context context;
-    private final ImageOCRController.ImageOCRResolvedCallback imageOCRResolvedCallback = this;
-    private final WikiAPIController.WikiAPIResolvedCallback wikiAPIResolvedCallback = this;
     private ImageOCRController imageOCRController;
     private WikiAPIController wikiAPIController;
 
@@ -78,10 +75,8 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
 
         setUpPhotoCamera();
 
-        context = getActivity();
-
-        imageOCRController = new ImageOCRController(context);
-        wikiAPIController = new WikiAPIController(context);
+        imageOCRController = new ImageOCRController(getContext());
+        wikiAPIController = new WikiAPIController(getContext());
 
         return rootview;
     }
@@ -298,8 +293,8 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
                 //Log.e(TAG, medicine.toString());
 
                 String text = medicine.getName();
-                WikiAPIController wikiAPIController = new WikiAPIController(context);
-                ArrayList<String> words = new ArrayList<String>(Arrays.asList(text.split(" ")));
+                WikiAPIController wikiAPIController = new WikiAPIController(getContext());
+                ArrayList<String> words = new ArrayList<>(Arrays.asList(text.split(" ")));
 
                 possibleNames = words.size();
                 for (int i = 0; i < words.size(); ++i) {
