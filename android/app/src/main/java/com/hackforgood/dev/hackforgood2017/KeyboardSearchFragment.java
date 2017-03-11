@@ -3,6 +3,7 @@ package com.hackforgood.dev.hackforgood2017;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,11 @@ public class KeyboardSearchFragment extends Fragment {
 
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                Fragment fragment = ResultScreenFragment.newInstance(null, null, editText.getText().toString());
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.main_container, fragment, ResultScreenFragment.TAG);
+                ft.addToBackStack(null);
+                ft.commit();
             }
         });
     }

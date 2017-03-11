@@ -7,7 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-class VolleyController {
+public class VolleyController {
     private static VolleyController instance;
     private RequestQueue fRequestQueue;
     private VolleyCore volley;

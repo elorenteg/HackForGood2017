@@ -1,30 +1,32 @@
 package com.hackforgood.dev.hackforgood2017.model;
 
-import android.util.Log;
-
-import com.hackforgood.dev.hackforgood2017.MainActivity;
-import com.hackforgood.dev.hackforgood2017.controllers.WikiAPIController;
-
-import java.util.ArrayList;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Medicine {
-
+public class Medicine implements Serializable {
     private final String TAG = Medicine.class.getSimpleName();
 
     private int code = -1;
-
     private String name = "";           // ibuprofeno
-
     private int dosis = -1;             // 600
     private String dosisUnit = "";      // mg
     private int content = -1;           // 40
     private String contentType = "";    // comprimidos
-
     private String type = "";           // oral
+
+    public static Medicine deserialize(byte[] data) throws IOException, ClassNotFoundException {
+        ByteArrayInputStream in = new ByteArrayInputStream(data);
+        ObjectInputStream is = new ObjectInputStream(in);
+        return (Medicine) is.readObject();
+    }
 
     public int getCode() {
         return code;
@@ -88,7 +90,7 @@ public class Medicine {
         Matcher m;
 
         // Code
-        String numberText = parsedText.replaceAll("[a-zA-Z]","");
+        String numberText = parsedText.replaceAll("[a-zA-Z]", "");
         numberText = numberText.replaceAll("\\s{2,}", " ").trim();
         numberText = numberText.replaceAll("\\.", "").trim();
         numberText = numberText.replaceAll(",", "").trim();
@@ -97,7 +99,7 @@ public class Medicine {
         if (numberText.length() >= 7) {
             numberText = numberText.substring(0, 7);
             String securityNum = numberText.substring(numberText.length() - 1);
-            numberText = numberText.substring(0, numberText.length()-1);
+            numberText = numberText.substring(0, numberText.length() - 1);
             int code = Integer.parseInt(numberText);
             int securityCode = Integer.parseInt(securityNum);
             //if (codeIsCorrect(code, securityCode)) {
@@ -116,7 +118,7 @@ public class Medicine {
             if (m.find()) {
                 String dosis = m.group().replace(getDosisUnit(), "").trim();
                 setDosis(Integer.parseInt(dosis));
-                parsedText = parsedText.replace(getDosisUnit(),"");
+                parsedText = parsedText.replace(getDosisUnit(), "");
             }
         }
 
@@ -132,26 +134,26 @@ public class Medicine {
             }
         }
 
-        parsedText = parsedText.replace("comprimidos","");
-        parsedText = parsedText.replace("recubiertos","");
-        parsedText = parsedText.replace("pelicula","");
-        parsedText = parsedText.replace(" EFG ","");
-        parsedText = parsedText.replaceAll("\\d","");
-        parsedText = parsedText.replaceAll("\n"," ");
+        parsedText = parsedText.replace("comprimidos", "");
+        parsedText = parsedText.replace("recubiertos", "");
+        parsedText = parsedText.replace("pelicula", "");
+        parsedText = parsedText.replace(" EFG ", "");
+        parsedText = parsedText.replaceAll("\\d", "");
+        parsedText = parsedText.replaceAll("\n", " ");
 
-        parsedText = parsedText.replace("cuerpo","");
-        parsedText = parsedText.replace("dolor","");
-        parsedText = parsedText.replace("muscular","");
-        parsedText = parsedText.replace("cabeza","");
-        parsedText = parsedText.replace("anti-inflamatorio","");
-        parsedText = parsedText.replaceAll("\\."," ");
-        parsedText = parsedText.replaceAll(","," ");
+        parsedText = parsedText.replace("cuerpo", "");
+        parsedText = parsedText.replace("dolor", "");
+        parsedText = parsedText.replace("muscular", "");
+        parsedText = parsedText.replace("cabeza", "");
+        parsedText = parsedText.replace("anti-inflamatorio", "");
+        parsedText = parsedText.replaceAll("\\.", " ");
+        parsedText = parsedText.replaceAll(",", " ");
 
         parsedText = parsedText.toLowerCase();
 
         if (parsedText.contains("oral")) {
             setType("oral");
-            parsedText = parsedText.replace("oral","");
+            parsedText = parsedText.replace("oral", "");
         }
 
         parsedText = parsedText.replaceAll("\\b\\w{1,3}\\b\\s?", "");
@@ -168,12 +170,12 @@ public class Medicine {
 
         int count = 0;
         for (int i = 0; i < numText.length(); ++i) {
-            if (i%2 == 0) count += 3*Integer.parseInt(numText.substring(i, i+1));
-            else count += Integer.parseInt(numText.substring(i, i+1));
+            if (i % 2 == 0) count += 3 * Integer.parseInt(numText.substring(i, i + 1));
+            else count += Integer.parseInt(numText.substring(i, i + 1));
         }
         count += 27;
 
-        int ten = (int)(Math.rint((double) count / 10) * 10);
+        int ten = (int) (Math.rint((double) count / 10) * 10);
         if (ten < count) ten += 10;
         int calculatedSecurityCode = ten - count;
 
@@ -192,7 +194,14 @@ public class Medicine {
     }
 
     public boolean hasACode() {
-        if (getCode() >= 0) return true;
-        else return false;
+        return getCode() >= 0;
+    }
+
+    public byte[] serialize() throws IOException {
+        ByteArrayOutputStream bs = new ByteArrayOutputStream();
+        ObjectOutputStream os = new ObjectOutputStream(bs);
+        os.writeObject(this);
+        os.close();
+        return bs.toByteArray();
     }
 }

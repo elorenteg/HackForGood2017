@@ -15,6 +15,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
@@ -44,7 +45,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PhotoSearchFragment extends Fragment implements PhotoToServerController.PhotoToServerCallback,
-        ImageOCRController.ImageOCRResolvedCallback,WikiAPIController.WikiAPIResolvedCallback {
+        ImageOCRController.ImageOCRResolvedCallback, WikiAPIController.WikiAPIResolvedCallback {
     public static final String TAG = PhotoSearchFragment.class.getSimpleName();
     private static final int GALLERY_PHOTO_CODE = 100;
     private static final int CAMERA_PHOTO_CODE = 101;
@@ -61,6 +62,7 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
     private Medicine medicine = null;
     private int possibleNames = Integer.MAX_VALUE;
     private Map<String, String> medNameRedirections;
+    private String imageURL;
 
     public static PhotoSearchFragment newInstance() {
         return new PhotoSearchFragment();
@@ -265,7 +267,8 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
     @Override
     public void onPhotoToServerSent(String message) {
         Log.e(TAG, "FINALIZANDO ACK RECIBIDO; " + message);
-        medNameRedirections = new HashMap<String, String>();
+        imageURL = message;
+        medNameRedirections = new HashMap<>();
 
         String url = "";
         url = "http://omicrono.elespanol.com/wp-content/uploads/2015/05/ibuprofeno.jpg";
@@ -276,6 +279,7 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
 
         url = message;
 
+        Toast.makeText(getActivity(), "Doing OCR", Toast.LENGTH_SHORT).show();
         imageOCRController.imageOCRRequest(url, imageOCRResolvedCallback);
     }
 
@@ -284,6 +288,7 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
 
         if (imageOCR == null) Log.e(TAG, "ImageOCR is null :(");
         else {
+            Toast.makeText(getActivity(), "Doing WIKI", Toast.LENGTH_SHORT).show();
             String parsedText = imageOCR.getParsedText();
 
             medicine = new Medicine();
@@ -303,7 +308,9 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
                     //Log.e(TAG, "Calling WikiAPI with " + word);
                     wikiAPIController.wikiAPIRequest(word, wikiAPIResolvedCallback);
                 }
-            } else Log.e(TAG, medicine.toString());
+            } else {
+                loadMedicineFragment(medicine);
+            }
         }
     }
 
@@ -336,7 +343,17 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
                 prevName = medNameRedirections.get(name);
             }
             medicine.setName(name);
-            Log.e(TAG, medicine.toString());
+
+            loadMedicineFragment(medicine);
         }
+    }
+
+    private void loadMedicineFragment(Medicine medicine) {
+        Log.e(TAG, "Sending: " + medicine.toString());
+        Fragment fragment = ResultScreenFragment.newInstance(imageURL, medicine, null);
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.main_container, fragment, ResultScreenFragment.TAG);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }
