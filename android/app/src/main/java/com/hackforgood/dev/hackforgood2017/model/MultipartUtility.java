@@ -14,10 +14,6 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by LaQuay on 10/03/2017.
- */
-
 public class MultipartUtility {
     private static final String LINE_FEED = "\r\n";
     private final String boundary;

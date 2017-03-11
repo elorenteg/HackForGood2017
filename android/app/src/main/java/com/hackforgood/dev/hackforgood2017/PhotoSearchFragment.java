@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -23,20 +22,15 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
-import com.hackforgood.dev.hackforgood2017.model.MultipartUtility;
+import com.hackforgood.dev.hackforgood2017.controllers.PhotoToServerController;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
-/**
- * Created by LaQuay on 10/03/2017.
- */
-
-public class PhotoSearchFragment extends Fragment {
+public class PhotoSearchFragment extends Fragment implements PhotoToServerController.PhotoToServerCallback {
     public static final String TAG = PhotoSearchFragment.class.getSimpleName();
     private static final int GALLERY_PHOTO_CODE = 100;
     private static final int CAMERA_PHOTO_CODE = 101;
@@ -132,15 +126,15 @@ public class PhotoSearchFragment extends Fragment {
             if (requestCode == GALLERY_PHOTO_CODE) {
                 try {
                     Uri imageUri = data.getData();
+                    String realUri = getRealPathFromUri(imageUri);
                     InputStream imageStream = getActivity().getContentResolver().openInputStream(imageUri);
                     Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
-                    Log.e(TAG, "SIZE BEFORE: " + selectedImage.getWidth() + "_" + selectedImage.getWidth() + "_" + selectedImage.getByteCount());
-                    Bitmap scaledBitmap = scaleBitmap(selectedImage, 1280, 720);
-                    Bitmap compressedBitmap = compressBitmap(new File(getRealPathFromUri(imageUri)), scaledBitmap);
-                    Log.e(TAG, "SIZE AFTER: " + compressedBitmap.getWidth() + "_" + compressedBitmap.getWidth() + "_" + compressedBitmap.getByteCount());
 
-                    uploadImageToAPI(compressedBitmap, imageUri);
+                    Bitmap scaledBitmap = scaleBitmap(selectedImage, 640, 360);
+                    Bitmap compressedBitmap = compressBitmap(new File(realUri), scaledBitmap);
+
+                    uploadImageToAPI(compressedBitmap, realUri);
                 } catch (IOException e) {
                     e.printStackTrace();
                     Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
@@ -149,12 +143,10 @@ public class PhotoSearchFragment extends Fragment {
                 try {
                     Bitmap selectedImage = readImageFromResources(outputFileUri);
 
-                    Log.e(TAG, "SIZE BEFORE: " + selectedImage.getWidth() + "_" + selectedImage.getWidth() + "_" + selectedImage.getByteCount());
-                    Bitmap scaledBitmap = scaleBitmap(selectedImage, 1280, 720);
+                    Bitmap scaledBitmap = scaleBitmap(selectedImage, 640, 360);
                     Bitmap compressedBitmap = compressBitmap(new File(outputFileUri.getPath()), scaledBitmap);
-                    Log.e(TAG, "SIZE AFTER: " + compressedBitmap.getWidth() + "_" + compressedBitmap.getWidth() + "_" + compressedBitmap.getByteCount());
 
-                    uploadImageToAPI(compressedBitmap, outputFileUri);
+                    uploadImageToAPI(compressedBitmap, outputFileUri.getPath());
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
@@ -169,6 +161,13 @@ public class PhotoSearchFragment extends Fragment {
         if (maxHeight > 0 && maxWidth > 0) {
             int width = bitmap.getWidth();
             int height = bitmap.getHeight();
+
+            if (height > width) {
+                int aux = maxHeight;
+                maxHeight = maxWidth;
+                maxWidth = aux;
+            }
+
             float ratioBitmap = (float) width / (float) height;
             float ratioMax = (float) maxWidth / (float) maxHeight;
 
@@ -209,13 +208,10 @@ public class PhotoSearchFragment extends Fragment {
         return MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uriToRead);
     }
 
-    public void uploadImageToAPI(Bitmap imageToUpload, Uri uriToUpload) {
+    public void uploadImageToAPI(Bitmap imageToUpload, String uriToUpload) {
         Toast.makeText(getActivity(), "Uploading PHOTO", Toast.LENGTH_SHORT).show();
 
-        //TODO Marc: Upload commit
-
-        //MultipartAsync multipartAsync = new MultipartAsync();
-        //multipartAsync.execute(uriToUpload.getPath());
+        PhotoToServerController.sendPhotoToServer(uriToUpload, this);
     }
 
     private String getRealPathFromUri(Uri contentUri) {
@@ -233,37 +229,8 @@ public class PhotoSearchFragment extends Fragment {
         }
     }
 
-    private class MultipartAsync extends AsyncTask<String, Void, List<String>> {
-        @Override
-        protected List<String> doInBackground(String... params) {
-            try {
-                String uriName = params[0];
-                Log.e(TAG, "FileURIName: " + uriName);
-                MultipartUtility multipart = new MultipartUtility("URL", "UTF-8");
-
-                multipart.addFilePart("PHOTO", new File(uriName));
-
-                return multipart.finish();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(List<String> response) {
-            Log.e(TAG, "SERVER REPLIED:");
-            for (String line : response) {
-                Log.e(TAG, "Upload Files Response: " + line);
-            }
-        }
-
-        @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-        }
+    @Override
+    public void onPhotoToServerSent(String message) {
+        Log.e(TAG, "FINALIZANDO ACK RECIBIDO; " + message);
     }
 }
