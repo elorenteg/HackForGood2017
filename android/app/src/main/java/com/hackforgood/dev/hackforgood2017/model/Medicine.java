@@ -89,6 +89,7 @@ public class Medicine {
 
         boolean parseByCode = false;
 
+        // Code
         String numberText = parsedText.replaceAll("[a-zA-Z]","");
         numberText = numberText.replaceAll("\\s{2,}", " ").trim();
         numberText = numberText.replaceAll("\\.", "").trim();
@@ -107,64 +108,61 @@ public class Medicine {
             }
         }
 
-        //if (!parseByCode) {
-            //Log.e(TAG, "No code");
-            if (parsedText.contains("comprimidos")) {
-                // Dosis
-                if (parsedText.contains(" mg ")) setDosisUnit("mg");
-                else if (parsedText.contains(" g ")) setDosisUnit("g");
-                if (!"".equals(getDosisUnit())) {
-                    pattern = "(\\d+)([^\\d])" + getDosisUnit();
-                    p = Pattern.compile(pattern);
-                    m = p.matcher(parsedText);
-                    if (m.find()) {
-                        String dosis = m.group().replace(getDosisUnit(), "").trim();
-                        setDosis(Integer.parseInt(dosis));
-                        parsedText = parsedText.replace(getDosisUnit(),"");
-                    }
-                }
-
-                // Content
-                setContentType("comprimidos");
-                pattern = "(\\d+)([^\\d])" + "comprimidos";
-                p = Pattern.compile(pattern);
-                m = p.matcher(parsedText);
-                if (m.find()) {
-                    String content = m.group().replace("comprimidos", "").trim();
-                    setContent(Integer.parseInt(content));
-                }
+        // Dosis
+        if (parsedText.contains(" mg ")) setDosisUnit("mg");
+        else if (parsedText.contains(" g ")) setDosisUnit("g");
+        if (!"".equals(getDosisUnit())) {
+            pattern = "(\\d+)([^\\d])" + getDosisUnit();
+            p = Pattern.compile(pattern);
+            m = p.matcher(parsedText);
+            if (m.find()) {
+                String dosis = m.group().replace(getDosisUnit(), "").trim();
+                setDosis(Integer.parseInt(dosis));
+                parsedText = parsedText.replace(getDosisUnit(),"");
             }
+        }
 
-            parsedText = parsedText.replace("comprimidos","");
-            parsedText = parsedText.replace("recubiertos","");
-            parsedText = parsedText.replace("pelicula","");
-            parsedText = parsedText.replace(" EFG ","");
-            parsedText = parsedText.replaceAll("\\d","");
-            parsedText = parsedText.replaceAll("\n"," ");
-
-            parsedText = parsedText.replace("cuerpo","");
-            parsedText = parsedText.replace("dolor","");
-            parsedText = parsedText.replace("muscular","");
-            parsedText = parsedText.replace("cabeza","");
-            parsedText = parsedText.replace("anti-inflamatorio","");
-            parsedText = parsedText.replaceAll("\\."," ");
-            parsedText = parsedText.replaceAll(","," ");
-
-            parsedText = parsedText.toLowerCase();
-
-            if (parsedText.contains("oral")) {
-                setType("oral");
-                parsedText = parsedText.replace("oral","");
+        // Content
+        if (parsedText.contains("comprimidos")) {
+            setContentType("comprimidos");
+            pattern = "(\\d+)([^\\d])" + "comprimidos";
+            p = Pattern.compile(pattern);
+            m = p.matcher(parsedText);
+            if (m.find()) {
+                String content = m.group().replace("comprimidos", "").trim();
+                setContent(Integer.parseInt(content));
             }
+        }
 
-            parsedText = parsedText.replaceAll("\\b\\w{1,3}\\b\\s?", "");
-            parsedText = parsedText.replaceAll("\\s{2,}", " ").trim();
+        parsedText = parsedText.replace("comprimidos","");
+        parsedText = parsedText.replace("recubiertos","");
+        parsedText = parsedText.replace("pelicula","");
+        parsedText = parsedText.replace(" EFG ","");
+        parsedText = parsedText.replaceAll("\\d","");
+        parsedText = parsedText.replaceAll("\n"," ");
 
-            // Name
-            parsedText = parsedText.replaceAll(",", " ");
-            parsedText = new LinkedHashSet<String>(Arrays.asList(parsedText.split(" "))).toString().replaceAll("(^\\[|\\]$)", "").replace(", ", " ");
-            setName(parsedText);
-        //}
+        parsedText = parsedText.replace("cuerpo","");
+        parsedText = parsedText.replace("dolor","");
+        parsedText = parsedText.replace("muscular","");
+        parsedText = parsedText.replace("cabeza","");
+        parsedText = parsedText.replace("anti-inflamatorio","");
+        parsedText = parsedText.replaceAll("\\."," ");
+        parsedText = parsedText.replaceAll(","," ");
+
+        parsedText = parsedText.toLowerCase();
+
+        if (parsedText.contains("oral")) {
+            setType("oral");
+            parsedText = parsedText.replace("oral","");
+        }
+
+        parsedText = parsedText.replaceAll("\\b\\w{1,3}\\b\\s?", "");
+        parsedText = parsedText.replaceAll("\\s{2,}", " ").trim();
+
+        // Name
+        parsedText = parsedText.replaceAll(",", " ");
+        parsedText = new LinkedHashSet<String>(Arrays.asList(parsedText.split(" "))).toString().replaceAll("(^\\[|\\]$)", "").replace(", ", " ");
+        setName(parsedText);
     }
 
     private boolean codeIsCorrect(int code, int securityCode) {
