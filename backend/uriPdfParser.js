@@ -1,7 +1,7 @@
 var fs = require('fs');
-var http = require('http');
-var PDFParser = require("pdf2json");
-var parser = new PDFParser(this,1);
+var http = require('https');
+//var PDFParser = require("pdf2json");
+//var parser = new PDFParser();
 
 const QUE = 0;
 const ANTES = 1;
@@ -10,12 +10,9 @@ const EFECTOS = 3;
 const CONSERVACION = 4;
 const INFORMACION = 5;
 
-//var ID = '2011';
-//var ID = '63647';
-var ID = '72983';
 var rawtext = "";
 
-module.exports = {
+var exports = module.exports = {
 	QUE: QUE,
 	ANTES: ANTES,
 	COMO: COMO,
@@ -24,7 +21,8 @@ module.exports = {
 	INFORMACION: INFORMACION
 };
 
-parser.on("pdfParser_dataError", errData => console.error(errData.parserError) );
+/*
+parser.on("pdfParser_dataError", errData => console.error(errData.parserError));
 parser.on("pdfParser_dataReady", pdfData => {
 	// Prospecto
 	rawtext = parser.getRawTextContent();
@@ -39,6 +37,7 @@ parser.on("pdfParser_dataReady", pdfData => {
 	//fs.writeFile("output/"+ID+"_p_conservacion.txt", sectionconservacion);
 	//fs.writeFile("output/"+ID+"_p_informacion.txt", sectioninformacion);
 });
+*/
 
 function clearText(rawtext) {
 	// Limpieza Saltos y Números de página 
@@ -54,16 +53,32 @@ function getRawSection(rawtext, startPattern, endPattern) {
 	return clearText(section);
 }
 
-exports.parsePDF = function (url,cb) {
+exports.parsePDF = function (url) {
+    let fs = require('fs'),
+        PDFParser = require("pdf2json");
+    let parser = new PDFParser();
+
+    parser.on("pdfParser_dataError", errData => console.error(errData.parserError));
+    parser.on("pdfParser_dataReady", pdfData => {
+        rawtext = parser.getRawTextContent();
+    });
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
 	var file = fs.createWriteStream("./input/temp.pdf");
-	http.get(url, function(response) {
-		response.pipe(file);
-		file.on('finish', function() {
-			file.close(cb);
-		});
-	});
-	parser.loadPDF("./input/temp.pdf");
-}
+    var req = https.request(url, function(res) {
+        console.log("statusCode: ", res.statusCode);
+        console.log("headers: ", res.headers);
+        res.on('data', function(d) {
+            file.write(d);
+            parser.loadPDF("./input/temp.pdf");
+        });
+    });
+    req.end();
+    req.on('error', function(e) {
+        console.error(e);
+    });
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+};
 
 exports.getSection = function(sectionType) {
 	var section = {};
@@ -77,4 +92,4 @@ exports.getSection = function(sectionType) {
 	else return console.log("sectionType not found");
 
 	return section;
-}
+};
