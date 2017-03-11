@@ -11,6 +11,8 @@ var express = require("express"),
     path = require('path'),
     formidable = require('formidable'),
     fs = require('fs'),
+    https = require('https'),
+    url = require('url'),
     pdfp = require('./uriPdfParser.js');
 
 var json_preinscripciones = "";
@@ -49,7 +51,7 @@ function getUrlByCode(code) {
   var url;
   var array = json_preinscripciones.aemps_prescripcion.prescription;
   for (var i = 0; i < array.length; ++i) {
-    if (array[i].nro_definitivo[0] == code) {
+    if (array[i].cod_nacion[0] == code) {
       url = array[i].url_prosp[0];
       break;
     }
@@ -75,7 +77,7 @@ function getUrlByConstraints(constraints) {
   for (var key in Object.keys(constraints)) {
     if (input_array.length == 0) break;
     //TODO: me quedo aqui, para cada key hay que mirar si coincide y ponerlo en el array de salida. cuando se quede vacio el array de salida es que no hay solucion. si solo queda 1 al final, hay solucion.
-    if () {
+    if (true) {
       array[i].des_prese[0] == code
       url = array[i].url_prosp[0];
       break;
@@ -88,7 +90,8 @@ function getUrlByConstraints(constraints) {
 /*********GET PROSPECTO*********/
 function getProspecto(url) {
   console.log("procesando pdf");
-  pdfp.parsePDF(url);
+  pdfp.parsePDF(url,null);
+  console.log("obteniendo secciones");
   var prospecto = pdfp.getSection(pdfp.QUE);
   return prospecto;
 }
@@ -109,7 +112,7 @@ router.post('/upload', function(req, res){
     console.log('An error has occured: \n' + err);
   });
   form.on('end', function() {
-    res.end('{"url"="http://c3cce9a9.ngrok.io/getimage/'+ filename +'"}');
+    res.end('{"url"="https://c3cce9a9.ngrok.io/getimage/'+ filename +'"}');
   });
   form.parse(req);
 });
@@ -144,5 +147,15 @@ router.get('/', function(req, res) {
 /**************************************************WEB SERVER**********************************************************/
 app.use(router);
 app.listen(80, function() {
-  console.log("Node server running on http://c3cce9a9.ngrok.io/");
+  console.log("Node server running on https://c3cce9a9.ngrok.io/");
+/*
+  var file = fs.createWriteStream("./input/temp.pdf");
+  var url2get = 'https://www.aemps.gob.es/cima/pdfs/es/p/63647/63647_p.pdf';
+
+  var exec = require('child_process').exec;
+  var cmd = ' wget -O ./input/temp.pdf ' + url2get;
+  exec(cmd, function(error, stdout, stderr) {
+    console.log("curl done");
+  });
+*/
 });
