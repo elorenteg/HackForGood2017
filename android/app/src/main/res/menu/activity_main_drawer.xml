@@ -17,12 +17,15 @@
             android:title="Teclado" />
     </group>
 
-    <item android:title="Ajustes">
-        <menu>
-            <item
-                android:id="@+id/nav_manage"
-                android:icon="@drawable/ic_menu_manage"
-                android:title="Ajustes" />
-        </menu>
-    </item>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Ajustes" />
+
+        <item
+            android:id="@+id/nav_about_us"
+            android:icon="@drawable/ic_information_black_24dp"
+            android:title="Acerca de" />
+    </group>
 </menu>

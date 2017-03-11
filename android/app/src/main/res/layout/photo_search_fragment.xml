@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="?attr/actionBarSize"
@@ -9,14 +8,14 @@
 
 
     <Button
-        android:id="@+id/camera_search_camera_button"
+        android:id="@+id/photo_search_camera_button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="#0175D8"
+        android:drawableLeft="@drawable/photo_camera"
         android:padding="20dp"
         android:text="Foto"
         android:textColor="#FFF"
-        android:drawableLeft="@drawable/photo_camera"
-        android:background="#0175D8"
         android:textSize="24sp"/>
 
     <View
@@ -24,13 +23,13 @@
         android:layout_height="30dp" />
 
     <Button
-        android:id="@+id/camera_search_gallery_button"
+        android:id="@+id/photo_search_gallery_button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="#5BB85D"
+        android:drawableLeft="@drawable/gallery"
         android:padding="20dp"
         android:text="Galería"
         android:textColor="#FFF"
-        android:drawableLeft="@drawable/gallery"
-        android:background="#5BB85D"
         android:textSize="24sp"/>
 </LinearLayout>
