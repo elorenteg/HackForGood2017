@@ -25,7 +25,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.hackforgood.dev.hackforgood2017.controllers.ImageOCRController;
 import com.hackforgood.dev.hackforgood2017.controllers.PhotoToServerController;
 import com.hackforgood.dev.hackforgood2017.controllers.WikiAPIController;
@@ -71,7 +70,7 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        rootview = inflater.inflate(R.layout.camera_search_fragment, container, false);
+        rootview = inflater.inflate(R.layout.photo_search_fragment, container, false);
 
         setUpElements();
         setUpListeners();
@@ -85,8 +84,8 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
     }
 
     private void setUpElements() {
-        buttonCamera = (Button) rootview.findViewById(R.id.camera_search_camera_button);
-        buttonGallery = (Button) rootview.findViewById(R.id.camera_search_gallery_button);
+        buttonCamera = (Button) rootview.findViewById(R.id.photo_search_camera_button);
+        buttonGallery = (Button) rootview.findViewById(R.id.photo_search_gallery_button);
     }
 
     private void setUpListeners() {
