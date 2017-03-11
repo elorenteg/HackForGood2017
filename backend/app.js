@@ -36,17 +36,62 @@ fs.readFile(XMLFILE, 'utf8', function (err,data) {
     if (err) {
       return console.log(err);
     }
-    json_preinscripciones = JSON.stringify(result);
+    //json_preinscripciones = JSON.stringify(result);
+    json_preinscripciones = result;
     console.log("xml parseado en JSON");
   });
 });
 
-//get by code function
-function getByCode(code) {
-  console.log(json_preinscripciones);
+/*********GET PDF URL FROM CODE*********/
+function getUrlByCode(code) {
+  console.log("start filtering");
+  var url;
+  var array = json_preinscripciones.aemps_prescripcion.prescription;
+  for (var i = 0; i < array.length; ++i) {
+    if (array[i].nro_definitivo[0] == code) {
+      url = array[i].url_prosp[0];
+      break;
+    }
+  }
+  return url;
 }
 
+/*********GET PDF URL FROM CONSTRAINTS*********/
+function getUrlByCode(constraints) {
+  console.log("start filtering");
+  var constraints = {
+    name: 'AMOXICILINA',
+    dosis: 500,
+    dosis_unit: 'mg',
+    content: 100,
+    content_type: 'viales',
+    type: 'INYECTABLE'
+  };
+  var url;
+  var input_array = json_preinscripciones.aemps_prescripcion.prescription;
+  var out_array = [];
+  for (var key in Object.keys(constraints)) {
+    if (input_array.length == 0) break;
+      //me quedo aqui, para cada key hay que mirar si coincide y ponerlo en el array de salida. cuando se quede vacio el array de salida es que no hay solucion. si solo queda 1 al final, hay solucion.
+    if () {
+      array[i].des_prese[0] == code
+      url = array[i].url_prosp[0];
+      break;
+    }
+    input_array = out_array;
+  }
+  return url;
+}
 
+/*********GET PROSPECTO*********/
+function getProspecto(url) {
+  console.log("procesando pdf");
+  var prospecto = "";
+
+  //...
+
+  return prospecto;
+}
 
 /**************************************************ROUTERS************************************************************/
 
@@ -75,15 +120,26 @@ app.get('/getimage/:image', function (req, res) {
   res.sendfile(path.resolve('./uploads/' + imagePath));
 });
 
-router.get('/:code', function(req, res) {
-  //var code = req.body.code; //post
+/*********GET PROSPECTO BY CODE*********/
+router.get('/getprospecto/bycode/:code', function(req, res) {
+  //var code = req.body.code; //para postspost
   var code = req.params.code;
+  var url = getUrlByCode(code);
+  var prospecto = getProspecto(url);
+  res.send(prospecto);
+});
 
-  res.send("code:" +  code);
+/*********GET PROSPECTO BY des_prese*********/
+router.get('/getprospecto/bydescription/:description', function(req, res) {
+  //var code = req.body.code; //para postspost
+  var code = req.params.description;
+  var url = getUrlByDescription(description);
+  var prospecto = getProspecto(url);
+  res.send(prospecto);
 });
 
 router.get('/', function(req, res) {
-  getByCode(66346);
+
   res.send("por favor, usa la api bien... MIAU! ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬");
 });
 
