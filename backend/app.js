@@ -10,7 +10,8 @@ var express = require("express"),
     mongoose = require('mongoose'),
     path = require('path'),
     formidable = require('formidable'),
-    fs = require('fs');
+    fs = require('fs'),
+    pdfp = require('./uriPdfParser.js');
 
 var json_preinscripciones = "";
 
@@ -57,7 +58,8 @@ function getUrlByCode(code) {
 }
 
 /*********GET PDF URL FROM CONSTRAINTS*********/
-function getUrlByCode(constraints) {
+function getUrlByConstraints(constraints) {
+  //TODO: to implement
   console.log("start filtering");
   var constraints = {
     name: 'AMOXICILINA',
@@ -72,7 +74,7 @@ function getUrlByCode(constraints) {
   var out_array = [];
   for (var key in Object.keys(constraints)) {
     if (input_array.length == 0) break;
-      //me quedo aqui, para cada key hay que mirar si coincide y ponerlo en el array de salida. cuando se quede vacio el array de salida es que no hay solucion. si solo queda 1 al final, hay solucion.
+    //TODO: me quedo aqui, para cada key hay que mirar si coincide y ponerlo en el array de salida. cuando se quede vacio el array de salida es que no hay solucion. si solo queda 1 al final, hay solucion.
     if () {
       array[i].des_prese[0] == code
       url = array[i].url_prosp[0];
@@ -86,10 +88,8 @@ function getUrlByCode(constraints) {
 /*********GET PROSPECTO*********/
 function getProspecto(url) {
   console.log("procesando pdf");
-  var prospecto = "";
-
-  //...
-
+  pdfp.parsePDF(url);
+  var prospecto = pdfp.getSection(pdfp.QUE);
   return prospecto;
 }
 
@@ -129,17 +129,15 @@ router.get('/getprospecto/bycode/:code', function(req, res) {
   res.send(prospecto);
 });
 
-/*********GET PROSPECTO BY des_prese*********/
-router.get('/getprospecto/bydescription/:description', function(req, res) {
-  //var code = req.body.code; //para postspost
-  var code = req.params.description;
-  var url = getUrlByDescription(description);
+/*********GET PROSPECTO BY constraints*********/
+router.get('/getprospecto/byconstraints/:constraints', function(req, res) {
+  var constraints = req.params.constraints;
+  var url = getUrlByConstraints(constraints);
   var prospecto = getProspecto(url);
   res.send(prospecto);
 });
 
 router.get('/', function(req, res) {
-
   res.send("por favor, usa la api bien... MIAU! ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬");
 });
 
