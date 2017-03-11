@@ -87,8 +87,6 @@ public class Medicine {
         Pattern p;
         Matcher m;
 
-        boolean parseByCode = false;
-
         // Code
         String numberText = parsedText.replaceAll("[a-zA-Z]","");
         numberText = numberText.replaceAll("\\s{2,}", " ").trim();
@@ -102,10 +100,10 @@ public class Medicine {
             numberText = numberText.substring(0, numberText.length()-1);
             int code = Integer.parseInt(numberText);
             int securityCode = Integer.parseInt(securityNum);
-            if (codeIsCorrect(code, securityCode)) {
+            //if (codeIsCorrect(code, securityCode)) {
                 setCode(code);
-                parseByCode = true;
-            }
+            //}
+            //else Log.e(TAG, "Code is not correct");
         }
 
         // Dosis
