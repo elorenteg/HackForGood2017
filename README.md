@@ -7,7 +7,7 @@ El objetivo de este reto, es diseñar una APP que sea capaz de reconocer el medi
 
 ## Motivación ##
 
-Los prospectos son difíciles para leer para la gente con deficiencias visuales, principalmente debido a que su letra es muy pequeña-
+Los prospectos son difíciles para leer para la gente con dificultades visuales, principalmente debido a que su letra es muy pequeña-
 
 ## Que hacemos ##
 
