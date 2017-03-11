@@ -46,7 +46,7 @@ public class PhotoToServerController {
 
         @Override
         protected void onPostExecute(List<String> response) {
-            if (!response.isEmpty()) {
+            if (response != null && !response.isEmpty()) {
                 try {
                     JSONObject jsonObj = new JSONObject(response.get(0));
                     callback.onPhotoToServerSent(jsonObj.getString("url"));
