@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -15,6 +16,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,12 +109,23 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
                 e.printStackTrace();
             }
 
-            outputFileUri = Uri.fromFile(newfile);
+            outputFileUri = getUrifromFile(newfile);
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
 
             startActivityForResult(cameraIntent, CAMERA_PHOTO_CODE);
         }
+    }
+
+    private Uri getUrifromFile(File newfile) {
+        Uri uri;
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            uri = FileProvider.getUriForFile(getContext(), getContext().getApplicationContext().getPackageName() + ".provider", newfile);
+        } else {
+            uri = Uri.fromFile(newfile);
+        }
+
+        return uri;
     }
 
     private void openImageChooser() {
