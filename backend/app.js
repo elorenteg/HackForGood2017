@@ -148,7 +148,7 @@ router.get('/', function(req, res) {
 app.use(router);
 app.listen(80, function() {
   console.log("Node server running on https://c3cce9a9.ngrok.io/");
-
+/*
   var file = fs.createWriteStream("./input/temp.pdf");
   var url2get = 'https://www.aemps.gob.es/cima/pdfs/es/p/63647/63647_p.pdf';
 
@@ -157,5 +157,5 @@ app.listen(80, function() {
   exec(cmd, function(error, stdout, stderr) {
     console.log("curl done");
   });
-
+*/
 });
