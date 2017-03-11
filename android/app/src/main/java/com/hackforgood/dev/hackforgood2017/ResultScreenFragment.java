@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.ImageRequest;
-import com.beardedhen.androidbootstrap.AwesomeTextView;
 import com.hackforgood.dev.hackforgood2017.controllers.TextToSpeechController;
 import com.hackforgood.dev.hackforgood2017.controllers.VolleyController;
 import com.hackforgood.dev.hackforgood2017.model.Medicine;
@@ -95,10 +94,17 @@ public class ResultScreenFragment extends Fragment {
             imageLayout.setVisibility(View.GONE);
         }
 
+        //TODO Futura implementación con servidor
+        medicineLeaflet = "Paracetamol Pensa pertenece al grupo de medicamentos llamados analgésicos y antipiréticos. \n" +
+                " \n" +
+                "Este medicamento está indicado para el tratamiento sintomático del dolor de intensidad leve o moderada, y \n" +
+                "para reducir la fiebre. ";
+
         if (medicine != null) {
             //TODO Send Volley to load the med XML
             medNameText.setText(medicine.getName());
             medCodeText.setText("" + medicine.getCode());
+            medLeafletText.setText(medicineLeaflet);
         } else if (textToSearch != null) {
             //TODO Send Volley to load the med XML
             medNameText.setText(textToSearch);
@@ -141,8 +147,7 @@ public class ResultScreenFragment extends Fragment {
         leafletLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (medicine != null) {
-                    String leaflet = "PROSPECTO";
-                    TextToSpeechController.getInstance(getContext()).speak(leaflet, TextToSpeech.QUEUE_FLUSH);
+                    TextToSpeechController.getInstance(getContext()).speak(medicineLeaflet, TextToSpeech.QUEUE_FLUSH);
                 }
             }
         });
