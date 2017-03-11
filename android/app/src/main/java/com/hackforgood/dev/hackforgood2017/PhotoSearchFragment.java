@@ -121,7 +121,6 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
         }
     }
 
-
     public void makePhotoCamera() {
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, MainActivity.CAMERA_PERMISSION_CODE);
@@ -169,7 +168,6 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
                     String realUri = getRealPathFromUri(imageUri);
                     InputStream imageStream = getActivity().getContentResolver().openInputStream(imageUri);
                     Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-
 
                     Bitmap scaledBitmap = scaleBitmap(selectedImage, 640, 360);
                     Bitmap compressedBitmap = compressBitmap(new File(realUri), scaledBitmap);
@@ -228,7 +226,6 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
         try {
             out = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-
             return bitmap;
         } catch (Exception e) {
             e.printStackTrace();
