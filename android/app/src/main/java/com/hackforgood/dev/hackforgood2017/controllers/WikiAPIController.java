@@ -46,8 +46,7 @@ public class WikiAPIController {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        WikiContent wikiContent = parseWikiAPIContent(response);
-                        wikiContent.setQueryText(name);
+                        WikiContent wikiContent = parseWikiAPIContent(name, response);
                         wikiAPIResolvedCallback.onWikiAPIResolved(wikiContent);
                     }
                 }, new Response.ErrorListener() {
@@ -62,8 +61,9 @@ public class WikiAPIController {
         VolleyController.getInstance(context).addToQueue(jsonObjectRequest);
     }
 
-    private WikiContent parseWikiAPIContent(JSONObject wikiContentJSONObject) {
+    private WikiContent parseWikiAPIContent(String query, JSONObject wikiContentJSONObject) {
         WikiContent wikiContent = new WikiContent();
+        wikiContent.setQueryText(query);
         wikiContent.setJsonResponse(wikiContentJSONObject);
         return wikiContent;
     }

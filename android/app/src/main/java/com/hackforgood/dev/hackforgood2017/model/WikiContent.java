@@ -31,7 +31,8 @@ public class WikiContent {
     public boolean isAMedicine() {
         if (jsonResponse != null) {
             String str = jsonResponse.toString();
-            if (str.contains("Fórmula_química") && str.contains("Farmacocinética")) return true;
+            //if (str.contains("Fórmula_química") && str.contains("Farmacocinética")) return true;
+            if (str.contains("Ficha de medicamento")) return true;
         }
 
         return false;
@@ -46,19 +47,19 @@ public class WikiContent {
         }
 
         return false;
-
     }
 
     public String getRedirectionText() {
-        String redirectionText = "";
+        String response = jsonResponse.toString();
 
-        String pattern = "#REDIRECCIÓN([^\\d])\\[\\[[a-zA-Z]+]]";
-        Pattern p = Pattern.compile(pattern);
-        Matcher m = p.matcher(jsonResponse.toString());
-        if (m.find()) {
-            redirectionText = m.group();
-            redirectionText.replace("#REDIRECCIÓN","").trim();
-        }
-        return redirectionText;
+        String pattern = "#REDIRECCIÓN ";
+        int indPattern = response.indexOf(pattern);
+        response = response.substring(indPattern + pattern.length());
+
+        pattern = "]]";
+        indPattern = response.indexOf(pattern);
+        response = response.substring(0, indPattern);
+
+        return response.replaceAll("\\[", "");
     }
 }

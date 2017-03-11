@@ -7,7 +7,7 @@ import com.hackforgood.dev.hackforgood2017.controllers.WikiAPIController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Optional;
+import java.util.LinkedHashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -91,8 +91,12 @@ public class Medicine {
 
         String numberText = parsedText.replaceAll("[a-zA-Z]","");
         numberText = numberText.replaceAll("\\s{2,}", " ").trim();
+        numberText = numberText.replaceAll("\\.", "").trim();
+        numberText = numberText.replaceAll(",", "").trim();
+        numberText = numberText.replaceAll("-", "").trim();
         numberText = numberText.replaceAll("\\b\\w{1,5}\\b\\s?", "").trim();
-        if (numberText.length() == 7) {
+        if (numberText.length() >= 7) {
+            numberText = numberText.substring(0, 7);
             String securityNum = numberText.substring(numberText.length() - 1);
             numberText = numberText.substring(0, numberText.length()-1);
             int code = Integer.parseInt(numberText);
@@ -103,8 +107,8 @@ public class Medicine {
             }
         }
 
-        if (!parseByCode) {
-            Log.e(TAG, "No code");
+        //if (!parseByCode) {
+            //Log.e(TAG, "No code");
             if (parsedText.contains("comprimidos")) {
                 // Dosis
                 if (parsedText.contains(" mg ")) setDosisUnit("mg");
@@ -138,6 +142,14 @@ public class Medicine {
             parsedText = parsedText.replaceAll("\\d","");
             parsedText = parsedText.replaceAll("\n"," ");
 
+            parsedText = parsedText.replace("cuerpo","");
+            parsedText = parsedText.replace("dolor","");
+            parsedText = parsedText.replace("muscular","");
+            parsedText = parsedText.replace("cabeza","");
+            parsedText = parsedText.replace("anti-inflamatorio","");
+            parsedText = parsedText.replaceAll("\\."," ");
+            parsedText = parsedText.replaceAll(","," ");
+
             parsedText = parsedText.toLowerCase();
 
             if (parsedText.contains("oral")) {
@@ -149,8 +161,10 @@ public class Medicine {
             parsedText = parsedText.replaceAll("\\s{2,}", " ").trim();
 
             // Name
+            parsedText = parsedText.replaceAll(",", " ");
+            parsedText = new LinkedHashSet<String>(Arrays.asList(parsedText.split(" "))).toString().replaceAll("(^\\[|\\]$)", "").replace(", ", " ");
             setName(parsedText);
-        }
+        //}
     }
 
     private boolean codeIsCorrect(int code, int securityCode) {
@@ -174,12 +188,10 @@ public class Medicine {
     public String toString() {
         String str = "";
         if (code >= 0) str += "Code: " + code + "\n";
-        else {
-            if (!name.equals("")) str += "Name: " + name + "\n";
-            if (dosis >= 0) str += "Dosis: " + dosis + " " + dosisUnit + "\n";
-            if (content >= 0) str += "Content: " + content + " " + contentType + "\n";
-            if (!type.equals("")) str += "Type: " + type + "\n";
-        }
+        if (!name.equals("")) str += "Name: " + name + "\n";
+        if (dosis >= 0) str += "Dosis: " + dosis + " " + dosisUnit + "\n";
+        if (content >= 0) str += "Content: " + content + " " + contentType + "\n";
+        if (!type.equals("")) str += "Type: " + type + "\n";
         return str;
     }
 
