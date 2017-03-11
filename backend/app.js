@@ -9,6 +9,7 @@ var express = require("express"),
     xml2js = require('xml2js'),
     mongoose = require('mongoose'),
     path = require('path'),
+    formidable = require('formidable'),
     fs = require('fs');
 
 var json_preinscripciones = "";
@@ -49,16 +50,26 @@ function getByCode(code) {
 
 /**************************************************ROUTERS************************************************************/
 
-router.post('/upload', function (req, res) {
-  var tempPath = req.files.file.path,
-      targetPath = path.resolve('./uploads/image.png');
-
-  fs.rename(tempPath, targetPath, function(err) {
-      if (err) throw err;
-      console.log("http://c3cce9a9.ngrok.io/getimage/" + filename);
+/*********UPLOAD IMAGE*********/
+router.post('/upload', function(req, res){
+  var form = new formidable.IncomingForm();
+  var filename = "";
+  form.multiples = false;
+  form.uploadDir = path.join(__dirname, '/uploads');
+  form.on('file', function(field, file) {
+    filename = file.name;
+    fs.rename(file.path, path.join(form.uploadDir, file.name));
   });
+  form.on('error', function(err) {
+    console.log('An error has occured: \n' + err);
+  });
+  form.on('end', function() {
+    res.end('{"url"="http://c3cce9a9.ngrok.io/getimage/'+ filename +'"}');
+  });
+  form.parse(req);
 });
 
+/*********GET IMAGE*********/
 app.get('/getimage/:image', function (req, res) {
   var imagePath = req.params.image;
   res.sendfile(path.resolve('./uploads/' + imagePath));
@@ -68,15 +79,13 @@ router.get('/:code', function(req, res) {
   //var code = req.body.code; //post
   var code = req.params.code;
 
-
   res.send("code:" +  code);
 });
 
 router.get('/', function(req, res) {
   getByCode(66346);
-  res.send("por favor, usa la api bien... MIAU");
+  res.send("por favor, usa la api bien... MIAU! ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬");
 });
-
 
 /**************************************************WEB SERVER**********************************************************/
 app.use(router);

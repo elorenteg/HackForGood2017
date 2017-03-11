@@ -18,19 +18,39 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.hackforgood.dev.hackforgood2017.controllers.ImageOCRController;
+import com.hackforgood.dev.hackforgood2017.controllers.WikiAPIController;
 import com.hackforgood.dev.hackforgood2017.model.ImageOCR;
 import com.hackforgood.dev.hackforgood2017.model.Medicine;
+import com.hackforgood.dev.hackforgood2017.model.WikiContent;
+
+import java.text.Normalizer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        ImageOCRController.ImageOCRResolvedCallback {
-    public static final String TAG = MainActivity.class.getSimpleName();
+        ImageOCRController.ImageOCRResolvedCallback,
+        WikiAPIController.WikiAPIResolvedCallback {
+
+    private final String TAG = MainActivity.class.getSimpleName();
+
     public static final int CAMERA_PERMISSION_CODE = 200;
     public static final int WRITE_SD_PERMISSION_CODE = 201;
     private final ImageOCRController.ImageOCRResolvedCallback imageOCRResolvedCallback = this;
+    private final WikiAPIController.WikiAPIResolvedCallback wikiAPIResolvedCallback = this;
     private ImageOCRController imageOCRController;
+    private WikiAPIController wikiAPIController;
+
+    private Medicine medicine = null;
+    private int possibleNames = Integer.MAX_VALUE;
+    private Map<String,String> medNameRedirections;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +81,14 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         imageOCRController = new ImageOCRController(this);
+        wikiAPIController = new WikiAPIController(this);
+        medNameRedirections = new HashMap<String,String>();
 
-        String url = "http://omicrono.elespanol.com/wp-content/uploads/2015/05/ibuprofeno.jpg";
-        imageOCRController.imageOCRRequest(url, imageOCRResolvedCallback);
+        String url = "";
+        url= "http://omicrono.elespanol.com/wp-content/uploads/2015/05/ibuprofeno.jpg";
+        url = "http://carolinayh.com/image/cache/finalizado/2014_01_28/19-98web-780x600.jpg";
+        //url = "http://www.elcorreo.com/noticias/201407/24/media/cortadas/paracetamol--575x323.jpg";
 
-        url = "http://elfarmaceutico.es/images/stories/546/Ibuprofeno_400mg_cinfa.jpg";
-        imageOCRController.imageOCRRequest(url, imageOCRResolvedCallback);
-
-        url = "http://www.elcorreo.com/noticias/201407/24/media/cortadas/paracetamol--575x323.jpg";
         imageOCRController.imageOCRRequest(url, imageOCRResolvedCallback);
     }
 
@@ -160,15 +180,64 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onImageOCRResolved(ImageOCR imageOCR) {
-        Log.e(TAG, "onImageOCRResolved");
+        //Log.e(TAG, "onImageOCRResolved");
 
         if (imageOCR == null) Log.e(TAG, "ImageOCR is null :(");
         else {
             String parsedText = imageOCR.getParsedText();
-            //Log.e(TAG, parsedText.replace("\n",""));
 
-            Medicine medicine = new Medicine();
+            medicine = new Medicine();
             medicine.parseInfo(parsedText);
+
+            if (!medicine.hasACode()) {
+                //Log.e(TAG, parsedText.replace("\n",""));
+                //Log.e(TAG, medicine.toString());
+
+                String text = medicine.getName();
+                WikiAPIController wikiAPIController = new WikiAPIController(this);
+                ArrayList<String> words = new ArrayList<String>(Arrays.asList(text.split(" ")));
+
+                possibleNames = words.size();
+                for (int i = 0; i < words.size(); ++i) {
+                    String word = words.get(i);
+                    //Log.e(TAG, "Calling WikiAPI with " + word);
+                    wikiAPIController.wikiAPIRequest(word, wikiAPIResolvedCallback);
+                }
+            }
+            else Log.e(TAG, medicine.toString());
+        }
+    }
+
+    @Override
+    public void onWikiAPIResolved(WikiContent wikiContent) {
+        if (medicine != null) {
+            if (wikiContent.isAMedicine()) {
+                medicine.setName(wikiContent.getQueryText());
+            }
+            else {
+                if (wikiContent.redirects()) {
+                    String queryText = Normalizer.normalize(wikiContent.getQueryText(), Normalizer.Form.NFD).replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");;
+                    String redirText = Normalizer.normalize(wikiContent.getRedirectionText(), Normalizer.Form.NFD).replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");;
+                    if (!queryText.contains(redirText) && !redirText.contains(queryText)) {
+                        //Log.e(TAG, "Redirection from " + queryText + " to " + redirText);
+                        possibleNames++;
+                        medNameRedirections.put(wikiContent.getRedirectionText(), wikiContent.getQueryText());
+                        wikiAPIController.wikiAPIRequest(wikiContent.getRedirectionText(), wikiAPIResolvedCallback);
+                    }
+                }
+            }
+        }
+        possibleNames--;
+        if (possibleNames == 0) {
+            String name = medicine.getName();
+
+            String prevName = medNameRedirections.get(name);
+            while (prevName != null) {
+                Log.e(TAG, name + "->" + prevName);
+                name = prevName;
+                prevName = medNameRedirections.get(name);
+            }
+            medicine.setName(name);
             Log.e(TAG, medicine.toString());
         }
     }
