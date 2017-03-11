@@ -40,7 +40,8 @@ parser.on("pdfParser_dataReady", pdfData => {
 */
 
 function clearText(rawtext) {
-	// Limpieza Saltos y Números de página 
+	// Limpieza Saltos y Números de página
+    console.log(rawtext);
 	var aux = rawtext.replace(/^.*-----.*$/mg, "");
 	var clearedtext = aux.replace(/^\d+ de \d+ *$/mg, "");
     return clearedtext;
@@ -48,10 +49,21 @@ function clearText(rawtext) {
 
 function getRawSection(rawtext, startPattern, endPattern) {
 	// Obtención de una sección del prospecto
-	var aux = rawtext.split(startPattern)
+	var aux = rawtext.split(startPattern);
 	var section = aux[aux.length-1].split(endPattern)[0];
 	return clearText(section);
 }
+
+exports.getAllSections = function () {
+    var all = {};
+    all['que'] = getSectionInternal(QUE);
+    all['antes'] = getSectionInternal(ANTES);
+    all['como'] = getSectionInternal(COMO);
+    all['efectos'] = getSectionInternal(EFECTOS);
+    all['conservacion'] = getSectionInternal(CONSERVACION);
+    all['informacion'] = getSectionInternal(INFORMACION);
+    return all;
+};
 
 exports.parsePDF = function (url) {
     let fs = require('fs'),
@@ -61,35 +73,41 @@ exports.parsePDF = function (url) {
     parser.on("pdfParser_dataError", errData => console.error(errData.parserError));
     parser.on("pdfParser_dataReady", pdfData => {
         rawtext = parser.getRawTextContent();
+        //TODO: por hacer callback de mierda
     });
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-	var file = fs.createWriteStream("./input/temp.pdf");
-    var req = https.request(url, function(res) {
-        console.log("statusCode: ", res.statusCode);
-        console.log("headers: ", res.headers);
-        res.on('data', function(d) {
-            file.write(d);
-            parser.loadPDF("./input/temp.pdf");
-        });
-    });
-    req.end();
-    req.on('error', function(e) {
-        console.error(e);
-    });
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    var urlParser = require("url");
+    var path = require("path");
+    var parsed = urlParser.parse(url);
+    console.log(path.basename(parsed.pathname));
+
+    parser.loadPDF("./input/"+path.basename(parsed.pathname));
 };
 
 exports.getSection = function(sectionType) {
-	var section = {};
+    var section = {};
 
-	if (sectionType == QUE) section = getRawSection(rawtext, /^1\..*\n?/m, /^2\..*\n?/m);// Sección: Qué es
-	else if (sectionType == ANTES) section = getRawSection(rawtext, /^2\..*\n?/m, /^3\..*\n?/m);// Sección: Antes de tomar
-	else if (sectionType == COMO) section = getRawSection(rawtext, /^3\..*\n?/m, /^4\..*\n?/m);// Sección: Cómo Tomar
-	else if (sectionType == EFECTOS) section = getRawSection(rawtext, /^4\..*\n?/m, /^5\..*\n?/m);// Sección: Posibles efectos adversos
-	else if (sectionType == CONSERVACION) section = getRawSection(rawtext, /^5\..*\n?/m, /^6\..*\n?/m);// Sección: Conservación
-	else if (sectionType == INFORMACION) section = getRawSection(rawtext, /^6\..*\n?/m, /$/);// Sección: Información adicional
-	else return console.log("sectionType not found");
+    if (sectionType == QUE) section = getRawSection(rawtext, /^1\..*\n?/m, /^2\..*\n?/m);// Sección: Qué es
+    else if (sectionType == ANTES) section = getRawSection(rawtext, /^2\..*\n?/m, /^3\..*\n?/m);// Sección: Antes de tomar
+    else if (sectionType == COMO) section = getRawSection(rawtext, /^3\..*\n?/m, /^4\..*\n?/m);// Sección: Cómo Tomar
+    else if (sectionType == EFECTOS) section = getRawSection(rawtext, /^4\..*\n?/m, /^5\..*\n?/m);// Sección: Posibles efectos adversos
+    else if (sectionType == CONSERVACION) section = getRawSection(rawtext, /^5\..*\n?/m, /^6\..*\n?/m);// Sección: Conservación
+    else if (sectionType == INFORMACION) section = getRawSection(rawtext, /^6\..*\n?/m, /$/);// Sección: Información adicional
+    else return console.log("sectionType not found");
 
-	return section;
+    return section;
+};
+
+function getSectionInternal(sectionType) {
+    var section = {};
+
+    if (sectionType == QUE) section = getRawSection(rawtext, /^1\..*\n?/m, /^2\..*\n?/m);// Sección: Qué es
+    else if (sectionType == ANTES) section = getRawSection(rawtext, /^2\..*\n?/m, /^3\..*\n?/m);// Sección: Antes de tomar
+    else if (sectionType == COMO) section = getRawSection(rawtext, /^3\..*\n?/m, /^4\..*\n?/m);// Sección: Cómo Tomar
+    else if (sectionType == EFECTOS) section = getRawSection(rawtext, /^4\..*\n?/m, /^5\..*\n?/m);// Sección: Posibles efectos adversos
+    else if (sectionType == CONSERVACION) section = getRawSection(rawtext, /^5\..*\n?/m, /^6\..*\n?/m);// Sección: Conservación
+    else if (sectionType == INFORMACION) section = getRawSection(rawtext, /^6\..*\n?/m, /$/);// Sección: Información adicional
+    else return console.log("sectionType not found");
+
+    return section;
 };

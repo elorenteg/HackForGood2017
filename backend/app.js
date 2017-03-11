@@ -42,6 +42,7 @@ fs.readFile(XMLFILE, 'utf8', function (err,data) {
     //json_preinscripciones = JSON.stringify(result);
     json_preinscripciones = result;
     console.log("xml parseado en JSON");
+    getAllUrls();
   });
 });
 
@@ -57,6 +58,15 @@ function getUrlByCode(code) {
     }
   }
   return url;
+}
+
+/*********GET PDF URL FROM CODE*********/
+function getAllUrls() {
+  console.log("start filtering");
+  var array = json_preinscripciones.aemps_prescripcion.prescription;
+  for (var i = 0; i < array.length; ++i) {
+    fs.appendFile("./input/urls.txt", array[i].url_prosp[0]+'\r\n', function (err) {});
+  }
 }
 
 /*********GET PDF URL FROM CONSTRAINTS*********/
@@ -90,10 +100,17 @@ function getUrlByConstraints(constraints) {
 /*********GET PROSPECTO*********/
 function getProspecto(url) {
   console.log("procesando pdf");
-  pdfp.parsePDF(url,null);
+  pdfp.parsePDF(url);
   console.log("obteniendo secciones");
-  var prospecto = pdfp.getSection(pdfp.QUE);
-  return prospecto;
+
+  function function2() {
+    var prospecto = pdfp.getAllSections();
+    console.log('Blah blah blah blah extra-blah');
+    return prospecto;
+  }
+
+  // call the rest of the code and have it execute after 3 seconds
+  setTimeout(function2, 5000);
 }
 
 /**************************************************ROUTERS************************************************************/
@@ -148,14 +165,4 @@ router.get('/', function(req, res) {
 app.use(router);
 app.listen(80, function() {
   console.log("Node server running on https://c3cce9a9.ngrok.io/");
-/*
-  var file = fs.createWriteStream("./input/temp.pdf");
-  var url2get = 'https://www.aemps.gob.es/cima/pdfs/es/p/63647/63647_p.pdf';
-
-  var exec = require('child_process').exec;
-  var cmd = ' wget -O ./input/temp.pdf ' + url2get;
-  exec(cmd, function(error, stdout, stderr) {
-    console.log("curl done");
-  });
-*/
 });
