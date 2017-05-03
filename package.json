@@ -16,8 +16,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "debug": "node debug app.js",
-    "start": "node app.js"
+    "debug": "node debug backend/app.js",
+    "start": "node backend/app.js"
   },
   "engines": {
     "node": "6.10.3"
