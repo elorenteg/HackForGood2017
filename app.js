@@ -162,7 +162,8 @@ router.get('/', function(req, res) {
 });
 
 /**************************************************WEB SERVER**********************************************************/
+var port = process.env.PORT || 80;
 app.use(router);
-app.listen(80, function() {
-  console.log("Node server running on https://c3cce9a9.ngrok.io/");
+app.listen(port, function() {
+  console.log("Node server running on port" + port);
 });
