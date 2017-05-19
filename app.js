@@ -18,7 +18,7 @@ var express = require("express"),
 var json_preinscripciones = "";
 
 //var XMLFILE = './backend/data/Prescripcion.xml';
-var XMLFILE = './backend/data/Prescripcion_lite.xml';
+var XMLFILE = './data/Prescripcion_lite.xml';
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
