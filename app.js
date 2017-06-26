@@ -129,7 +129,7 @@ router.post('/upload', function(req, res){
     console.log('An error has occured: \n' + err);
   });
   form.on('end', function() {
-    res.end('{"url"="https://c3cce9a9.ngrok.io/getimage/'+ filename +'"}');
+    res.end('{"url"="https://hackforgoodbcn2017app.herokuapp.com/getimage/'+ filename +'"}');
   });
   form.parse(req);
 });
