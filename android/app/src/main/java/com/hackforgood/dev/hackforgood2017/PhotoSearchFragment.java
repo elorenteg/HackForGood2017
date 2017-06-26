@@ -166,7 +166,7 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
                     InputStream imageStream = getActivity().getContentResolver().openInputStream(imageUri);
                     Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
-                    Bitmap scaledBitmap = scaleBitmap(selectedImage, 640, 360);
+                    Bitmap scaledBitmap = scaleBitmap(selectedImage, 854, 480);
                     Bitmap compressedBitmap = compressBitmap(new File(realUri), scaledBitmap);
 
                     uploadImageToAPI(compressedBitmap, realUri);

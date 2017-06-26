@@ -13,7 +13,7 @@ import java.util.List;
 
 public class PhotoToServerController {
     public static final String TAG = PhotoToServerController.class.getSimpleName();
-    private static final String URL = "http://c3cce9a9.ngrok.io/upload";
+    private static final String URL = "https://hackforgoodbcn2017app.herokuapp.com/upload";
 
     public static void sendPhotoToServer(String uriToUpload, PhotoToServerCallback photoToServerCallback) {
         PhotoToServerAsyncTask photoToServerAsyncTask = new PhotoToServerAsyncTask();
@@ -25,7 +25,6 @@ public class PhotoToServerController {
     }
 
     private static class PhotoToServerAsyncTask extends AsyncTask<Object, Void, List<String>> {
-        private static final String URL = "http://c3cce9a9.ngrok.io/upload";
         private PhotoToServerCallback callback;
 
         @Override
