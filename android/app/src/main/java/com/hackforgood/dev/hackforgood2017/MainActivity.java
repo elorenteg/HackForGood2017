@@ -88,10 +88,7 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment = null;
         String fragmentTAG = null;
-        //if (id == R.id.nav_home) {
-        //    fragment = MainFragmentActivity.newInstance();
-        //    fragmentTAG = MainFragmentActivity.TAG;
-        //} else if (id == R.id.nav_gallery) {
+
         if (id == R.id.nav_gallery) {
             fragment = PhotoSearchFragment.newInstance();
             fragmentTAG = PhotoSearchFragment.TAG;

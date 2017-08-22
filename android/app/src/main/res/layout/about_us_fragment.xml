@@ -16,7 +16,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginTop="10dp"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
@@ -51,6 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
         <TextView
@@ -73,6 +74,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
         <TextView
@@ -94,6 +96,7 @@
         android:id="@+id/dialog_about_us_marc_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
         <TextView
