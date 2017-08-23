@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.ImageRequest;
+import com.hackforgood.dev.hackforgood2017.controllers.LeafletAPIController;
 import com.hackforgood.dev.hackforgood2017.controllers.TextToSpeechController;
 import com.hackforgood.dev.hackforgood2017.controllers.VolleyController;
 import com.hackforgood.dev.hackforgood2017.model.Medicine;
@@ -26,7 +27,7 @@ import java.io.IOException;
  * Created by LaQuay on 11/03/2017.
  */
 
-public class ResultScreenFragment extends Fragment {
+public class ResultScreenFragment extends Fragment implements LeafletAPIController.LeafletAPICallback {
     public static final String TAG = ResultScreenFragment.class.getSimpleName();
     private static final String ARG_URL = "url";
     private static final String ARG_MEDICINE = "medicine";
@@ -95,10 +96,15 @@ public class ResultScreenFragment extends Fragment {
         }
 
         //TODO Futura implementación con servidor
-        medicineLeaflet = "Paracetamol Pensa pertenece al grupo de medicamentos llamados analgésicos y antipiréticos. \n" +
-                " \n" +
-                "Este medicamento está indicado para el tratamiento sintomático del dolor de intensidad leve o moderada, y \n" +
-                "para reducir la fiebre. ";
+        if (MainActivity.USE_DUMMY_MODE_MEDS) {
+            medNameText.setText(medicine.getName());
+            medCodeText.setText("" + medicine.getCode());
+            medicineLeaflet = "Paracetamol Pensa pertenece al grupo de medicamentos llamados analgésicos y antipiréticos. \n" +
+                    " \n" +
+                    "Este medicamento está indicado para el tratamiento sintomático del dolor de intensidad leve o moderada, y \n" +
+                    "para reducir la fiebre. ";
+            medLeafletText.setText(medicineLeaflet);
+        }
 
         if (medicine != null) {
             //TODO Send Volley to load the med XML
@@ -110,6 +116,8 @@ public class ResultScreenFragment extends Fragment {
             medNameText.setText(textToSearch);
             medCodeText.setText("-----");
         }
+
+        sendRequestoToGetLeafletInformation(medicine.getCode());
 
         return rootview;
     }
@@ -163,5 +171,14 @@ public class ResultScreenFragment extends Fragment {
         }, 0, 0, ImageView.ScaleType.CENTER_INSIDE, null, null);
 
         VolleyController.getInstance(getActivity()).addToQueue(request);
+    }
+
+    private void sendRequestoToGetLeafletInformation(int code) {
+        LeafletAPIController.leafletAPIRequest(code + "", getContext(), this);
+    }
+
+    @Override
+    public void onLeafletAPIResolved(String leafletText) {
+        Log.e(TAG, "Response: " + leafletText);
     }
 }

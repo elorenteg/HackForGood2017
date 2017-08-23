@@ -10,9 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.beardedhen.androidbootstrap.BootstrapButton;
-import com.beardedhen.androidbootstrap.BootstrapEditText;
-
 public class KeyboardSearchFragment extends Fragment {
     public static final String TAG = KeyboardSearchFragment.class.getSimpleName();
     private View rootview;
@@ -48,11 +45,13 @@ public class KeyboardSearchFragment extends Fragment {
 
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Fragment fragment = ResultScreenFragment.newInstance(null, null, editText.getText().toString());
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.main_container, fragment, ResultScreenFragment.TAG);
-                ft.addToBackStack(null);
-                ft.commit();
+                if (!editText.getText().toString().equals("")) {
+                    Fragment fragment = ResultScreenFragment.newInstance(null, null, editText.getText().toString());
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.main_container, fragment, ResultScreenFragment.TAG);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
             }
         });
     }

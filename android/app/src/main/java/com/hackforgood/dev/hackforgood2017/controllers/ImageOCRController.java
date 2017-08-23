@@ -14,8 +14,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 public class ImageOCRController {
     private final String TAG = ImageOCRController.class.getSimpleName();
     private final Context context;
@@ -39,7 +37,6 @@ public class ImageOCRController {
         // Request a string response from the provided URL.
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
-
                     @Override
                     public void onResponse(JSONObject response) {
                         ImageOCR imageOCRArray = parseImageOCRJSON(response);

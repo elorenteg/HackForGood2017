@@ -103,14 +103,18 @@ public class Medicine implements Serializable {
             int code = Integer.parseInt(numberText);
             int securityCode = Integer.parseInt(securityNum);
             //if (codeIsCorrect(code, securityCode)) {
-                setCode(code);
+            setCode(code);
             //}
             //else Log.e(TAG, "Code is not correct");
         }
 
         // Dosis
-        if (parsedText.contains(" mg ")) setDosisUnit("mg");
-        else if (parsedText.contains(" g ")) setDosisUnit("g");
+        if (parsedText.contains("mg") || parsedText.contains("microgramos")) {
+            setDosisUnit("mg");
+        } else if (parsedText.contains("g") || parsedText.contains("gramos")) {
+            setDosisUnit("g");
+        }
+
         if (!"".equals(getDosisUnit())) {
             pattern = "(\\d+)([^\\d])" + getDosisUnit();
             p = Pattern.compile(pattern);
@@ -154,6 +158,10 @@ public class Medicine implements Serializable {
         if (parsedText.contains("oral")) {
             setType("oral");
             parsedText = parsedText.replace("oral", "");
+        } else if (parsedText.contains("nasal")) {
+            setType("nasal");
+        } else if (parsedText.contains("ótica") || parsedText.contains("otica") || parsedText.contains("ötica")) {
+            setType("ótica");
         }
 
         parsedText = parsedText.replaceAll("\\b\\w{1,3}\\b\\s?", "");
@@ -161,7 +169,7 @@ public class Medicine implements Serializable {
 
         // Name
         parsedText = parsedText.replaceAll(",", " ");
-        parsedText = new LinkedHashSet<String>(Arrays.asList(parsedText.split(" "))).toString().replaceAll("(^\\[|\\]$)", "").replace(", ", " ");
+        parsedText = new LinkedHashSet<>(Arrays.asList(parsedText.split(" "))).toString().replaceAll("(^\\[|\\]$)", "").replace(", ", " ");
         setName(parsedText);
     }
 

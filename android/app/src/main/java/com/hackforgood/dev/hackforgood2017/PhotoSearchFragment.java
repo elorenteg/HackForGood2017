@@ -62,6 +62,8 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
     private int possibleNames = Integer.MAX_VALUE;
     private Map<String, String> medNameRedirections;
     private String imageURL;
+    private int PHOTO_SCALED_WIDTH = 854;
+    private int PHOTO_SCALED_HEIGHT = 480;
 
     public static PhotoSearchFragment newInstance() {
         return new PhotoSearchFragment();
@@ -103,8 +105,6 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
     }
 
     public void setUpPhotoCamera() {
-        //buttonCamera.setBootstrapBrand();
-
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MainActivity.WRITE_SD_PERMISSION_CODE);
         } else {
@@ -164,12 +164,13 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
                     Uri imageUri = data.getData();
                     String realUri = getRealPathFromUri(imageUri);
                     InputStream imageStream = getActivity().getContentResolver().openInputStream(imageUri);
+
                     Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
-                    Bitmap scaledBitmap = scaleBitmap(selectedImage, 854, 480);
-                    Bitmap compressedBitmap = compressBitmap(new File(realUri), scaledBitmap);
+                    Bitmap scaledBitmap = scaleBitmap(selectedImage, PHOTO_SCALED_WIDTH, PHOTO_SCALED_HEIGHT);
+                    compressBitmap(new File(realUri), scaledBitmap);
 
-                    uploadImageToAPI(compressedBitmap, realUri);
+                    uploadImageToAPI(realUri);
                 } catch (IOException e) {
                     e.printStackTrace();
                     Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
@@ -178,10 +179,10 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
                 try {
                     Bitmap selectedImage = readImageFromResources(outputFileUri);
 
-                    Bitmap scaledBitmap = scaleBitmap(selectedImage, 640, 360);
-                    Bitmap compressedBitmap = compressBitmap(new File(outputFileUri.getPath()), scaledBitmap);
+                    Bitmap scaledBitmap = scaleBitmap(selectedImage, PHOTO_SCALED_WIDTH, PHOTO_SCALED_HEIGHT);
+                    compressBitmap(new File(outputFileUri.getPath()), scaledBitmap);
 
-                    uploadImageToAPI(compressedBitmap, outputFileUri.getPath());
+                    uploadImageToAPI(outputFileUri.getPath());
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
@@ -218,12 +219,11 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
         return bitmap;
     }
 
-    private Bitmap compressBitmap(File file, Bitmap bitmap) throws FileNotFoundException {
+    private void compressBitmap(File file, Bitmap bitmap) throws FileNotFoundException {
         FileOutputStream out = null;
         try {
             out = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-            return bitmap;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -235,15 +235,14 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
                 e.printStackTrace();
             }
         }
-        return bitmap;
     }
 
     private Bitmap readImageFromResources(Uri uriToRead) throws IOException {
         return MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uriToRead);
     }
 
-    public void uploadImageToAPI(Bitmap imageToUpload, String uriToUpload) {
-        Toast.makeText(getActivity(), "Uploading PHOTO", Toast.LENGTH_SHORT).show();
+    public void uploadImageToAPI(String uriToUpload) {
+        Toast.makeText(getActivity(), "Uploading photo", Toast.LENGTH_SHORT).show();
 
         PhotoToServerController.sendPhotoToServer(uriToUpload, this);
     }
@@ -287,7 +286,7 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
 
         if (imageOCR == null) Log.e(TAG, "ImageOCR is null :(");
         else {
-            Toast.makeText(getActivity(), "Doing WIKI", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "Doing WIKI", Toast.LENGTH_SHORT).show();
             String parsedText = imageOCR.getParsedText();
 
             medicine = new Medicine();
