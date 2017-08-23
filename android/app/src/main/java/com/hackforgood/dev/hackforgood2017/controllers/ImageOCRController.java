@@ -29,6 +29,7 @@ public class ImageOCRController {
                 .appendPath("parse")
                 .appendPath("imageurl")
                 .appendQueryParameter("apikey", "ab70658b5888957")
+                .appendQueryParameter("language", "spa")
                 .appendQueryParameter("url", imageURL);
         String url = builder.build().toString();
 
