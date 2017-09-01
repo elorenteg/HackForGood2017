@@ -116,6 +116,11 @@ public class MainActivityFragment extends Fragment implements PhotoToServerContr
 
         buttonMicrophone.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Fragment fragment = AudioRecognisonFragment.newInstance();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.main_container, fragment, AudioRecognisonFragment.TAG);
+                ft.addToBackStack(null);
+                ft.commit();
             }
         });
     }
