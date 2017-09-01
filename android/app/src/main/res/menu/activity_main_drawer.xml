@@ -15,6 +15,11 @@
             android:id="@+id/nav_keyboard"
             android:icon="@drawable/ic_menu_send"
             android:title="Teclado" />
+
+        <item
+            android:id="@+id/nav_microphone"
+            android:icon="@drawable/micro"
+            android:title="Microfono" />
     </group>
 
     <group android:checkableBehavior="single">
