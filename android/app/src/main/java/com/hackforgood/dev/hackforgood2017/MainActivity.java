@@ -1,7 +1,9 @@
 package com.hackforgood.dev.hackforgood2017;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -15,6 +17,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -104,7 +108,7 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.main_container, fragment, fragmentTAG);
             //if (id != R.id.nav_home)
-                ft.addToBackStack(null);
+            ft.addToBackStack(null);
             ft.commit();
         }
 
@@ -132,5 +136,23 @@ public class MainActivity extends AppCompatActivity
         }
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case AudioRecognisonFragment.REQ_CODE_SPEECH_INPUT: {
+                if (resultCode == RESULT_OK && null != data) {
+                    AudioRecognisonFragment fragment = (AudioRecognisonFragment) getSupportFragmentManager().findFragmentByTag(AudioRecognisonFragment.TAG);
+                    if (fragment != null) {
+                        ArrayList<String> result = data
+                                .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                        fragment.setSpeechText(result);
+                    }
+                }
+                break;
+            }
+        }
     }
 }
