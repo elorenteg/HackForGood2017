@@ -90,12 +90,9 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         String fragmentTAG = null;
 
-        if (id == R.id.nav_gallery) {
-            fragment = PhotoSearchFragment.newInstance();
-            fragmentTAG = PhotoSearchFragment.TAG;
-        } else if (id == R.id.nav_keyboard) {
-            fragment = KeyboardSearchFragment.newInstance();
-            fragmentTAG = KeyboardSearchFragment.TAG;
+        if (id == R.id.nav_search) {
+            fragment = MainActivityFragment.newInstance();
+            fragmentTAG = MainActivityFragment.TAG;
         } else if (id == R.id.nav_manage) {
             Toast.makeText(this, "Función no implementada", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_about_us) {
@@ -120,14 +117,14 @@ public class MainActivity extends AppCompatActivity
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == CAMERA_PERMISSION_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                PhotoSearchFragment fragment = (PhotoSearchFragment) getSupportFragmentManager().findFragmentByTag(PhotoSearchFragment.TAG);
+                MainActivityFragment fragment = (MainActivityFragment) getSupportFragmentManager().findFragmentByTag(MainActivityFragment.TAG);
                 if (fragment != null) {
                     fragment.makePhotoCamera();
                 }
             }
         } else if (requestCode == WRITE_SD_PERMISSION_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                PhotoSearchFragment fragment = (PhotoSearchFragment) getSupportFragmentManager().findFragmentByTag(PhotoSearchFragment.TAG);
+                MainActivityFragment fragment = (MainActivityFragment) getSupportFragmentManager().findFragmentByTag(MainActivityFragment.TAG);
                 if (fragment != null) {
                     fragment.setUpPhotoCamera();
                 }

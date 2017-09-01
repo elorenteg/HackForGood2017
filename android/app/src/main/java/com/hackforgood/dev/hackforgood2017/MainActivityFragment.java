@@ -4,11 +4,9 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -17,7 +15,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,16 +22,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.hackforgood.dev.hackforgood2017.controllers.ImageOCRController;
+import com.hackforgood.dev.hackforgood2017.controllers.ImageSearchController;
 import com.hackforgood.dev.hackforgood2017.controllers.PhotoToServerController;
 import com.hackforgood.dev.hackforgood2017.controllers.WikiAPIController;
 import com.hackforgood.dev.hackforgood2017.model.ImageOCR;
 import com.hackforgood.dev.hackforgood2017.model.Medicine;
 import com.hackforgood.dev.hackforgood2017.model.WikiContent;
+import com.hackforgood.dev.hackforgood2017.utils.ImageUtils;
+import com.hackforgood.dev.hackforgood2017.utils.UriUtils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.Normalizer;
@@ -43,19 +40,19 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PhotoSearchFragment extends Fragment implements PhotoToServerController.PhotoToServerCallback,
-        ImageOCRController.ImageOCRResolvedCallback, WikiAPIController.WikiAPIResolvedCallback {
-    public static final String TAG = PhotoSearchFragment.class.getSimpleName();
+public class MainActivityFragment extends Fragment implements PhotoToServerController.PhotoToServerCallback,
+        ImageSearchController.ImageOCRResolvedCallback, WikiAPIController.WikiAPIResolvedCallback {
+    public static final String TAG = MainActivityFragment.class.getSimpleName();
     private static final int GALLERY_PHOTO_CODE = 100;
     private static final int CAMERA_PHOTO_CODE = 101;
-    private final ImageOCRController.ImageOCRResolvedCallback imageOCRResolvedCallback = this;
+    private final ImageSearchController.ImageOCRResolvedCallback imageOCRResolvedCallback = this;
     private final WikiAPIController.WikiAPIResolvedCallback wikiAPIResolvedCallback = this;
     private View rootview;
     private Button buttonCamera;
     private Button buttonGallery;
-    private String cameraDir;
-    private Uri outputFileUri;
-    private ImageOCRController imageOCRController;
+    private Button buttonKeyboard;
+    private Button buttonMicrophone;
+    private ImageSearchController imageSearchController;
     private WikiAPIController wikiAPIController;
 
     private Medicine medicine = null;
@@ -64,30 +61,34 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
     private String imageURL;
     private int PHOTO_SCALED_WIDTH = 854;
     private int PHOTO_SCALED_HEIGHT = 480;
+    private Uri outputFileUri;
+    private String cameraDirectory;
 
-    public static PhotoSearchFragment newInstance() {
-        return new PhotoSearchFragment();
+    public static MainActivityFragment newInstance() {
+        return new MainActivityFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        rootview = inflater.inflate(R.layout.photo_search_fragment, container, false);
+        rootview = inflater.inflate(R.layout.main_activity_fragment, container, false);
 
         setUpElements();
         setUpListeners();
 
         setUpPhotoCamera();
 
-        imageOCRController = new ImageOCRController(getContext());
+        imageSearchController = new ImageSearchController(getContext());
         wikiAPIController = new WikiAPIController(getContext());
 
         return rootview;
     }
 
     private void setUpElements() {
-        buttonCamera = (Button) rootview.findViewById(R.id.photo_search_camera_button);
-        buttonGallery = (Button) rootview.findViewById(R.id.photo_search_gallery_button);
+        buttonCamera = (Button) rootview.findViewById(R.id.main_fragment_camera_button);
+        buttonGallery = (Button) rootview.findViewById(R.id.main_fragment_gallery_button);
+        buttonKeyboard = (Button) rootview.findViewById(R.id.main_fragment_keyboard_button);
+        buttonMicrophone = (Button) rootview.findViewById(R.id.main_fragment_microphone_button);
     }
 
     private void setUpListeners() {
@@ -102,37 +103,26 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
                 openImageChooser();
             }
         });
-    }
 
-    public void setUpPhotoCamera() {
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MainActivity.WRITE_SD_PERMISSION_CODE);
-        } else {
-            cameraDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/tellmedleaflet/";
-            File newdir = new File(cameraDir);
-            if (!newdir.isDirectory()) {
-                if (!newdir.mkdirs()) {
-                    Toast.makeText(getContext(), "Problem creating IMAGES FOLDER", Toast.LENGTH_SHORT).show();
-                }
+        buttonKeyboard.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Fragment fragment = KeyboardSearchFragment.newInstance();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.main_container, fragment, KeyboardSearchFragment.TAG);
+                ft.addToBackStack(null);
+                ft.commit();
             }
-        }
+        });
+
+        buttonMicrophone.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            }
+        });
     }
 
     public void makePhotoCamera() {
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, MainActivity.CAMERA_PERMISSION_CODE);
-        } else {
-            String file = cameraDir + System.currentTimeMillis() + ".jpg";
-            File newfile = new File(file);
-            try {
-                if (!newfile.createNewFile()) {
-                    Toast.makeText(getContext(), "Problem creating IMAGE", Toast.LENGTH_SHORT).show();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            outputFileUri = getUrifromFile(newfile);
+        outputFileUri = imageSearchController.getUriCameraPhoto(cameraDirectory);
+        if (outputFileUri != null) {
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
 
@@ -140,15 +130,22 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
         }
     }
 
-    private Uri getUrifromFile(File newfile) {
-        Uri uri;
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-            uri = FileProvider.getUriForFile(getContext(), getContext().getApplicationContext().getPackageName() + ".provider", newfile);
+    public void setUpPhotoCamera() {
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MainActivity.WRITE_SD_PERMISSION_CODE);
         } else {
-            uri = Uri.fromFile(newfile);
+            cameraDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/tellmedleaflet/";
+            File newdir = new File(cameraDirectory);
+            if (!newdir.isDirectory()) {
+                if (!newdir.mkdirs()) {
+                    Toast.makeText(getContext(), "Problem creating IMAGES FOLDER", Toast.LENGTH_SHORT).show();
+                }
+            }
         }
 
-        return uri;
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, MainActivity.CAMERA_PERMISSION_CODE);
+        }
     }
 
     private void openImageChooser() {
@@ -162,13 +159,13 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
             if (requestCode == GALLERY_PHOTO_CODE) {
                 try {
                     Uri imageUri = data.getData();
-                    String realUri = getRealPathFromUri(imageUri);
+                    String realUri = UriUtils.getRealPathFromUri(imageUri, getContext());
                     InputStream imageStream = getActivity().getContentResolver().openInputStream(imageUri);
 
                     Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
-                    Bitmap scaledBitmap = scaleBitmap(selectedImage, PHOTO_SCALED_WIDTH, PHOTO_SCALED_HEIGHT);
-                    compressBitmap(new File(realUri), scaledBitmap);
+                    Bitmap scaledBitmap = ImageUtils.scaleBitmap(selectedImage, PHOTO_SCALED_WIDTH, PHOTO_SCALED_HEIGHT);
+                    ImageUtils.compressBitmap(new File(realUri), scaledBitmap);
 
                     uploadImageToAPI(realUri);
                 } catch (IOException e) {
@@ -179,8 +176,8 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
                 try {
                     Bitmap selectedImage = readImageFromResources(outputFileUri);
 
-                    Bitmap scaledBitmap = scaleBitmap(selectedImage, PHOTO_SCALED_WIDTH, PHOTO_SCALED_HEIGHT);
-                    compressBitmap(new File(outputFileUri.getPath()), scaledBitmap);
+                    Bitmap scaledBitmap = ImageUtils.scaleBitmap(selectedImage, PHOTO_SCALED_WIDTH, PHOTO_SCALED_HEIGHT);
+                    ImageUtils.compressBitmap(new File(outputFileUri.getPath()), scaledBitmap);
 
                     uploadImageToAPI(outputFileUri.getPath());
                 } catch (Exception e) {
@@ -190,50 +187,6 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
             }
         } else {
             Toast.makeText(getActivity(), "You haven't picked Image", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private Bitmap scaleBitmap(Bitmap bitmap, int maxWidth, int maxHeight) {
-        if (maxHeight > 0 && maxWidth > 0) {
-            int width = bitmap.getWidth();
-            int height = bitmap.getHeight();
-
-            if (height > width) {
-                int aux = maxHeight;
-                maxHeight = maxWidth;
-                maxWidth = aux;
-            }
-
-            float ratioBitmap = (float) width / (float) height;
-            float ratioMax = (float) maxWidth / (float) maxHeight;
-
-            int finalWidth = maxWidth;
-            int finalHeight = maxHeight;
-            if (ratioMax > 1) {
-                finalWidth = (int) ((float) maxHeight * ratioBitmap);
-            } else {
-                finalHeight = (int) ((float) maxWidth / ratioBitmap);
-            }
-            return Bitmap.createScaledBitmap(bitmap, finalWidth, finalHeight, true);
-        }
-        return bitmap;
-    }
-
-    private void compressBitmap(File file, Bitmap bitmap) throws FileNotFoundException {
-        FileOutputStream out = null;
-        try {
-            out = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (out != null) {
-                    out.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -247,38 +200,14 @@ public class PhotoSearchFragment extends Fragment implements PhotoToServerContro
         PhotoToServerController.sendPhotoToServer(uriToUpload, this);
     }
 
-    private String getRealPathFromUri(Uri contentUri) {
-        Cursor cursor = null;
-        try {
-            String[] proj = {MediaStore.Images.Media.DATA};
-            cursor = getContext().getContentResolver().query(contentUri, proj, null, null, null);
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-    }
-
     @Override
     public void onPhotoToServerSent(String message) {
         Log.e(TAG, "FINALIZANDO ACK RECIBIDO; " + message);
         imageURL = message;
         medNameRedirections = new HashMap<>();
 
-        String url = "";
-        url = "http://omicrono.elespanol.com/wp-content/uploads/2015/05/ibuprofeno.jpg";
-        url = "http://carolinayh.com/image/cache/finalizado/2014_01_28/19-98web-780x600.jpg";
-        //url = "http://www.elcorreo.com/noticias/201407/24/media/cortadas/paracetamol--575x323.jpg";
-
-        //TextToSpeechController.getInstance(this).speak("Hola Mundo!", TextToSpeech.QUEUE_FLUSH);
-
-        url = message;
-
         Toast.makeText(getActivity(), "Doing OCR", Toast.LENGTH_SHORT).show();
-        imageOCRController.imageOCRRequest(url, imageOCRResolvedCallback);
+        imageSearchController.imageOCRRequest(imageURL, imageOCRResolvedCallback);
     }
 
     public void onImageOCRResolved(ImageOCR imageOCR) {
