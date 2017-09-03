@@ -98,7 +98,12 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_search) {
             fragment = MainActivityFragment.newInstance();
             fragmentTAG = MainActivityFragment.TAG;
-        } else if (id == R.id.nav_manage) {
+        }
+        else if (id == R.id.nav_historic) {
+            fragment = HistoricFragment.newInstance();
+            fragmentTAG = HistoricFragment.TAG;
+        }
+        else if (id == R.id.nav_manage) {
             Toast.makeText(this, "Función no implementada", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_about_us) {
             fragment = AboutUsFragment.newInstance();

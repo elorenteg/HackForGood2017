@@ -5,6 +5,10 @@
             android:id="@+id/nav_search"
             android:icon="@drawable/ic_menu_share"
             android:title="Buscar" />
+        <item
+            android:id="@+id/nav_historic"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Historic" />
     </group>
 
     <group android:checkableBehavior="single">
