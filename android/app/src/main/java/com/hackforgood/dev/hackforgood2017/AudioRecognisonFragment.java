@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ public class AudioRecognisonFragment extends Fragment {
     public static final String TAG = AudioRecognisonFragment.class.getSimpleName();
     public final static int REQ_CODE_SPEECH_INPUT = 100;
     private View rootview;
+    private Button buttonRecording;
     private Button buttonSearch;
     private EditText editText;
 
@@ -40,7 +42,8 @@ public class AudioRecognisonFragment extends Fragment {
 
     private void setUpElements() {
         editText = (EditText) rootview.findViewById(R.id.audio_recognison_edit_text);
-        buttonSearch = (Button) rootview.findViewById(R.id.audio_recognison_button);
+        buttonRecording = (Button) rootview.findViewById(R.id.audio_recording_button);
+        buttonSearch = (Button) rootview.findViewById(R.id.audio_search_button);
     }
 
     private void setUpListeners() {
@@ -49,9 +52,21 @@ public class AudioRecognisonFragment extends Fragment {
             }
         });
 
-        buttonSearch.setOnClickListener(new View.OnClickListener() {
+        buttonRecording.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 promptSpeechInput();
+            }
+        });
+
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (!editText.getText().toString().equals("")) {
+                    Fragment fragment = ResultScreenFragment.newInstance(null, null, editText.getText().toString());
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.main_container, fragment, ResultScreenFragment.TAG);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
             }
         });
     }

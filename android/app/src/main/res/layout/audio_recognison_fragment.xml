@@ -8,13 +8,13 @@
     android:padding="30dp">
 
     <Button
-        android:id="@+id/audio_recognison_button"
+        android:id="@+id/audio_recording_button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#0175D8"
-        android:drawableLeft="@drawable/micro"
+        android:drawableLeft="@drawable/voice_recorder"
         android:padding="20dp"
-        android:text="Buscar"
+        android:text="Grabar"
         android:textColor="#FFF"
         android:textSize="24sp" />
 
@@ -34,5 +34,20 @@
         android:padding="16dp"
         android:text=""
         android:textSize="30sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
+    <Button
+        android:id="@+id/audio_search_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#0175D8"
+        android:drawableLeft="@drawable/magnifying_glass_finder"
+        android:padding="20dp"
+        android:text="Buscar"
+        android:textColor="#FFF"
+        android:textSize="24sp" />
 
 </LinearLayout>
