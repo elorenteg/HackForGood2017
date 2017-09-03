@@ -8,7 +8,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class ImageUtils {
-
     public static Bitmap scaleBitmap(Bitmap bitmap, int maxWidth, int maxHeight) {
         if (maxHeight > 0 && maxWidth > 0) {
             int width = bitmap.getWidth();

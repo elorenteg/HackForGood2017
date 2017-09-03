@@ -8,7 +8,7 @@
         <item
             android:id="@+id/nav_historic"
             android:icon="@drawable/ic_menu_send"
-            android:title="Historic" />
+            android:title="Histórico" />
     </group>
 
     <group android:checkableBehavior="single">

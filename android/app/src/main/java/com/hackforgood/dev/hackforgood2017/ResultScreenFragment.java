@@ -20,6 +20,7 @@ import com.hackforgood.dev.hackforgood2017.controllers.LeafletAPIController;
 import com.hackforgood.dev.hackforgood2017.controllers.TextToSpeechController;
 import com.hackforgood.dev.hackforgood2017.controllers.VolleyController;
 import com.hackforgood.dev.hackforgood2017.model.Medicine;
+import com.hackforgood.dev.hackforgood2017.utils.HistoricUtils;
 
 import java.io.IOException;
 
@@ -117,6 +118,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
             medCodeText.setText("-----");
         }
 
+        saveInformationForHistoric(medicine.getCode(), medicine.getName());
         sendRequestoToGetLeafletInformation(medicine.getCode());
 
         return rootview;
@@ -173,8 +175,12 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         VolleyController.getInstance(getActivity()).addToQueue(request);
     }
 
+    private void saveInformationForHistoric(int code, String name) {
+        HistoricUtils.saveInformationHistoric(getContext(), code, name);
+    }
+
     private void sendRequestoToGetLeafletInformation(int code) {
-        LeafletAPIController.leafletAPIRequest(code + "", getContext(), this);
+        //LeafletAPIController.leafletAPIRequest(code + "", getContext(), this);
     }
 
     @Override

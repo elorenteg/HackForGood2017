@@ -1,9 +1,7 @@
 package com.hackforgood.dev.hackforgood2017.adapters;
 
-import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +10,13 @@ import android.widget.TextView;
 import com.hackforgood.dev.hackforgood2017.R;
 import com.hackforgood.dev.hackforgood2017.model.HistoricItem;
 
-import org.json.JSONException;
-
 import java.util.List;
 
-public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.ViewHolder>{
-
+public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.ViewHolder> {
     private List<HistoricItem> data;
-    private Context context;
 
-    public HistoricAdapter(List<HistoricItem> data, Context context) {
+    public HistoricAdapter(List<HistoricItem> data) {
         this.data = data;
-        this.context = context;
     }
 
     @Override
@@ -36,8 +29,10 @@ public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         HistoricItem cardModel = data.get(position);
+        int code = cardModel.getCode();
         String name = cardModel.getName();
 
+        holder.mHistoricItemCode.setText(code + "");
         holder.mHistoricItemName.setText(name);
     }
 
@@ -48,12 +43,14 @@ public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private CardView mCardView;
+        private TextView mHistoricItemCode;
         private TextView mHistoricItemName;
 
         ViewHolder(View itemView) {
             super(itemView);
             mCardView = (CardView) itemView.findViewById(R.id.historic_item_layout);
-            mHistoricItemName = (TextView) itemView.findViewById(R.id.historic_item_text);
+            mHistoricItemCode = (TextView) itemView.findViewById(R.id.historic_item_code);
+            mHistoricItemName = (TextView) itemView.findViewById(R.id.historic_item_name);
         }
     }
 }
