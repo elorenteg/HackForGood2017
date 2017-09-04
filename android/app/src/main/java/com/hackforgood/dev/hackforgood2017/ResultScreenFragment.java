@@ -24,34 +24,54 @@ import com.hackforgood.dev.hackforgood2017.utils.HistoricUtils;
 
 import java.io.IOException;
 
-/**
- * Created by LaQuay on 11/03/2017.
- */
-
 public class ResultScreenFragment extends Fragment implements LeafletAPIController.LeafletAPICallback {
     public static final String TAG = ResultScreenFragment.class.getSimpleName();
     private static final String ARG_URL = "url";
     private static final String ARG_MEDICINE = "medicine";
     private static final String ARG_TEXTTOSEARCH = "user_text";
+    private static final String ARG_ISNEWEVENT = "new_event";
     private View rootview;
     private LinearLayout imageLayout;
     private CardView nameLayout;
     private CardView codeLayout;
-    private CardView leafletLayout;
     private ImageView imageView;
     private TextView medNameText;
     private TextView medCodeText;
-    private TextView medLeafletText;
     private ImageView nameSpeakerImage;
     private ImageView codeSpeakerImage;
-    private ImageView leafletSpeakerImage;
+
+    private CardView queLayout;
+    private TextView medQueText;
+    private ImageView queSpeakerImage;
+    private CardView antesLayout;
+    private TextView medAntesText;
+    private ImageView antesSpeakerImage;
+    private CardView comoLayout;
+    private TextView medComoText;
+    private ImageView comoSpeakerImage;
+    private CardView efectosLayout;
+    private TextView medEfectosText;
+    private ImageView efectosSpeakerImage;
+    private CardView informacionLayout;
+    private TextView medInformacionText;
+    private ImageView informacionSpeakerImage;
+    private CardView conservacionLayout;
+    private TextView medConservacionText;
+    private ImageView conservacionSpeakerImage;
 
     private String imageUrl;
     private Medicine medicine;
     private String textToSearch;
-    private String medicineLeaflet;
+    private boolean isNewEvent;
 
-    public static ResultScreenFragment newInstance(String imageUrl, Medicine medicine, String textToSearch) {
+    private String medicineQue;
+    private String medicineAntes;
+    private String medicineComo;
+    private String medicineEfectos;
+    private String medicineConservacion;
+    private String medicineInformacion;
+
+    public static ResultScreenFragment newInstance(String imageUrl, Medicine medicine, String textToSearch, boolean isNewEvent) {
         ResultScreenFragment fragment = new ResultScreenFragment();
         Bundle args = new Bundle();
         args.putString(ARG_URL, imageUrl);
@@ -63,6 +83,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
             }
         }
         args.putString(ARG_TEXTTOSEARCH, textToSearch);
+        args.putBoolean(ARG_ISNEWEVENT, isNewEvent);
         fragment.setArguments(args);
 
         return fragment;
@@ -84,6 +105,8 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         }
 
         this.textToSearch = getArguments().getString(ARG_TEXTTOSEARCH);
+
+        this.isNewEvent = getArguments().getBoolean(ARG_ISNEWEVENT);
     }
 
     @Nullable
@@ -107,24 +130,57 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         if (MainActivity.USE_DUMMY_MODE_MEDS) {
             medNameText.setText(medicine.getName());
             medCodeText.setText("" + medicine.getCode());
-            medicineLeaflet = "Paracetamol Pensa pertenece al grupo de medicamentos llamados analgésicos y antipiréticos. \n" +
-                    " \n" +
-                    "Este medicamento está indicado para el tratamiento sintomático del dolor de intensidad leve o moderada, y \n" +
-                    "para reducir la fiebre. ";
-            medLeafletText.setText(medicineLeaflet);
+
+            medicineQue = "que texto";
+            medicineComo = "como texto";
+            medicineAntes = "antes texto";
+            medicineEfectos = "efectos texto";
+            medicineConservacion = "conservacion texto";
+            medicineInformacion = "informacion texto";
+
+            medQueText.setText(medicineQue);
+            medComoText.setText(medicineComo);
+            medAntesText.setText(medicineAntes);
+            medEfectosText.setText(medicineEfectos);
+            medConservacionText.setText(medicineConservacion);
+            medInformacionText.setText(medicineInformacion);
         }
 
         if (medicine != null) {
             medNameText.setText(medicine.getName());
             medCodeText.setText("" + medicine.getCode());
-            medLeafletText.setText(medicineLeaflet);
+
+            // TODO json parser
+
+            medicineQue = "que texto";
+            medicineComo = "como texto";
+            medicineAntes = "antes texto";
+            medicineEfectos = "efectos texto";
+            medicineConservacion = "conservacion texto";
+            medicineInformacion = "informacion texto";
+
+            medQueText.setText(medicineQue);
+            medComoText.setText(medicineComo);
+            medAntesText.setText(medicineAntes);
+            medEfectosText.setText(medicineEfectos);
+            medConservacionText.setText(medicineConservacion);
+            medInformacionText.setText(medicineInformacion);
+
         } else if (textToSearch != null) {
             medNameText.setText(textToSearch);
             medCodeText.setText("-----");
+            medQueText.setText("-----");
+            medComoText.setText("-----");
+            medAntesText.setText("-----");
+            medEfectosText.setText("-----");
+            medConservacionText.setText("-----");
+            medInformacionText.setText("-----");
         }
 
         if (medicine != null) {
-            saveInformationForHistoric(medicine.getCode(), medicine.getName());
+            if (isNewEvent) {
+                saveInformationForHistoric(medicine.getCode(), medicine.getName());
+            }
             sendRequestoToGetLeafletInformation(LeafletAPIController.SEARCH_BY_CODE, medicine.getCode() + "");
         } else {
             speakerStatus(View.GONE);
@@ -140,15 +196,30 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
 
         medNameText = (TextView) rootview.findViewById(R.id.result_screen_med_name_text);
         medCodeText = (TextView) rootview.findViewById(R.id.result_screen_med_code_text);
-        medLeafletText = (TextView) rootview.findViewById(R.id.result_screen_med_leaflet_text);
+        medQueText = (TextView) rootview.findViewById(R.id.result_screen_med_que_text);
+        medAntesText = (TextView) rootview.findViewById(R.id.result_screen_med_antes_text);
+        medComoText = (TextView) rootview.findViewById(R.id.result_screen_med_como_text);
+        medEfectosText = (TextView) rootview.findViewById(R.id.result_screen_med_efectos_text);
+        medConservacionText = (TextView) rootview.findViewById(R.id.result_screen_med_conservacion_text);
+        medInformacionText = (TextView) rootview.findViewById(R.id.result_screen_med_informacion_text);
 
         nameLayout = (CardView) rootview.findViewById(R.id.result_screen_name_layout);
         codeLayout = (CardView) rootview.findViewById(R.id.result_screen_code_layout);
-        leafletLayout = (CardView) rootview.findViewById(R.id.result_screen_leaflet_layout);
+        queLayout = (CardView) rootview.findViewById(R.id.result_screen_que_layout);
+        antesLayout = (CardView) rootview.findViewById(R.id.result_screen_antes_layout);
+        comoLayout = (CardView) rootview.findViewById(R.id.result_screen_como_layout);
+        efectosLayout = (CardView) rootview.findViewById(R.id.result_screen_efectos_layout);
+        conservacionLayout = (CardView) rootview.findViewById(R.id.result_screen_conservacion_layout);
+        informacionLayout = (CardView) rootview.findViewById(R.id.result_screen_informacion_layout);
 
         nameSpeakerImage = (ImageView) rootview.findViewById(R.id.result_screen_name_speaker);
         codeSpeakerImage = (ImageView) rootview.findViewById(R.id.result_screen_code_speaker);
-        leafletSpeakerImage = (ImageView) rootview.findViewById(R.id.result_screen_leaflet_speaker);
+        queSpeakerImage = (ImageView) rootview.findViewById(R.id.result_screen_que_speaker);
+        antesSpeakerImage = (ImageView) rootview.findViewById(R.id.result_screen_antes_speaker);
+        comoSpeakerImage = (ImageView) rootview.findViewById(R.id.result_screen_como_speaker);
+        efectosSpeakerImage = (ImageView) rootview.findViewById(R.id.result_screen_efectos_speaker);
+        conservacionSpeakerImage = (ImageView) rootview.findViewById(R.id.result_screen_conservacion_speaker);
+        informacionSpeakerImage = (ImageView) rootview.findViewById(R.id.result_screen_informacion_speaker);
     }
 
     private void setUpListeners() {
@@ -168,10 +239,50 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
             }
         });
 
-        leafletLayout.setOnClickListener(new View.OnClickListener() {
+        queLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (medicine != null) {
-                    TextToSpeechController.getInstance(getContext()).speak(medicineLeaflet, TextToSpeech.QUEUE_FLUSH);
+                    TextToSpeechController.getInstance(getContext()).speak(medicineQue, TextToSpeech.QUEUE_FLUSH);
+                }
+            }
+        });
+
+        antesLayout.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (medicine != null) {
+                    TextToSpeechController.getInstance(getContext()).speak(medicineAntes, TextToSpeech.QUEUE_FLUSH);
+                }
+            }
+        });
+
+        comoLayout.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (medicine != null) {
+                    TextToSpeechController.getInstance(getContext()).speak(medicineComo, TextToSpeech.QUEUE_FLUSH);
+                }
+            }
+        });
+
+        efectosLayout.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (medicine != null) {
+                    TextToSpeechController.getInstance(getContext()).speak(medicineEfectos, TextToSpeech.QUEUE_FLUSH);
+                }
+            }
+        });
+
+        conservacionLayout.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (medicine != null) {
+                    TextToSpeechController.getInstance(getContext()).speak(medicineConservacion, TextToSpeech.QUEUE_FLUSH);
+                }
+            }
+        });
+
+        informacionLayout.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (medicine != null) {
+                    TextToSpeechController.getInstance(getContext()).speak(medicineInformacion, TextToSpeech.QUEUE_FLUSH);
                 }
             }
         });
@@ -181,11 +292,21 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         if (state == View.GONE) {
             nameSpeakerImage.setVisibility(View.GONE);
             codeSpeakerImage.setVisibility(View.GONE);
-            leafletSpeakerImage.setVisibility(View.GONE);
+            queSpeakerImage.setVisibility(View.GONE);
+            antesSpeakerImage.setVisibility(View.GONE);
+            comoSpeakerImage.setVisibility(View.GONE);
+            efectosSpeakerImage.setVisibility(View.GONE);
+            conservacionSpeakerImage.setVisibility(View.GONE);
+            informacionSpeakerImage.setVisibility(View.GONE);
         } else {
             nameSpeakerImage.setVisibility(View.VISIBLE);
             codeSpeakerImage.setVisibility(View.VISIBLE);
-            leafletSpeakerImage.setVisibility(View.VISIBLE);
+            queSpeakerImage.setVisibility(View.VISIBLE);
+            antesSpeakerImage.setVisibility(View.VISIBLE);
+            comoSpeakerImage.setVisibility(View.VISIBLE);
+            efectosSpeakerImage.setVisibility(View.VISIBLE);
+            conservacionSpeakerImage.setVisibility(View.VISIBLE);
+            informacionSpeakerImage.setVisibility(View.VISIBLE);
         }
     }
 
@@ -215,7 +336,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
 
         // TODO Construir medicamento definitivo
 
-        if (searchMode == LeafletAPIController.SEARCH_BY_NAME) {
+        if (searchMode == LeafletAPIController.SEARCH_BY_NAME && isNewEvent) {
             saveInformationForHistoric(medicine.getCode(), medicine.getName());
         }
 

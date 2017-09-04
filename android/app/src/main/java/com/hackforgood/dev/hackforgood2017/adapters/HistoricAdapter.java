@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,16 +37,36 @@ public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         HistoricItem cardModel = data.get(position);
-        int code = cardModel.getCode();
-        String name = cardModel.getName();
+        final int code = cardModel.getCode();
+        final String name = cardModel.getName();
 
         holder.mHistoricItemCode.setText(code + "");
         holder.mHistoricItemName.setText(name);
+
+        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadMedicineFragment(code, name);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+    private void loadMedicineFragment(int code, String name) {
+        Medicine medicine = new Medicine();
+        medicine.setCode(code);
+        medicine.setName(name);
+
+        Fragment fragment = ResultScreenFragment.newInstance(null, medicine, null, false);
+        MainActivity mainActivity = (MainActivity) context;
+        FragmentTransaction ft = mainActivity.getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.main_container, fragment, ResultScreenFragment.TAG);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -57,31 +76,9 @@ public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.ViewHo
 
         ViewHolder(View itemView) {
             super(itemView);
-            mCardView = (CardView) itemView.findViewById(R.id.historic_item_layout);
+            mCardView = (CardView) itemView.findViewById(R.id.historic_item_cardview);
             mHistoricItemCode = (TextView) itemView.findViewById(R.id.historic_item_code);
             mHistoricItemName = (TextView) itemView.findViewById(R.id.historic_item_name);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int code = Integer.parseInt(mHistoricItemCode.getText().toString());
-                    String name = mHistoricItemName.toString();
-                    loadMedicineFragment(code, name);
-                }
-            });
         }
-    }
-
-    private void loadMedicineFragment(int code, String name) {
-        Medicine medicine = new Medicine();
-        medicine.setCode(code);
-        medicine.setName(name);
-
-        Fragment fragment = ResultScreenFragment.newInstance(null, medicine, null);
-        MainActivity mainActivity = (MainActivity) context;
-        FragmentTransaction ft = mainActivity.getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.main_container, fragment, ResultScreenFragment.TAG);
-        ft.addToBackStack(null);
-        ft.commit();
     }
 }

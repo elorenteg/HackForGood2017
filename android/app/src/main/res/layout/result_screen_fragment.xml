@@ -11,13 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="30dp">
+        android:padding="15dp">
 
         <LinearLayout
             android:id="@+id/linear_result_image_screen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <ImageView
                 android:id="@+id/result_screen_med_result_image"
@@ -62,7 +62,7 @@
 
                 <TextView
                     android:id="@+id/result_screen_med_name_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/result_screen_med_name_label"
                     android:text="Resultado"
@@ -103,17 +103,17 @@
 
                 <TextView
                     android:id="@+id/result_screen_med_code_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/result_screen_med_code_label"
                     android:text="Código"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="40sp"/>
+                    android:textSize="40sp" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            android:id="@+id/result_screen_leaflet_layout"
+            android:id="@+id/result_screen_que_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -126,7 +126,7 @@
                 android:padding="10dp">
 
                 <ImageView
-                    android:id="@+id/result_screen_leaflet_speaker"
+                    android:id="@+id/result_screen_que_speaker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -135,22 +135,228 @@
                     android:src="@drawable/ic_speaker_wireless_grey600_36dp" />
 
                 <com.beardedhen.androidbootstrap.AwesomeTextView
-                    android:id="@+id/result_screen_med_leaflet_label"
+                    android:id="@+id/result_screen_med_que_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Prospecto"
+                    android:text="Que"
                     android:textSize="20sp"
                     app:bootstrapBrand="regular" />
 
                 <TextView
-                    android:id="@+id/result_screen_med_leaflet_text"
+                    android:id="@+id/result_screen_med_que_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/result_screen_med_leaflet_label"
+                    android:layout_below="@id/result_screen_med_que_label"
                     android:text="Prospecto..."
                     android:textColor="@color/colorPrimary"
                     android:textSize="36sp" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/result_screen_antes_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            card_view:cardCornerRadius="5dp"
+            card_view:cardElevation="2dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/result_screen_antes_speaker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/ic_speaker_wireless_grey600_36dp" />
+
+                <com.beardedhen.androidbootstrap.AwesomeTextView
+                    android:id="@+id/result_screen_med_antes_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Antes"
+                    android:textSize="20sp"
+                    app:bootstrapBrand="regular" />
+
+                <TextView
+                    android:id="@+id/result_screen_med_antes_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/result_screen_med_antes_label"
+                    android:text="Prospecto..."
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="36sp" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/result_screen_como_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            card_view:cardCornerRadius="5dp"
+            card_view:cardElevation="2dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/result_screen_como_speaker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/ic_speaker_wireless_grey600_36dp" />
+
+                <com.beardedhen.androidbootstrap.AwesomeTextView
+                    android:id="@+id/result_screen_med_como_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Como"
+                    android:textSize="20sp"
+                    app:bootstrapBrand="regular" />
+
+                <TextView
+                    android:id="@+id/result_screen_med_como_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/result_screen_med_como_label"
+                    android:text="Prospecto..."
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="36sp" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/result_screen_efectos_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            card_view:cardCornerRadius="5dp"
+            card_view:cardElevation="2dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/result_screen_efectos_speaker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/ic_speaker_wireless_grey600_36dp" />
+
+                <com.beardedhen.androidbootstrap.AwesomeTextView
+                    android:id="@+id/result_screen_med_efectos_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Efectos"
+                    android:textSize="20sp"
+                    app:bootstrapBrand="regular" />
+
+                <TextView
+                    android:id="@+id/result_screen_med_efectos_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/result_screen_med_efectos_label"
+                    android:text="Prospecto..."
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="36sp" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/result_screen_conservacion_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            card_view:cardCornerRadius="5dp"
+            card_view:cardElevation="2dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/result_screen_conservacion_speaker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/ic_speaker_wireless_grey600_36dp" />
+
+                <com.beardedhen.androidbootstrap.AwesomeTextView
+                    android:id="@+id/result_screen_med_conservacion_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Conservación"
+                    android:textSize="20sp"
+                    app:bootstrapBrand="regular" />
+
+                <TextView
+                    android:id="@+id/result_screen_med_conservacion_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/result_screen_med_conservacion_label"
+                    android:text="Prospecto..."
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="36sp" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/result_screen_informacion_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            card_view:cardCornerRadius="5dp"
+            card_view:cardElevation="2dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/result_screen_informacion_speaker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/ic_speaker_wireless_grey600_36dp" />
+
+                <com.beardedhen.androidbootstrap.AwesomeTextView
+                    android:id="@+id/result_screen_med_informacion_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Información"
+                    android:textSize="20sp"
+                    app:bootstrapBrand="regular" />
+
+                <TextView
+                    android:id="@+id/result_screen_med_informacion_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/result_screen_med_informacion_label"
+                    android:text="Prospecto..."
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="36sp" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
     </LinearLayout>
 </ScrollView>

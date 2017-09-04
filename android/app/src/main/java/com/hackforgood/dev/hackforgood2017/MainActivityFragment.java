@@ -294,7 +294,7 @@ public class MainActivityFragment extends Fragment implements PhotoToServerContr
 
     private void loadMedicineFragment(Medicine medicine) {
         Log.e(TAG, "Sending: " + medicine.toString());
-        Fragment fragment = ResultScreenFragment.newInstance(imageURL, medicine, null);
+        Fragment fragment = ResultScreenFragment.newInstance(imageURL, medicine, null, true);
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.main_container, fragment, ResultScreenFragment.TAG);
         ft.addToBackStack(null);

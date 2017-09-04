@@ -152,10 +152,9 @@ public class Medicine implements Serializable {
         parsedText = parsedText.replaceAll("cabeza", "");
         parsedText = parsedText.replaceAll("anti-inflamatorio", "");
         parsedText = parsedText.replaceAll("película", "");
-        parsedText = parsedText.replaceAll("gotas", "");
-        parsedText = parsedText.replaceAll("oticas", "");
         parsedText = parsedText.replaceAll("solucion", "");
         parsedText = parsedText.replaceAll("microgramos", "");
+        parsedText = parsedText.replaceAll("peucu", "");
         parsedText = parsedText.replaceAll(" /", " ");
         parsedText = parsedText.replaceAll("/ ", " ");
         parsedText = parsedText.replaceAll("'", "");
@@ -165,8 +164,8 @@ public class Medicine implements Serializable {
         parsedText = parsedText.replaceAll("\\.", " ");
         parsedText = parsedText.replaceAll(",", " ");
 
-        //parsedText = parsedText.replaceAll("/", " / ");
-        //parsedText = parsedText.replaceAll(" +", " ");
+        parsedText = parsedText.replaceAll("/", " / ");
+        parsedText = parsedText.replaceAll(" +", " ");
 
         parsedText = parsedText.toLowerCase();
 
