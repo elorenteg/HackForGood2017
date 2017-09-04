@@ -38,11 +38,18 @@ public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         HistoricItem cardModel = data.get(position);
-        int code = cardModel.getCode();
-        String name = cardModel.getName();
+        final int code = cardModel.getCode();
+        final String name = cardModel.getName();
 
         holder.mHistoricItemCode.setText(code + "");
         holder.mHistoricItemName.setText(name);
+
+        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadMedicineFragment(code, name);
+            }
+        });
     }
 
     @Override
@@ -60,15 +67,6 @@ public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.ViewHo
             mCardView = (CardView) itemView.findViewById(R.id.historic_item_layout);
             mHistoricItemCode = (TextView) itemView.findViewById(R.id.historic_item_code);
             mHistoricItemName = (TextView) itemView.findViewById(R.id.historic_item_name);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int code = Integer.parseInt(mHistoricItemCode.getText().toString());
-                    String name = mHistoricItemName.getText().toString();
-                    loadMedicineFragment(code, name);
-                }
-            });
         }
     }
 
