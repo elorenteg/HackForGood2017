@@ -17,7 +17,7 @@ public class LeafletAPIController {
     private static final String TAG = LeafletAPIController.class.getSimpleName();
 
     //TODO Request para el heroku
-    public static void leafletAPIRequest(int searchMode, String leafletCode, Context context, final LeafletAPICallback leafletAPICallback) {
+    public static void leafletAPIRequest(final int searchMode, String leafletCode, Context context, final LeafletAPICallback leafletAPICallback) {
         if (searchMode == SEARCH_BY_CODE) {
 
         } else if (searchMode == SEARCH_BY_NAME) {
@@ -35,7 +35,7 @@ public class LeafletAPIController {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        leafletAPICallback.onLeafletAPIResolved("TEST");
+                        leafletAPICallback.onLeafletAPIResolved(searchMode, "TEST");
                     }
                 }, new Response.ErrorListener() {
 
@@ -50,6 +50,6 @@ public class LeafletAPIController {
     }
 
     public interface LeafletAPICallback {
-        void onLeafletAPIResolved(String leaflet);
+        void onLeafletAPIResolved(int searchMode, String leaflet);
     }
 }

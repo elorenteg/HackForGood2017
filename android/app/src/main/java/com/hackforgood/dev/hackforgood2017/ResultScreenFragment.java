@@ -124,6 +124,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         }
 
         if (medicine != null) {
+            saveInformationForHistoric(medicine.getCode(), medicine.getName());
             sendRequestoToGetLeafletInformation(LeafletAPIController.SEARCH_BY_CODE, medicine.getCode() + "");
         } else {
             speakerStatus(View.GONE);
@@ -209,12 +210,15 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
     }
 
     @Override
-    public void onLeafletAPIResolved(String leafletText) {
+    public void onLeafletAPIResolved(int searchMode, String leafletText) {
         Log.e(TAG, "Response: " + leafletText);
 
         // TODO Construir medicamento definitivo
 
-        saveInformationForHistoric(medicine.getCode(), medicine.getName());
+        if (searchMode == LeafletAPIController.SEARCH_BY_NAME) {
+            saveInformationForHistoric(medicine.getCode(), medicine.getName());
+        }
+
         speakerStatus(View.VISIBLE);
     }
 }
