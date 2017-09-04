@@ -17,8 +17,8 @@ var express = require("express"),
 
 var json_preinscripciones = "";
 
-//var XMLFILE = './backend/data/Prescripcion.xml';
-var XMLFILE = './backend/data/Prescripcion_lite.xml';
+//var XMLFILE = './data/Prescripcion.xml';
+var XMLFILE = './data/Prescripcion_lite.xml';
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -41,12 +41,17 @@ fs.readFile(XMLFILE, 'utf8', function (err,data) {
     }
     //json_preinscripciones = JSON.stringify(result);
     json_preinscripciones = result;
-    console.log("xml parseado en JSON");
-    getAllUrls();
+    console.log("XML parseado en JSON");
   });
 });
 
-/*********GET PDF URL FROM CODE*********/
+/** UPDATE DATABASE **/
+function updateDatabase() {
+  getAllUrls();
+  console.log("get all PDF's");
+}
+
+/********* GET PDF URL FROM CODE *********/
 function getUrlByCode(code) {
   console.log("start filtering");
   var url;
@@ -60,7 +65,7 @@ function getUrlByCode(code) {
   return url;
 }
 
-/*********GET PDF URL FROM CODE*********/
+/*********GET ALL PDFs from database *********/
 function getAllUrls() {
   console.log("start filtering");
   var array = json_preinscripciones.aemps_prescripcion.prescription;
@@ -103,14 +108,13 @@ function getProspecto(url) {
   pdfp.parsePDF(url);
   console.log("obteniendo secciones");
 
-  function function2() {
-    var prospecto = pdfp.getAllSections();
-    console.log('Blah blah blah blah extra-blah');
-    return prospecto;
-  }
+  //function function2() {
+  var prospecto = pdfp.getAllSections();
+  return prospecto;
+  //}
 
   // call the rest of the code and have it execute after 3 seconds
-  setTimeout(function2, 5000);
+  //setTimeout(function2, 5000);
 }
 
 /**************************************************ROUTERS************************************************************/

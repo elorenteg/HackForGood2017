@@ -1,7 +1,7 @@
 var fs = require('fs');
 var http = require('https');
-//var PDFParser = require("pdf2json");
-//var parser = new PDFParser();
+var PDFParser = require("pdf2json");
+var parser = new PDFParser();
 
 const QUE = 0;
 const ANTES = 1;
