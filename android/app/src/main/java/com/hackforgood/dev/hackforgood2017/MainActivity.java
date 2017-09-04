@@ -98,12 +98,10 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_search) {
             fragment = MainActivityFragment.newInstance();
             fragmentTAG = MainActivityFragment.TAG;
-        }
-        else if (id == R.id.nav_historic) {
+        } else if (id == R.id.nav_historic) {
             fragment = HistoricFragment.newInstance();
             fragmentTAG = HistoricFragment.TAG;
-        }
-        else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_manage) {
             Toast.makeText(this, "Función no implementada", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_about_us) {
             fragment = AboutUsFragment.newInstance();
@@ -113,8 +111,8 @@ public class MainActivity extends AppCompatActivity
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.main_container, fragment, fragmentTAG);
-            //if (id != R.id.nav_home)
-            ft.addToBackStack(null);
+            if (id != R.id.nav_search)
+                ft.addToBackStack(null);
             ft.commit();
         }
 
