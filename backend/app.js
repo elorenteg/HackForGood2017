@@ -141,7 +141,8 @@ router.post('/upload', function(req, res){
 /*********GET IMAGE*********/
 app.get('/getimage/:image', function (req, res) {
   var imagePath = req.params.image;
-  res.sendfile(path.resolve('./backend/uploads/' + imagePath));
+  //res.sendfile(path.resolve('./backend/uploads/' + imagePath));
+  res.sendfile(path.join(__dirname, 'uploads/', imagePath));
 });
 
 /*********GET PROSPECTO BY CODE*********/
