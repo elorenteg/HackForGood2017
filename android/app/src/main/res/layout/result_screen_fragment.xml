@@ -138,7 +138,7 @@
                     android:id="@+id/result_screen_med_que_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Que"
+                    android:text="Qué es"
                     android:textSize="20sp"
                     app:bootstrapBrand="regular" />
 
@@ -179,7 +179,7 @@
                     android:id="@+id/result_screen_med_antes_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Antes"
+                    android:text="Antes de tomar"
                     android:textSize="20sp"
                     app:bootstrapBrand="regular" />
 
@@ -220,7 +220,7 @@
                     android:id="@+id/result_screen_med_como_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Como"
+                    android:text="Cómo Tomar"
                     android:textSize="20sp"
                     app:bootstrapBrand="regular" />
 
@@ -261,7 +261,7 @@
                     android:id="@+id/result_screen_med_efectos_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Efectos"
+                    android:text="Posibles efectos adversos"
                     android:textSize="20sp"
                     app:bootstrapBrand="regular" />
 
@@ -343,7 +343,7 @@
                     android:id="@+id/result_screen_med_informacion_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Información"
+                    android:text="Información adicional"
                     android:textSize="20sp"
                     app:bootstrapBrand="regular" />
 
