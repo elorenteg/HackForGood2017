@@ -76,7 +76,7 @@ public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.ViewHo
 
         ViewHolder(View itemView) {
             super(itemView);
-            mCardView = (CardView) itemView.findViewById(R.id.historic_item_layout);
+            mCardView = (CardView) itemView.findViewById(R.id.historic_item_cardview);
             mHistoricItemCode = (TextView) itemView.findViewById(R.id.historic_item_code);
             mHistoricItemName = (TextView) itemView.findViewById(R.id.historic_item_name);
         }
