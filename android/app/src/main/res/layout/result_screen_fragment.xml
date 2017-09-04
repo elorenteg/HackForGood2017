@@ -23,6 +23,7 @@
                 android:id="@+id/result_screen_med_result_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:adjustViewBounds="true"
                 android:maxHeight="200dp" />
         </LinearLayout>

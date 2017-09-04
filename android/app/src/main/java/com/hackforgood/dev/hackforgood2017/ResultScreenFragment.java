@@ -128,7 +128,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         }
 
         if (MainActivity.USE_DUMMY_MODE_MEDS) {
-            imageUrl = "https://image.prntscr.com/image/_H366TcER1OS_P83dHE7tQ.png";
+            imageUrl = "https://image.prntscr.com/image/1LI4UdV7TG_0ebx1O4vSGA.png";
             loadImage(imageUrl);
             medNameText.setText("Amoxicilina/Ácido clavulánico Mylan 500 mg/125 mg comprimidos recubiertos con película EFG");
             medCodeText.setText("694513.1");
@@ -156,19 +156,25 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
             medEfectosText.setText(medicineEfectos);
             medConservacionText.setText(medicineConservacion);
             medInformacionText.setText(medicineInformacion);
-        } else if (medicine != null) {
-            medNameText.setText(medicine.getName());
-            medCodeText.setText("" + medicine.getCode());
-        } else if (textToSearch != null) {
-            medNameText.setText(textToSearch);
-            medCodeText.setText("Cargando...");
+
+            speakerStatus(View.VISIBLE);
+        } else {
+            speakerStatus(View.GONE);
+            if (medicine != null) {
+                medNameText.setText(medicine.getName());
+                medCodeText.setText("" + medicine.getCode());
+            } else if (textToSearch != null) {
+                medNameText.setText(textToSearch);
+                medCodeText.setText("Cargando...");
+            }
+
+            medQueText.setText("Cargando...");
+            medComoText.setText("Cargando...");
+            medAntesText.setText("Cargando...");
+            medEfectosText.setText("Cargando...");
+            medConservacionText.setText("Cargando...");
+            medInformacionText.setText("Cargando...");
         }
-        medQueText.setText("Cargando...");
-        medComoText.setText("Cargando...");
-        medAntesText.setText("Cargando...");
-        medEfectosText.setText("Cargando...");
-        medConservacionText.setText("Cargando...");
-        medInformacionText.setText("Cargando...");
 
         if (medicine != null) {
             if (isNewEvent) {
@@ -176,7 +182,6 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
             }
             sendRequestoToGetLeafletInformation(LeafletAPIController.SEARCH_BY_CODE, medicine.getCode() + "");
         } else {
-            speakerStatus(View.GONE);
             sendRequestoToGetLeafletInformation(LeafletAPIController.SEARCH_BY_NAME, textToSearch + "");
         }
 
