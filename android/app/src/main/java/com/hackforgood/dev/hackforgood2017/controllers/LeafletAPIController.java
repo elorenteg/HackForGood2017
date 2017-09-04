@@ -9,6 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LeafletAPIController {
@@ -16,7 +17,6 @@ public class LeafletAPIController {
     public static final int SEARCH_BY_NAME = 2;
     private static final String TAG = LeafletAPIController.class.getSimpleName();
 
-    //TODO Request para el heroku
     public static void leafletAPIRequest(final int searchMode, String leafletCode, Context context, final LeafletAPICallback leafletAPICallback) {
         if (searchMode == SEARCH_BY_CODE) {
 
@@ -24,8 +24,15 @@ public class LeafletAPIController {
 
         }
 
-        Uri.Builder builder = new Uri.Builder();
+        // TODO No hardcodear
+        leafletCode = "600000";
 
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("https")
+                .authority("hackforgoodbcn2017app.herokuapp.com")
+                .appendPath("getprospecto")
+                .appendPath("bycode")
+                .appendPath(leafletCode);
         String url = builder.build().toString();
 
         Log.e(TAG, url);
@@ -35,7 +42,19 @@ public class LeafletAPIController {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        leafletAPICallback.onLeafletAPIResolved(searchMode, "TEST");
+                        try {
+                            String que = response.getString("que");
+                            String antes = response.getString("antes");
+                            String como = response.getString("como");
+                            String efectos = response.getString("efectos");
+                            String informacion = response.getString("informacion");
+                            String conservacion = response.getString("conservacion");
+
+                            leafletAPICallback.onLeafletAPIResolved(searchMode, que, antes, como, efectos, informacion, conservacion);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 }, new Response.ErrorListener() {
 
@@ -50,6 +69,6 @@ public class LeafletAPIController {
     }
 
     public interface LeafletAPICallback {
-        void onLeafletAPIResolved(int searchMode, String leaflet);
+        void onLeafletAPIResolved(int searchMode, String que, String antes, String como, String efectos, String informacion, String conservacion);
     }
 }

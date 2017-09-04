@@ -352,20 +352,17 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
     }
 
     @Override
-    public void onLeafletAPIResolved(int searchMode, String leafletText) {
-        Log.e(TAG, "Response: " + leafletText);
-
-        // TODO Construir medicamento definitivo
-        medicine.setQue("...");
-        medicine.setComo("...");
-        medicine.setAntes("...");
-        medicine.setEfectos("...");
-        medicine.setConservacion("...");
-        medicine.setInformacion("...");
+    public void onLeafletAPIResolved(int searchMode, String que, String antes, String como, String efectos, String informacion, String conservacion) {
+        medicine.setQue(que);
+        medicine.setAntes(antes);
+        medicine.setComo(antes);
+        medicine.setEfectos(efectos);
+        medicine.setConservacion(conservacion);
+        medicine.setInformacion(informacion);
 
         medQueText.setText(medicine.getQue());
-        medComoText.setText(medicine.getComo());
         medAntesText.setText(medicine.getAntes());
+        medComoText.setText(medicine.getComo());
         medEfectosText.setText(medicine.getEfectos());
         medConservacionText.setText(medicine.getConservacion());
         medInformacionText.setText(medicine.getInformacion());
