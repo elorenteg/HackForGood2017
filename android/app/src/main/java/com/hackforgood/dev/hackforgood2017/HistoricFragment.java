@@ -14,6 +14,7 @@ import com.hackforgood.dev.hackforgood2017.adapters.HistoricAdapter;
 import com.hackforgood.dev.hackforgood2017.model.HistoricItem;
 import com.hackforgood.dev.hackforgood2017.utils.HistoricUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HistoricFragment extends Fragment {
@@ -35,7 +36,11 @@ public class HistoricFragment extends Fragment {
         setUpElements();
         setUpListeners();
 
-        mData = HistoricUtils.getInformationHistoric(getContext());
+        if (MainActivity.USE_DUMMY_MODE_MEDS) {
+            mData = getInformationHistoricFake();
+        } else {
+            mData = HistoricUtils.getInformationHistoric(getContext());
+        }
 
         if (mData == null || mData.isEmpty()) {
             mRecyclerView.setVisibility(View.GONE);
@@ -58,5 +63,16 @@ public class HistoricFragment extends Fragment {
     }
 
     private void setUpListeners() {
+    }
+
+    private ArrayList<HistoricItem> getInformationHistoricFake() {
+        ArrayList<HistoricItem> arrayHistoric = new ArrayList<>();
+
+        int itemCode = 694513;
+        String itemName = "Amoxicilina/Ácido clavulánico Mylan 500 mg/125 mg comprimidos recubiertos con película EFG";
+        HistoricItem item = new HistoricItem(itemCode, itemName);
+        arrayHistoric.add(item);
+
+        return arrayHistoric;
     }
 }
