@@ -12,10 +12,18 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONObject;
 
 public class LeafletAPIController {
+    public static final int SEARCH_BY_CODE = 1;
+    public static final int SEARCH_BY_NAME = 2;
     private static final String TAG = LeafletAPIController.class.getSimpleName();
 
     //TODO Request para el heroku
-    public static void leafletAPIRequest(String leafletCode, Context context, final LeafletAPICallback leafletAPICallback) {
+    public static void leafletAPIRequest(int searchMode, String leafletCode, Context context, final LeafletAPICallback leafletAPICallback) {
+        if (searchMode == SEARCH_BY_CODE) {
+
+        } else if (searchMode == SEARCH_BY_NAME) {
+
+        }
+
         Uri.Builder builder = new Uri.Builder();
 
         String url = builder.build().toString();

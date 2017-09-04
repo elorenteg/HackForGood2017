@@ -10,7 +10,8 @@
         android:id="@+id/awesomeTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Selecciona método"
+        android:fontFamily="sans-serif-light"
+        android:text="Método de búsqueda"
         android:textSize="30sp" />
 
     <LinearLayout
@@ -66,7 +67,7 @@
                 android:layout_weight="1"
                 android:background="#07C641"
                 android:drawableTop="@drawable/keyboard"
-                android:paddingTop="30dp"
+                android:paddingTop="40dp"
                 android:text="Teclado"
                 android:textColor="#FFF"
                 android:textSize="24sp" />

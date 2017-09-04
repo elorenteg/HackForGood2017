@@ -42,6 +42,9 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
     private TextView medNameText;
     private TextView medCodeText;
     private TextView medLeafletText;
+    private ImageView nameSpeakerImage;
+    private ImageView codeSpeakerImage;
+    private ImageView leafletSpeakerImage;
 
     private String imageUrl;
     private Medicine medicine;
@@ -70,11 +73,16 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         super.onCreate(savedInstanceState);
 
         this.imageUrl = getArguments().getString(ARG_URL);
-        try {
-            this.medicine = Medicine.deserialize(getArguments().getByteArray(ARG_MEDICINE));
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+        if (getArguments().getByteArray(ARG_MEDICINE) != null) {
+            try {
+                this.medicine = Medicine.deserialize(getArguments().getByteArray(ARG_MEDICINE));
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            this.medicine = null;
         }
+
         this.textToSearch = getArguments().getString(ARG_TEXTTOSEARCH);
     }
 
@@ -96,7 +104,6 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
             imageLayout.setVisibility(View.GONE);
         }
 
-        //TODO Futura implementación con servidor
         if (MainActivity.USE_DUMMY_MODE_MEDS) {
             medNameText.setText(medicine.getName());
             medCodeText.setText("" + medicine.getCode());
@@ -108,18 +115,20 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         }
 
         if (medicine != null) {
-            //TODO Send Volley to load the med XML
             medNameText.setText(medicine.getName());
             medCodeText.setText("" + medicine.getCode());
             medLeafletText.setText(medicineLeaflet);
         } else if (textToSearch != null) {
-            //TODO Send Volley to load the med XML
             medNameText.setText(textToSearch);
             medCodeText.setText("-----");
         }
 
-        saveInformationForHistoric(medicine.getCode(), medicine.getName());
-        sendRequestoToGetLeafletInformation(medicine.getCode());
+        if (medicine != null) {
+            sendRequestoToGetLeafletInformation(LeafletAPIController.SEARCH_BY_CODE, medicine.getCode() + "");
+        } else {
+            speakerStatus(View.GONE);
+            sendRequestoToGetLeafletInformation(LeafletAPIController.SEARCH_BY_NAME, textToSearch + "");
+        }
 
         return rootview;
     }
@@ -135,6 +144,10 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         nameLayout = (CardView) rootview.findViewById(R.id.result_screen_name_layout);
         codeLayout = (CardView) rootview.findViewById(R.id.result_screen_code_layout);
         leafletLayout = (CardView) rootview.findViewById(R.id.result_screen_leaflet_layout);
+
+        nameSpeakerImage = (ImageView) rootview.findViewById(R.id.result_screen_name_speaker);
+        codeSpeakerImage = (ImageView) rootview.findViewById(R.id.result_screen_code_speaker);
+        leafletSpeakerImage = (ImageView) rootview.findViewById(R.id.result_screen_leaflet_speaker);
     }
 
     private void setUpListeners() {
@@ -163,6 +176,18 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         });
     }
 
+    private void speakerStatus(int state) {
+        if (state == View.GONE) {
+            nameSpeakerImage.setVisibility(View.GONE);
+            codeSpeakerImage.setVisibility(View.GONE);
+            leafletSpeakerImage.setVisibility(View.GONE);
+        } else {
+            nameSpeakerImage.setVisibility(View.VISIBLE);
+            codeSpeakerImage.setVisibility(View.VISIBLE);
+            leafletSpeakerImage.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void loadImage(String url) {
         final ImageRequest request = new ImageRequest(url, new Response.Listener<Bitmap>() {
             @Override
@@ -179,12 +204,17 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         HistoricUtils.saveInformationHistoric(getContext(), code, name);
     }
 
-    private void sendRequestoToGetLeafletInformation(int code) {
-        //LeafletAPIController.leafletAPIRequest(code + "", getContext(), this);
+    private void sendRequestoToGetLeafletInformation(int searchMode, String info) {
+        LeafletAPIController.leafletAPIRequest(searchMode, info, getContext(), this);
     }
 
     @Override
     public void onLeafletAPIResolved(String leafletText) {
         Log.e(TAG, "Response: " + leafletText);
+
+        // TODO Construir medicamento definitivo
+
+        saveInformationForHistoric(medicine.getCode(), medicine.getName());
+        speakerStatus(View.VISIBLE);
     }
 }
