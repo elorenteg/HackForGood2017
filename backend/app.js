@@ -129,7 +129,7 @@ router.post('/upload', function(req, res){
     console.log('An error has occured: \n' + err);
   });
   form.on('end', function() {
-    res.end('{"url"="https://c3cce9a9.ngrok.io/getimage/'+ filename +'"}');
+    res.end('{"url"="https://hackforgoodbcn2017app.herokuapp.com/getimage/'+ filename +'"}');
   });
   form.parse(req);
 });
@@ -158,11 +158,15 @@ router.get('/getprospecto/byconstraints/:constraints', function(req, res) {
 });
 
 router.get('/', function(req, res) {
-  res.send("por favor, usa la api bien... MIAU! ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬");
+  res.send("por favor, usa la api bien... MIAU! ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ ¬¬ \n" +
+      "rutas validas: \n" +
+      "/upload \n" +
+      "/getimage/:image \n" +
+      "/getprospecto/bycode/:code");
 });
 
 /**************************************************WEB SERVER**********************************************************/
 app.use(router);
 app.listen(80, function() {
-  console.log("Node server running on https://c3cce9a9.ngrok.io/");
+  console.log("Node server running on https://hackforgoodbcn2017app.herokuapp.com/");
 });
