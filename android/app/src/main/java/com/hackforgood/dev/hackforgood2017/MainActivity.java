@@ -23,6 +23,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final int MULTIPLE_PERMISSIONS_CODE = 10;
     public static final int CAMERA_PERMISSION_CODE = 200;
     public static final int WRITE_SD_PERMISSION_CODE = 201;
     public static final boolean USE_DUMMY_MODE_MEDS = false;
@@ -97,7 +98,12 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_search) {
             fragment = MainActivityFragment.newInstance();
             fragmentTAG = MainActivityFragment.TAG;
-        } else if (id == R.id.nav_manage) {
+        }
+        else if (id == R.id.nav_historic) {
+            fragment = HistoricFragment.newInstance();
+            fragmentTAG = HistoricFragment.TAG;
+        }
+        else if (id == R.id.nav_manage) {
             Toast.makeText(this, "Función no implementada", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_about_us) {
             fragment = AboutUsFragment.newInstance();
@@ -119,23 +125,26 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == CAMERA_PERMISSION_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                MainActivityFragment fragment = (MainActivityFragment) getSupportFragmentManager().findFragmentByTag(MainActivityFragment.TAG);
-                if (fragment != null) {
-                    fragment.makePhotoCamera();
-                }
-            }
-        } else if (requestCode == WRITE_SD_PERMISSION_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                MainActivityFragment fragment = (MainActivityFragment) getSupportFragmentManager().findFragmentByTag(MainActivityFragment.TAG);
-                if (fragment != null) {
-                    fragment.setUpPhotoCamera();
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case MULTIPLE_PERMISSIONS_CODE: {
+                if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    // permissions list of don't granted permission
+                    for (String permission : permissions) {
+                        if (permission.contains("CAMERA")) {
+                            if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                                Toast.makeText(this, "Permisos no concedidos para CAMARA", Toast.LENGTH_SHORT).show();
+                            }
+                        } else if (permission.contains("WRITE")) {
+                            if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                                Toast.makeText(this, "Permisos no concedidos para ESCRITURA", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
                 }
             }
         }
-
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

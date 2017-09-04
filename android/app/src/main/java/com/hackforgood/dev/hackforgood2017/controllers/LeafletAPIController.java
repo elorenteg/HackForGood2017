@@ -17,11 +17,7 @@ public class LeafletAPIController {
     //TODO Request para el heroku
     public static void leafletAPIRequest(String leafletCode, Context context, final LeafletAPICallback leafletAPICallback) {
         Uri.Builder builder = new Uri.Builder();
-        builder.scheme("https")
-                .authority("api.ocr.space")
-                .appendPath("parse")
-                .appendPath("imageurl")
-                .appendQueryParameter("url", leafletCode);
+
         String url = builder.build().toString();
 
         Log.e(TAG, url);
@@ -31,7 +27,6 @@ public class LeafletAPIController {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
                         leafletAPICallback.onLeafletAPIResolved("TEST");
                     }
                 }, new Response.ErrorListener() {

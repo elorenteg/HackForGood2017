@@ -38,6 +38,7 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MainActivityFragment extends Fragment implements PhotoToServerController.PhotoToServerCallback,
@@ -64,6 +65,10 @@ public class MainActivityFragment extends Fragment implements PhotoToServerContr
     private Uri outputFileUri;
     private String cameraDirectory;
 
+    private String[] permissions = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA};
+
     public static MainActivityFragment newInstance() {
         return new MainActivityFragment();
     }
@@ -76,7 +81,8 @@ public class MainActivityFragment extends Fragment implements PhotoToServerContr
         setUpElements();
         setUpListeners();
 
-        setUpPhotoCamera();
+        requestPermissions();
+        setUpFolderPhotos();
 
         imageSearchController = new ImageSearchController(getContext());
         wikiAPIController = new WikiAPIController(getContext());
@@ -135,21 +141,27 @@ public class MainActivityFragment extends Fragment implements PhotoToServerContr
         }
     }
 
-    public void setUpPhotoCamera() {
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MainActivity.WRITE_SD_PERMISSION_CODE);
-        } else {
-            cameraDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/tellmedleaflet/";
-            File newdir = new File(cameraDirectory);
-            if (!newdir.isDirectory()) {
-                if (!newdir.mkdirs()) {
-                    Toast.makeText(getContext(), "Problem creating IMAGES FOLDER", Toast.LENGTH_SHORT).show();
-                }
+    public void requestPermissions() {
+        int result;
+        List<String> listPermissionsNeeded = new ArrayList<>();
+        for (String p : permissions) {
+            result = ContextCompat.checkSelfPermission(getActivity(), p);
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(p);
             }
         }
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(getActivity(), listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), MainActivity.MULTIPLE_PERMISSIONS_CODE);
+        }
+    }
 
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, MainActivity.CAMERA_PERMISSION_CODE);
+    public void setUpFolderPhotos() {
+        cameraDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/tellmedleaflet/";
+        File newdir = new File(cameraDirectory);
+        if (!newdir.isDirectory()) {
+            if (!newdir.mkdirs()) {
+                Toast.makeText(getContext(), "Problem creating IMAGES FOLDER", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
