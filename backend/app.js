@@ -124,7 +124,7 @@ router.post('/upload', function(req, res){
   var form = new formidable.IncomingForm();
   var filename = "";
   form.multiples = false;
-  form.uploadDir = path.join(__dirname, '/uploads');
+  form.uploadDir = path.join(__dirname, './backend/uploads');
   form.on('file', function(field, file) {
     filename = file.name;
     fs.rename(file.path, path.join(form.uploadDir, file.name));
@@ -141,7 +141,7 @@ router.post('/upload', function(req, res){
 /*********GET IMAGE*********/
 app.get('/getimage/:image', function (req, res) {
   var imagePath = req.params.image;
-  res.sendfile(path.resolve('./uploads/' + imagePath));
+  res.sendfile(path.resolve('./backend/uploads/' + imagePath));
 });
 
 /*********GET PROSPECTO BY CODE*********/
