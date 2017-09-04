@@ -18,7 +18,7 @@ var express = require("express"),
 var json_preinscripciones = "";
 
 //var XMLFILE = './backend/data/Prescripcion.xml';
-var XMLFILE = './backend/data/Prescripcion_lite.xml';
+var XMLFILE = path.join(__dirname, '/data/Prescripcion_lite.xml');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -104,17 +104,12 @@ function getUrlByConstraints(constraints) {
 
 /*********GET PROSPECTO*********/
 function getProspecto(url) {
-  console.log("procesando pdf");
-  pdfp.parsePDF(url);
+  var txt_filename = path.join(__dirname, "/parsed/", path.basename(url, '.pdf')+".txt");
   console.log("obteniendo secciones");
 
-  //function function2() {
-  var prospecto = pdfp.getAllSections();
+  var prospecto = pdfp.getAllSections(fs.readFileSync(txt_filename, 'utf8'));
+  console.log(prospecto);
   return prospecto;
-  //}
-
-  // call the rest of the code and have it execute after 3 seconds
-  //setTimeout(function2, 5000);
 }
 
 /**************************************************ROUTERS************************************************************/
@@ -141,7 +136,6 @@ router.post('/upload', function(req, res){
 /*********GET IMAGE*********/
 app.get('/getimage/:image', function (req, res) {
   var imagePath = req.params.image;
-  //res.sendfile(path.resolve('./backend/uploads/' + imagePath));
   res.sendfile(path.join(__dirname, 'uploads/', imagePath));
 });
 
@@ -160,6 +154,11 @@ router.get('/getprospecto/byconstraints/:constraints', function(req, res) {
   var url = getUrlByConstraints(constraints);
   var prospecto = getProspecto(url);
   res.send(prospecto);
+});
+
+router.get('/parseAll', function(req, res) {
+  pdfp.parseAndSave2Txt();
+  res.send("done");
 });
 
 router.get('/', function(req, res) {

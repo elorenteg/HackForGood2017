@@ -1,7 +1,8 @@
 var fs = require('fs');
 var http = require('https');
 var PDFParser = require("pdf2json");
-var parser = new PDFParser();
+var parser = new PDFParser(this,1);
+var path = require('path');
 
 const QUE = 0;
 const ANTES = 1;
@@ -9,8 +10,6 @@ const COMO = 2;
 const EFECTOS = 3;
 const CONSERVACION = 4;
 const INFORMACION = 5;
-
-var rawtext = "";
 
 var exports = module.exports = {
 	QUE: QUE,
@@ -39,29 +38,44 @@ parser.on("pdfParser_dataReady", pdfData => {
 });
 */
 
+
+exports.parseAndSave2Txt = function() {
+    var filepath = path.join(__dirname, "/input/66337_p.pdf");
+
+    parser.on("pdfParser_dataError", errData => console.error(errData.parserError));
+    parser.on("pdfParser_dataReady", pdfData => {
+        //rawtext = parser.getRawTextContent();
+        //console.log(rawtext);
+        var dest_filename = path.join(__dirname, "/parsed/", path.basename(filepath, '.pdf')+".txt");
+        fs.writeFile(dest_filename, parser.getRawTextContent());
+    });
+
+    parser.loadPDF(filepath);
+}
+
 function clearText(rawtext) {
 	// Limpieza Saltos y Números de página
-    console.log(rawtext);
+
 	var aux = rawtext.replace(/^.*-----.*$/mg, "");
 	var clearedtext = aux.replace(/^\d+ de \d+ *$/mg, "");
     return clearedtext;
 }
 
-function getRawSection(rawtext, startPattern, endPattern) {
+function getRawSection(data, startPattern, endPattern) {
 	// Obtención de una sección del prospecto
-	var aux = rawtext.split(startPattern);
+	var aux = data.split(startPattern);
 	var section = aux[aux.length-1].split(endPattern)[0];
 	return clearText(section);
 }
 
-exports.getAllSections = function () {
+exports.getAllSections = function (data) {
     var all = {};
-    all['que'] = getSectionInternal(QUE);
-    all['antes'] = getSectionInternal(ANTES);
-    all['como'] = getSectionInternal(COMO);
-    all['efectos'] = getSectionInternal(EFECTOS);
-    all['conservacion'] = getSectionInternal(CONSERVACION);
-    all['informacion'] = getSectionInternal(INFORMACION);
+    all['que'] = getSectionInternal(data,QUE);
+    all['antes'] = getSectionInternal(data,ANTES);
+    all['como'] = getSectionInternal(data,COMO);
+    all['efectos'] = getSectionInternal(data,EFECTOS);
+    all['conservacion'] = getSectionInternal(data,CONSERVACION);
+    all['informacion'] = getSectionInternal(data,INFORMACION);
     return all;
 };
 
@@ -83,7 +97,7 @@ exports.parsePDF = function (url) {
 
     parser.loadPDF("./input/"+path.basename(parsed.pathname));
 };
-
+/*
 exports.getSection = function(sectionType) {
     var section = {};
 
@@ -97,16 +111,16 @@ exports.getSection = function(sectionType) {
 
     return section;
 };
-
-function getSectionInternal(sectionType) {
+*/
+function getSectionInternal(data,sectionType) {
     var section = {};
 
-    if (sectionType == QUE) section = getRawSection(rawtext, /^1\..*\n?/m, /^2\..*\n?/m);// Sección: Qué es
-    else if (sectionType == ANTES) section = getRawSection(rawtext, /^2\..*\n?/m, /^3\..*\n?/m);// Sección: Antes de tomar
-    else if (sectionType == COMO) section = getRawSection(rawtext, /^3\..*\n?/m, /^4\..*\n?/m);// Sección: Cómo Tomar
-    else if (sectionType == EFECTOS) section = getRawSection(rawtext, /^4\..*\n?/m, /^5\..*\n?/m);// Sección: Posibles efectos adversos
-    else if (sectionType == CONSERVACION) section = getRawSection(rawtext, /^5\..*\n?/m, /^6\..*\n?/m);// Sección: Conservación
-    else if (sectionType == INFORMACION) section = getRawSection(rawtext, /^6\..*\n?/m, /$/);// Sección: Información adicional
+    if (sectionType == QUE) section = getRawSection(data, /^1\..*\n?/m, /^2\..*\n?/m);// Sección: Qué es
+    else if (sectionType == ANTES) section = getRawSection(data, /^2\..*\n?/m, /^3\..*\n?/m);// Sección: Antes de tomar
+    else if (sectionType == COMO) section = getRawSection(data, /^3\..*\n?/m, /^4\..*\n?/m);// Sección: Cómo Tomar
+    else if (sectionType == EFECTOS) section = getRawSection(data, /^4\..*\n?/m, /^5\..*\n?/m);// Sección: Posibles efectos adversos
+    else if (sectionType == CONSERVACION) section = getRawSection(data, /^5\..*\n?/m, /^6\..*\n?/m);// Sección: Conservación
+    else if (sectionType == INFORMACION) section = getRawSection(data, /^6\..*\n?/m, /$/);// Sección: Información adicional
     else return console.log("sectionType not found");
 
     return section;
