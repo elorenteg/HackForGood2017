@@ -4,114 +4,208 @@
     android:layout_height="match_parent"
     android:layout_marginTop="?attr/actionBarSize"
     android:orientation="vertical"
-    android:padding="30dp">
+    android:padding="10dp">
 
-    <ImageView
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
-        android:src="@mipmap/medicines" />
+        android:layout_marginBottom="10dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="sans-serif-light"
-        android:gravity="center"
-        android:text="@string/app_name"
-        android:textStyle="bold"
-        android:textSize="20sp" />
-
-    <LinearLayout
-        android:id="@+id/dialog_about_us_ester_dialog"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center"
-            android:text="Ester Lorente García"
-            android:textSize="17sp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/linked_in_icon" />
-    </LinearLayout>
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/dialog_about_us_juan_dialog"
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="15dp"
+                android:src="@mipmap/medicines" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal">
+        android:layout_marginBottom="10dp">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center"
-            android:text="Juan Salmerón Moya"
-            android:textSize="17sp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/linked_in_icon" />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:padding="10dp">
 
-    <LinearLayout
-        android:id="@+id/dialog_about_us_oriol_dialog"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:text="Desarrolladores"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:id="@+id/dialog_about_us_ester_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:text="Ester Lorente García"
+                    android:textSize="17sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/linked_in_icon" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dialog_about_us_juan_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:text="Juan Salmerón Moya"
+                    android:textSize="17sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/linked_in_icon" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dialog_about_us_oriol_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:text="Oriol Serch Muni"
+                    android:textSize="17sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/linked_in_icon" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dialog_about_us_marc_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:text="Marc Vila Gómez"
+                    android:textSize="17sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/linked_in_icon" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center"
-            android:text="Oriol Serch Muni"
-            android:textSize="17sp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/linked_in_icon" />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:padding="10dp">
 
-    <LinearLayout
-        android:id="@+id/dialog_about_us_marc_dialog"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:text="Lista de medicamentos"
+                android:textStyle="bold"
+                android:textSize="20sp" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center"
-            android:text="Marc Vila Gómez"
-            android:textSize="17sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:text="Proporcionada por AEMPS"
+                android:textSize="17sp" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/linked_in_icon" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:text="(Agencia Española de Medicamentos y Productos Sanitarios)"
+                android:textSize="17sp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:text="Medicamentos autorizados en España"
+                android:textSize="17sp"
+                android:layout_marginTop="10dp"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
 </LinearLayout>
