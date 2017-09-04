@@ -21,6 +21,7 @@ public class Medicine implements Serializable {
     private int content = -1;           // 40
     private String contentType = "";    // comprimidos
     private String type = "";           // oral
+    private String leaflet = "";
 
     public static Medicine deserialize(byte[] data) throws IOException, ClassNotFoundException {
         ByteArrayInputStream in = new ByteArrayInputStream(data);
@@ -82,6 +83,14 @@ public class Medicine implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getLeaflet() {
+        return leaflet;
+    }
+
+    public void setLeaflet(String leaflet) {
+        this.leaflet = leaflet;
     }
 
     public void parseInfo(String parsedText) {
@@ -212,6 +221,7 @@ public class Medicine implements Serializable {
         if (dosis >= 0) str += "Dosis: " + dosis + " " + dosisUnit + "\n";
         if (content >= 0) str += "Content: " + content + " " + contentType + "\n";
         if (!type.equals("")) str += "Type: " + type + "\n";
+        if (!leaflet.equals("")) str += "Leaflet: " + leaflet + "\n";
         return str;
     }
 

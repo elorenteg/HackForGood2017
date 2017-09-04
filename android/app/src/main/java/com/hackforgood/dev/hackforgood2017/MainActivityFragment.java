@@ -230,8 +230,11 @@ public class MainActivityFragment extends Fragment implements PhotoToServerContr
     public void onImageOCRResolved(ImageOCR imageOCR) {
         //Log.e(TAG, "onImageOCRResolved");
 
-        if (imageOCR == null) Log.e(TAG, "ImageOCR is null :(");
-        else {
+        if (MainActivity.USE_DUMMY_MODE_MEDS) {
+            loadMedicineFragment(null, null);
+        } else if (imageOCR == null) {
+            Log.e(TAG, "ImageOCR is null :(");
+        } else {
             //Toast.makeText(getActivity(), "Doing WIKI", Toast.LENGTH_SHORT).show();
             String parsedText = imageOCR.getParsedText();
 
@@ -253,7 +256,7 @@ public class MainActivityFragment extends Fragment implements PhotoToServerContr
                     wikiAPIController.wikiAPIRequest(word, wikiAPIResolvedCallback);
                 }
             } else {
-                loadMedicineFragment(medicine);
+                loadMedicineFragment(imageURL, medicine);
             }
         }
     }
@@ -288,12 +291,14 @@ public class MainActivityFragment extends Fragment implements PhotoToServerContr
             }
             medicine.setName(name);
 
-            loadMedicineFragment(medicine);
+            loadMedicineFragment(imageURL, medicine);
         }
     }
 
-    private void loadMedicineFragment(Medicine medicine) {
-        Log.e(TAG, "Sending: " + medicine.toString());
+    private void loadMedicineFragment(String imageURL, Medicine medicine) {
+        if (medicine != null) {
+            Log.e(TAG, "Sending: " + medicine.toString());
+        }
         Fragment fragment = ResultScreenFragment.newInstance(imageURL, medicine, null, true);
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.main_container, fragment, ResultScreenFragment.TAG);

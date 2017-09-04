@@ -51,7 +51,6 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
     private Medicine medicine;
     private String textToSearch;
     private boolean isNewEvent;
-    private String medicineLeaflet;
 
     public static ResultScreenFragment newInstance(String imageUrl, Medicine medicine, String textToSearch, boolean isNewEvent) {
         ResultScreenFragment fragment = new ResultScreenFragment();
@@ -110,23 +109,31 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         }
 
         if (MainActivity.USE_DUMMY_MODE_MEDS) {
-            medNameText.setText(medicine.getName());
-            medCodeText.setText("" + medicine.getCode());
-            medicineLeaflet = "Paracetamol Pensa pertenece al grupo de medicamentos llamados analgésicos y antipiréticos. \n" +
-                    " \n" +
-                    "Este medicamento está indicado para el tratamiento sintomático del dolor de intensidad leve o moderada, y \n" +
-                    "para reducir la fiebre. ";
-            medLeafletText.setText(medicineLeaflet);
+            imageUrl = "https://image.prntscr.com/image/_H366TcER1OS_P83dHE7tQ.png";
+            loadImage(imageUrl);
+            medNameText.setText("Amoxicilina/Ácido clavulánico Mylan 500 mg/125 mg comprimidos recubiertos con película EFG");
+            medCodeText.setText("694513.1");
+            medLeafletText.setText("Amoxicilina/Ácido clavulánico Mylan está indicado para el tratamiento de las siguientes infecciones en\n" +
+                    "adultos y niños:\n" +
+                    "\uF02D Sinusitis bacteriana aguda.\n" +
+                    "\uF02D Otitis media aguda.\n" +
+                    "\uF02D Exacerbación aguda de bronquitis crónica.\n" +
+                    "\uF02D Neumonía adquirida en la comunidad.\n" +
+                    "\uF02D Cistitis.\n" +
+                    "\uF02D Pielonefritis.\n" +
+                    "\uF02D Infecciones de la piel y tejidos blandos, en particular celulitis, mordeduras de animales, abscesos\n" +
+                    "dentales severos con celulitis diseminada.\n" +
+                    "\uF02D Infecciones de huesos y articulaciones, en particular osteomielitis. ");
         }
 
         if (medicine != null) {
             medNameText.setText(medicine.getName());
             medCodeText.setText("" + medicine.getCode());
-            medLeafletText.setText(medicineLeaflet);
         } else if (textToSearch != null) {
             medNameText.setText(textToSearch);
-            medCodeText.setText("-----");
+            medCodeText.setText("Cargando...");
         }
+        medLeafletText.setText("Cargando...");
 
         if (medicine != null) {
             if (isNewEvent) {
@@ -178,7 +185,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         leafletLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (medicine != null) {
-                    TextToSpeechController.getInstance(getContext()).speak(medicineLeaflet, TextToSpeech.QUEUE_FLUSH);
+                    TextToSpeechController.getInstance(getContext()).speak(medicine.getLeaflet(), TextToSpeech.QUEUE_FLUSH);
                 }
             }
         });
@@ -221,6 +228,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         Log.e(TAG, "Response: " + leafletText);
 
         // TODO Construir medicamento definitivo
+        medicine.setLeaflet("...");
 
         if (searchMode == LeafletAPIController.SEARCH_BY_NAME && isNewEvent) {
             saveInformationForHistoric(medicine.getCode(), medicine.getName());
