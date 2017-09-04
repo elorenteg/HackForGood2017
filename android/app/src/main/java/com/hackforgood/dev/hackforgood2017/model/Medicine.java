@@ -21,7 +21,12 @@ public class Medicine implements Serializable {
     private int content = -1;           // 40
     private String contentType = "";    // comprimidos
     private String type = "";           // oral
-    private String leaflet = "";
+    private String que = "";
+    private String como = "";
+    private String antes = "";
+    private String efectos = "";
+    private String conservacion = "";
+    private String informacion = "";
 
     public static Medicine deserialize(byte[] data) throws IOException, ClassNotFoundException {
         ByteArrayInputStream in = new ByteArrayInputStream(data);
@@ -85,12 +90,52 @@ public class Medicine implements Serializable {
         this.type = type;
     }
 
-    public String getLeaflet() {
-        return leaflet;
+    public String getQue() {
+        return que;
     }
 
-    public void setLeaflet(String leaflet) {
-        this.leaflet = leaflet;
+    public void setQue(String que) {
+        this.que = que;
+    }
+
+    public String getComo() {
+        return como;
+    }
+
+    public void setComo(String como) {
+        this.como = como;
+    }
+
+    public String getAntes() {
+        return antes;
+    }
+
+    public void setAntes(String antes) {
+        this.antes = antes;
+    }
+
+    public String getEfectos() {
+        return efectos;
+    }
+
+    public void setEfectos(String efectos) {
+        this.efectos = efectos;
+    }
+
+    public String getConservacion() {
+        return conservacion;
+    }
+
+    public void setConservacion(String conservacion) {
+        this.conservacion = conservacion;
+    }
+
+    public String getInformacion() {
+        return informacion;
+    }
+
+    public void setInformacion(String informacion) {
+        this.informacion = informacion;
     }
 
     public void parseInfo(String parsedText) {
@@ -221,7 +266,12 @@ public class Medicine implements Serializable {
         if (dosis >= 0) str += "Dosis: " + dosis + " " + dosisUnit + "\n";
         if (content >= 0) str += "Content: " + content + " " + contentType + "\n";
         if (!type.equals("")) str += "Type: " + type + "\n";
-        if (!leaflet.equals("")) str += "Leaflet: " + leaflet + "\n";
+        if (!que.equals("")) str += "Que: " + que + "\n";
+        if (!como.equals("")) str += "Como: " + como + "\n";
+        if (!antes.equals("")) str += "Antes: " + antes + "\n";
+        if (!efectos.equals("")) str += "Efectos: " + efectos + "\n";
+        if (!conservacion.equals("")) str += "Conservacion: " + conservacion + "\n";
+        if (!informacion.equals("")) str += "Informacion: " + informacion + "\n";
         return str;
     }
 

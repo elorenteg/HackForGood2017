@@ -64,13 +64,6 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
     private String textToSearch;
     private boolean isNewEvent;
 
-    private String medicineQue;
-    private String medicineAntes;
-    private String medicineComo;
-    private String medicineEfectos;
-    private String medicineConservacion;
-    private String medicineInformacion;
-
     public static ResultScreenFragment newInstance(String imageUrl, Medicine medicine, String textToSearch, boolean isNewEvent) {
         ResultScreenFragment fragment = new ResultScreenFragment();
         Bundle args = new Bundle();
@@ -128,34 +121,38 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         }
 
         if (MainActivity.USE_DUMMY_MODE_MEDS) {
+            medicine = new Medicine();
+            medicine.setName("Amoxicilina/Ácido clavulánico Mylan 500 mg/125 mg comprimidos recubiertos con película EFG");
+            medicine.setCode(694513);
+            medicine.setQue("Amoxicilina/Ácido clavulánico Mylan está indicado para el tratamiento de las siguientes infecciones en\n" +
+                    "\" +\n" +
+                    "                    \"adultos y niños:\\n\" +\n" +
+                    "                    \"\\uF02D Sinusitis bacteriana aguda.\\n\" +\n" +
+                    "                    \"\\uF02D Otitis media aguda.\\n\" +\n" +
+                    "                    \"\\uF02D Exacerbación aguda de bronquitis crónica.\\n\" +\n" +
+                    "                    \"\\uF02D Neumonía adquirida en la comunidad.\\n\" +\n" +
+                    "                    \"\\uF02D Cistitis.\\n\" +\n" +
+                    "                    \"\\uF02D Pielonefritis.\\n\" +\n" +
+                    "                    \"\\uF02D Infecciones de la piel y tejidos blandos, en particular celulitis, mordeduras de animales, abscesos\\n\" +\n" +
+                    "                    \"dentales severos con celulitis diseminada.\\n\" +\n" +
+                    "                    \"\uF02D Infecciones de huesos y articulaciones, en particular osteomielitis. ");
+            medicine.setComo("");
+            medicine.setAntes("");
+            medicine.setEfectos("");
+            medicine.setConservacion("");
+            medicine.setInformacion("");
+
             imageUrl = "https://image.prntscr.com/image/1LI4UdV7TG_0ebx1O4vSGA.png";
             loadImage(imageUrl);
-            medNameText.setText("Amoxicilina/Ácido clavulánico Mylan 500 mg/125 mg comprimidos recubiertos con película EFG");
-            medCodeText.setText("694513.1");
 
-            medicineQue = "Amoxicilina/Ácido clavulánico Mylan está indicado para el tratamiento de las siguientes infecciones en\n" +
-                    "adultos y niños:\n" +
-                    "\uF02D Sinusitis bacteriana aguda.\n" +
-                    "\uF02D Otitis media aguda.\n" +
-                    "\uF02D Exacerbación aguda de bronquitis crónica.\n" +
-                    "\uF02D Neumonía adquirida en la comunidad.\n" +
-                    "\uF02D Cistitis.\n" +
-                    "\uF02D Pielonefritis.\n" +
-                    "\uF02D Infecciones de la piel y tejidos blandos, en particular celulitis, mordeduras de animales, abscesos\n" +
-                    "dentales severos con celulitis diseminada.\n" +
-                    "\uF02D Infecciones de huesos y articulaciones, en particular osteomielitis. ";
-            medicineComo = "como texto";
-            medicineAntes = "antes texto";
-            medicineEfectos = "efectos texto";
-            medicineConservacion = "conservacion texto";
-            medicineInformacion = "informacion texto";
-
-            medQueText.setText(medicineQue);
-            medComoText.setText(medicineComo);
-            medAntesText.setText(medicineAntes);
-            medEfectosText.setText(medicineEfectos);
-            medConservacionText.setText(medicineConservacion);
-            medInformacionText.setText(medicineInformacion);
+            medNameText.setText(medicine.getName());
+            medCodeText.setText("" + medicine.getCode());
+            medQueText.setText(medicine.getQue());
+            medComoText.setText(medicine.getComo());
+            medAntesText.setText(medicine.getAntes());
+            medEfectosText.setText(medicine.getEfectos());
+            medConservacionText.setText(medicine.getConservacion());
+            medInformacionText.setText(medicine.getInformacion());
 
             speakerStatus(View.VISIBLE);
         } else {
@@ -174,15 +171,15 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
             medEfectosText.setText("Cargando...");
             medConservacionText.setText("Cargando...");
             medInformacionText.setText("Cargando...");
-        }
 
-        if (medicine != null) {
-            if (isNewEvent) {
-                saveInformationForHistoric(medicine.getCode(), medicine.getName());
+            if (medicine != null) {
+                if (isNewEvent) {
+                    saveInformationForHistoric(medicine.getCode(), medicine.getName());
+                }
+                sendRequestoToGetLeafletInformation(LeafletAPIController.SEARCH_BY_CODE, medicine.getCode() + "");
+            } else {
+                sendRequestoToGetLeafletInformation(LeafletAPIController.SEARCH_BY_NAME, textToSearch + "");
             }
-            sendRequestoToGetLeafletInformation(LeafletAPIController.SEARCH_BY_CODE, medicine.getCode() + "");
-        } else {
-            sendRequestoToGetLeafletInformation(LeafletAPIController.SEARCH_BY_NAME, textToSearch + "");
         }
 
         return rootview;
@@ -240,7 +237,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         queLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (medicine != null) {
-                    TextToSpeechController.getInstance(getContext()).speak(medicineQue, TextToSpeech.QUEUE_FLUSH);
+                    TextToSpeechController.getInstance(getContext()).speak(medicine.getQue(), TextToSpeech.QUEUE_FLUSH);
                 }
             }
         });
@@ -248,7 +245,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         antesLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (medicine != null) {
-                    TextToSpeechController.getInstance(getContext()).speak(medicineAntes, TextToSpeech.QUEUE_FLUSH);
+                    TextToSpeechController.getInstance(getContext()).speak(medicine.getAntes(), TextToSpeech.QUEUE_FLUSH);
                 }
             }
         });
@@ -256,7 +253,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         comoLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (medicine != null) {
-                    TextToSpeechController.getInstance(getContext()).speak(medicineComo, TextToSpeech.QUEUE_FLUSH);
+                    TextToSpeechController.getInstance(getContext()).speak(medicine.getComo(), TextToSpeech.QUEUE_FLUSH);
                 }
             }
         });
@@ -264,7 +261,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         efectosLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (medicine != null) {
-                    TextToSpeechController.getInstance(getContext()).speak(medicineEfectos, TextToSpeech.QUEUE_FLUSH);
+                    TextToSpeechController.getInstance(getContext()).speak(medicine.getEfectos(), TextToSpeech.QUEUE_FLUSH);
                 }
             }
         });
@@ -272,7 +269,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         conservacionLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (medicine != null) {
-                    TextToSpeechController.getInstance(getContext()).speak(medicineConservacion, TextToSpeech.QUEUE_FLUSH);
+                    TextToSpeechController.getInstance(getContext()).speak(medicine.getConservacion(), TextToSpeech.QUEUE_FLUSH);
                 }
             }
         });
@@ -280,8 +277,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         informacionLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (medicine != null) {
-                    TextToSpeechController.getInstance(getContext()).speak(medicine.getLeaflet(), TextToSpeech.QUEUE_FLUSH);
-                    TextToSpeechController.getInstance(getContext()).speak(medicineInformacion, TextToSpeech.QUEUE_FLUSH);
+                    TextToSpeechController.getInstance(getContext()).speak(medicine.getInformacion(), TextToSpeech.QUEUE_FLUSH);
                 }
             }
         });
@@ -334,21 +330,19 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         Log.e(TAG, "Response: " + leafletText);
 
         // TODO Construir medicamento definitivo
-        medicine.setLeaflet("...");
+        medicine.setQue("...");
+        medicine.setComo("...");
+        medicine.setAntes("...");
+        medicine.setEfectos("...");
+        medicine.setConservacion("...");
+        medicine.setInformacion("...");
 
-        medicineQue = "que texto";
-        medicineComo = "como texto";
-        medicineAntes = "antes texto";
-        medicineEfectos = "efectos texto";
-        medicineConservacion = "conservacion texto";
-        medicineInformacion = "informacion texto";
-
-        medQueText.setText(medicineQue);
-        medComoText.setText(medicineComo);
-        medAntesText.setText(medicineAntes);
-        medEfectosText.setText(medicineEfectos);
-        medConservacionText.setText(medicineConservacion);
-        medInformacionText.setText(medicineInformacion);
+        medQueText.setText(medicine.getQue());
+        medComoText.setText(medicine.getComo());
+        medAntesText.setText(medicine.getAntes());
+        medEfectosText.setText(medicine.getEfectos());
+        medConservacionText.setText(medicine.getConservacion());
+        medInformacionText.setText(medicine.getInformacion());
 
         if (searchMode == LeafletAPIController.SEARCH_BY_NAME && isNewEvent) {
             saveInformationForHistoric(medicine.getCode(), medicine.getName());
