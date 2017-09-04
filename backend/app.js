@@ -17,8 +17,8 @@ var express = require("express"),
 
 var json_preinscripciones = "";
 
-var XMLFILE = './data/Prescripcion.xml';
-//var XMLFILE = './data/Prescripcion_lite.xml';
+//var XMLFILE = './data/Prescripcion.xml';
+var XMLFILE = './data/Prescripcion_lite.xml';
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -70,7 +70,7 @@ function getAllUrls() {
   console.log("start filtering");
   var array = json_preinscripciones.aemps_prescripcion.prescription;
   for (var i = 0; i < array.length; ++i) {
-    fs.appendFile("./input/urls2.txt", array[i].url_prosp[0]+'\r\n', function (err) {});
+    fs.appendFile("./input/urls.txt", array[i].url_prosp[0]+'\r\n', function (err) {});
   }
 }
 
@@ -108,14 +108,13 @@ function getProspecto(url) {
   pdfp.parsePDF(url);
   console.log("obteniendo secciones");
 
-  function function2() {
-    var prospecto = pdfp.getAllSections();
-    console.log('Blah blah blah blah extra-blah');
-    return prospecto;
-  }
+  //function function2() {
+  var prospecto = pdfp.getAllSections();
+  return prospecto;
+  //}
 
   // call the rest of the code and have it execute after 3 seconds
-  setTimeout(function2, 5000);
+  //setTimeout(function2, 5000);
 }
 
 /**************************************************ROUTERS************************************************************/
