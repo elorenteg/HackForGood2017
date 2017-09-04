@@ -45,7 +45,7 @@ public class HistoricFragment extends Fragment {
             noDataText.setVisibility(View.GONE);
         }
 
-        mRecyclerView.setAdapter(new HistoricAdapter(mData));
+        mRecyclerView.setAdapter(new HistoricAdapter(mData, getContext()));
 
         return rootview;
     }
