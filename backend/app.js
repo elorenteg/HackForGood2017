@@ -124,7 +124,7 @@ router.post('/upload', function(req, res){
   var form = new formidable.IncomingForm();
   var filename = "";
   form.multiples = false;
-  form.uploadDir = path.join(__dirname, './backend/uploads');
+  form.uploadDir = path.join(__dirname, '/uploads');
   form.on('file', function(field, file) {
     filename = file.name;
     fs.rename(file.path, path.join(form.uploadDir, file.name));
