@@ -17,8 +17,8 @@ var express = require("express"),
 
 var json_preinscripciones = "";
 
-//var XMLFILE = './backend/data/Prescripcion.xml';
-var XMLFILE = './backend/data/Prescripcion_lite.xml';
+var XMLFILE = './data/Prescripcion.xml';
+//var XMLFILE = './data/Prescripcion_lite.xml';
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -41,12 +41,17 @@ fs.readFile(XMLFILE, 'utf8', function (err,data) {
     }
     //json_preinscripciones = JSON.stringify(result);
     json_preinscripciones = result;
-    console.log("xml parseado en JSON");
-    getAllUrls();
+    console.log("XML parseado en JSON");
   });
 });
 
-/*********GET PDF URL FROM CODE*********/
+/** UPDATE DATABASE **/
+function updateDatabase() {
+  getAllUrls();
+  console.log("get all PDF's");
+}
+
+/********* GET PDF URL FROM CODE *********/
 function getUrlByCode(code) {
   console.log("start filtering");
   var url;
@@ -60,12 +65,12 @@ function getUrlByCode(code) {
   return url;
 }
 
-/*********GET PDF URL FROM CODE*********/
+/*********GET ALL PDFs from database *********/
 function getAllUrls() {
   console.log("start filtering");
   var array = json_preinscripciones.aemps_prescripcion.prescription;
   for (var i = 0; i < array.length; ++i) {
-    fs.appendFile("./input/urls.txt", array[i].url_prosp[0]+'\r\n', function (err) {});
+    fs.appendFile("./input/urls2.txt", array[i].url_prosp[0]+'\r\n', function (err) {});
   }
 }
 
