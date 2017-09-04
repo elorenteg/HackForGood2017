@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +49,19 @@ public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.ViewHo
         return data.size();
     }
 
+    private void loadMedicineFragment(int code, String name) {
+        Medicine medicine = new Medicine();
+        medicine.setCode(code);
+        medicine.setName(name);
+
+        Fragment fragment = ResultScreenFragment.newInstance(null, medicine, null, false);
+        MainActivity mainActivity = (MainActivity) context;
+        FragmentTransaction ft = mainActivity.getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.main_container, fragment, ResultScreenFragment.TAG);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         private CardView mCardView;
         private TextView mHistoricItemCode;
@@ -70,18 +82,5 @@ public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.ViewHo
                 }
             });
         }
-    }
-
-    private void loadMedicineFragment(int code, String name) {
-        Medicine medicine = new Medicine();
-        medicine.setCode(code);
-        medicine.setName(name);
-
-        Fragment fragment = ResultScreenFragment.newInstance(null, medicine, null);
-        MainActivity mainActivity = (MainActivity) context;
-        FragmentTransaction ft = mainActivity.getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.main_container, fragment, ResultScreenFragment.TAG);
-        ft.addToBackStack(null);
-        ft.commit();
     }
 }

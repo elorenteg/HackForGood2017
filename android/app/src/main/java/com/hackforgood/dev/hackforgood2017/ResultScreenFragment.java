@@ -33,6 +33,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
     private static final String ARG_URL = "url";
     private static final String ARG_MEDICINE = "medicine";
     private static final String ARG_TEXTTOSEARCH = "user_text";
+    private static final String ARG_ISNEWEVENT = "new_event";
     private View rootview;
     private LinearLayout imageLayout;
     private CardView nameLayout;
@@ -49,9 +50,10 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
     private String imageUrl;
     private Medicine medicine;
     private String textToSearch;
+    private boolean isNewEvent;
     private String medicineLeaflet;
 
-    public static ResultScreenFragment newInstance(String imageUrl, Medicine medicine, String textToSearch) {
+    public static ResultScreenFragment newInstance(String imageUrl, Medicine medicine, String textToSearch, boolean isNewEvent) {
         ResultScreenFragment fragment = new ResultScreenFragment();
         Bundle args = new Bundle();
         args.putString(ARG_URL, imageUrl);
@@ -63,6 +65,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
             }
         }
         args.putString(ARG_TEXTTOSEARCH, textToSearch);
+        args.putBoolean(ARG_ISNEWEVENT, isNewEvent);
         fragment.setArguments(args);
 
         return fragment;
@@ -84,6 +87,8 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         }
 
         this.textToSearch = getArguments().getString(ARG_TEXTTOSEARCH);
+
+        this.isNewEvent = getArguments().getBoolean(ARG_ISNEWEVENT);
     }
 
     @Nullable
@@ -124,7 +129,9 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         }
 
         if (medicine != null) {
-            saveInformationForHistoric(medicine.getCode(), medicine.getName());
+            if (isNewEvent) {
+                saveInformationForHistoric(medicine.getCode(), medicine.getName());
+            }
             sendRequestoToGetLeafletInformation(LeafletAPIController.SEARCH_BY_CODE, medicine.getCode() + "");
         } else {
             speakerStatus(View.GONE);
@@ -215,7 +222,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
 
         // TODO Construir medicamento definitivo
 
-        if (searchMode == LeafletAPIController.SEARCH_BY_NAME) {
+        if (searchMode == LeafletAPIController.SEARCH_BY_NAME && isNewEvent) {
             saveInformationForHistoric(medicine.getCode(), medicine.getName());
         }
 

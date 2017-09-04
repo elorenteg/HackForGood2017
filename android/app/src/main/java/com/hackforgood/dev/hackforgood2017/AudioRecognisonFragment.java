@@ -61,7 +61,7 @@ public class AudioRecognisonFragment extends Fragment {
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (!editText.getText().toString().equals("")) {
-                    Fragment fragment = ResultScreenFragment.newInstance(null, null, editText.getText().toString());
+                    Fragment fragment = ResultScreenFragment.newInstance(null, null, editText.getText().toString(), true);
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.main_container, fragment, ResultScreenFragment.TAG);
                     ft.addToBackStack(null);
