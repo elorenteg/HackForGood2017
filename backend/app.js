@@ -17,8 +17,8 @@ var express = require("express"),
 
 var json_preinscripciones = "";
 
-//var XMLFILE = './data/Prescripcion.xml';
-var XMLFILE = './data/Prescripcion_lite.xml';
+//var XMLFILE = './backend/data/Prescripcion.xml';
+var XMLFILE = './backend/data/Prescripcion_lite.xml';
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -141,7 +141,8 @@ router.post('/upload', function(req, res){
 /*********GET IMAGE*********/
 app.get('/getimage/:image', function (req, res) {
   var imagePath = req.params.image;
-  res.sendfile(path.resolve('./uploads/' + imagePath));
+  //res.sendfile(path.resolve('./backend/uploads/' + imagePath));
+  res.sendfile(path.join(__dirname, 'uploads/', imagePath));
 });
 
 /*********GET PROSPECTO BY CODE*********/
