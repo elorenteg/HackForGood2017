@@ -138,20 +138,35 @@ public class Medicine implements Serializable {
             }
         }
 
-        parsedText = parsedText.replace("comprimidos", "");
-        parsedText = parsedText.replace("recubiertos", "");
-        parsedText = parsedText.replace("pelicula", "");
-        parsedText = parsedText.replace(" EFG ", "");
+        parsedText = parsedText.replaceAll("comprimidos", "");
+        parsedText = parsedText.replaceAll("cornprimidos", "");
+        parsedText = parsedText.replaceAll("recubiertos", "");
+        parsedText = parsedText.replaceAll("pelicula", "");
+        parsedText = parsedText.replaceAll(" EFG ", "");
         parsedText = parsedText.replaceAll("\\d", "");
         parsedText = parsedText.replaceAll("\n", " ");
 
-        parsedText = parsedText.replace("cuerpo", "");
-        parsedText = parsedText.replace("dolor", "");
-        parsedText = parsedText.replace("muscular", "");
-        parsedText = parsedText.replace("cabeza", "");
-        parsedText = parsedText.replace("anti-inflamatorio", "");
+        parsedText = parsedText.replaceAll("cuerpo", "");
+        parsedText = parsedText.replaceAll("dolor", "");
+        parsedText = parsedText.replaceAll("muscular", "");
+        parsedText = parsedText.replaceAll("cabeza", "");
+        parsedText = parsedText.replaceAll("anti-inflamatorio", "");
+        parsedText = parsedText.replaceAll("película", "");
+        parsedText = parsedText.replaceAll("gotas", "");
+        parsedText = parsedText.replaceAll("oticas", "");
+        parsedText = parsedText.replaceAll("solucion", "");
+        parsedText = parsedText.replaceAll("microgramos", "");
+        parsedText = parsedText.replaceAll(" /", " ");
+        parsedText = parsedText.replaceAll("/ ", " ");
+        parsedText = parsedText.replaceAll("'", "");
+        parsedText = parsedText.replaceAll(" +", " ");
+        parsedText = parsedText.replaceAll("\\[", "");
+        parsedText = parsedText.replaceAll("\\]", "");
         parsedText = parsedText.replaceAll("\\.", " ");
         parsedText = parsedText.replaceAll(",", " ");
+
+        //parsedText = parsedText.replaceAll("/", " / ");
+        //parsedText = parsedText.replaceAll(" +", " ");
 
         parsedText = parsedText.toLowerCase();
 
