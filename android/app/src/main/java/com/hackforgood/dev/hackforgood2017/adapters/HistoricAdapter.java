@@ -65,7 +65,7 @@ public class HistoricAdapter extends RecyclerView.Adapter<HistoricAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                     int code = Integer.parseInt(mHistoricItemCode.getText().toString());
-                    String name = mHistoricItemName.toString();
+                    String name = mHistoricItemName.getText().toString();
                     loadMedicineFragment(code, name);
                 }
             });
