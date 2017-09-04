@@ -23,6 +23,7 @@
                 android:id="@+id/result_screen_med_result_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:adjustViewBounds="true"
                 android:maxHeight="200dp" />
         </LinearLayout>
@@ -67,7 +68,7 @@
                     android:layout_below="@id/result_screen_med_name_label"
                     android:text="Resultado"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="40sp" />
+                    android:textSize="32sp" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
@@ -108,7 +109,7 @@
                     android:layout_below="@id/result_screen_med_code_label"
                     android:text="Código"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="40sp" />
+                    android:textSize="30sp" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
@@ -138,7 +139,7 @@
                     android:id="@+id/result_screen_med_que_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Que"
+                    android:text="Qué es"
                     android:textSize="20sp"
                     app:bootstrapBrand="regular" />
 
@@ -149,7 +150,7 @@
                     android:layout_below="@id/result_screen_med_que_label"
                     android:text="Prospecto..."
                     android:textColor="@color/colorPrimary"
-                    android:textSize="36sp" />
+                    android:textSize="30sp" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
@@ -179,7 +180,7 @@
                     android:id="@+id/result_screen_med_antes_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Antes"
+                    android:text="Antes de tomar"
                     android:textSize="20sp"
                     app:bootstrapBrand="regular" />
 
@@ -190,7 +191,7 @@
                     android:layout_below="@id/result_screen_med_antes_label"
                     android:text="Prospecto..."
                     android:textColor="@color/colorPrimary"
-                    android:textSize="36sp" />
+                    android:textSize="30sp" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
@@ -220,7 +221,7 @@
                     android:id="@+id/result_screen_med_como_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Como"
+                    android:text="Cómo tomar"
                     android:textSize="20sp"
                     app:bootstrapBrand="regular" />
 
@@ -231,7 +232,7 @@
                     android:layout_below="@id/result_screen_med_como_label"
                     android:text="Prospecto..."
                     android:textColor="@color/colorPrimary"
-                    android:textSize="36sp" />
+                    android:textSize="30sp" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
@@ -261,7 +262,7 @@
                     android:id="@+id/result_screen_med_efectos_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Efectos"
+                    android:text="Posibles efectos adversos"
                     android:textSize="20sp"
                     app:bootstrapBrand="regular" />
 
@@ -272,7 +273,7 @@
                     android:layout_below="@id/result_screen_med_efectos_label"
                     android:text="Prospecto..."
                     android:textColor="@color/colorPrimary"
-                    android:textSize="36sp" />
+                    android:textSize="30sp" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
@@ -313,7 +314,7 @@
                     android:layout_below="@id/result_screen_med_conservacion_label"
                     android:text="Prospecto..."
                     android:textColor="@color/colorPrimary"
-                    android:textSize="36sp" />
+                    android:textSize="30sp" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
@@ -343,7 +344,7 @@
                     android:id="@+id/result_screen_med_informacion_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Información"
+                    android:text="Información adicional"
                     android:textSize="20sp"
                     app:bootstrapBrand="regular" />
 
@@ -354,9 +355,8 @@
                     android:layout_below="@id/result_screen_med_informacion_label"
                     android:text="Prospecto..."
                     android:textColor="@color/colorPrimary"
-                    android:textSize="36sp" />
+                    android:textSize="30sp" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
-
     </LinearLayout>
 </ScrollView>

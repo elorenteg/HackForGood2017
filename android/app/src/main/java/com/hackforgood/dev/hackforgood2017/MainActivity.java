@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity
     public static final int MULTIPLE_PERMISSIONS_CODE = 10;
     public static final int CAMERA_PERMISSION_CODE = 200;
     public static final int WRITE_SD_PERMISSION_CODE = 201;
-    public static final boolean USE_DUMMY_MODE_MEDS = false;
+    public static final boolean USE_DUMMY_MODE_MEDS = true;
     private final String TAG = MainActivity.class.getSimpleName();
 
     @Override

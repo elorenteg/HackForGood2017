@@ -64,13 +64,6 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
     private String textToSearch;
     private boolean isNewEvent;
 
-    private String medicineQue;
-    private String medicineAntes;
-    private String medicineComo;
-    private String medicineEfectos;
-    private String medicineConservacion;
-    private String medicineInformacion;
-
     public static ResultScreenFragment newInstance(String imageUrl, Medicine medicine, String textToSearch, boolean isNewEvent) {
         ResultScreenFragment fragment = new ResultScreenFragment();
         Bundle args = new Bundle();
@@ -128,63 +121,91 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         }
 
         if (MainActivity.USE_DUMMY_MODE_MEDS) {
+            medicine = new Medicine();
+            medicine.setName("Amoxicilina/Ácido clavulánico Mylan 500 mg/125 mg comprimidos recubiertos con película EFG");
+            medicine.setCode(694513);
+            medicine.setQue("Amoxicilina/Ácido clavulánico Mylan está indicado para el tratamiento de las siguientes infecciones en\n" +
+                    "adultos y niños:\n" +
+                    "\uF02D Sinusitis bacteriana aguda.\n" +
+                    "\uF02D Otitis media aguda.\n" +
+                    "\uF02D Exacerbación aguda de bronquitis crónica.\n" +
+                    "\uF02D Neumonía adquirida en la comunidad.\n" +
+                    "\uF02D Cistitis.\n" +
+                    "\uF02D Pielonefritis.\n" +
+                    "\uF02D Infecciones de la piel y tejidos blandos, en particular celulitis, mordeduras de animales, abscesos\n" +
+                    "dentales severos con celulitis diseminada.\n" +
+                    "\uF02D Infecciones de huesos y articulaciones, en particular osteomielitis. ");
+            medicine.setComo("Para adultos y niños ≥ 40 kg, esta formulación de amoxicilina/ácido clavulánico proporciona una dosis\n" +
+                    "diaria total de 1.500 mg de amoxicilina/ 375 mg de ácido clavulánico, cuando se administra como se\n" +
+                    "recomienda a continuación.\n" +
+                    "Para niños < 40 kg esta formulación de amoxicilina/ácido clavulánico proporciona una dosis máxima diaria\n" +
+                    "de 2.400 mg de amoxicilina/600 mg de ácido clavulánico, cuando se administra como se recomienda a\n" +
+                    "continuación. Si se considera que es necesaria una mayor dosis diaria de amoxicilina se recomienda elegir\n" +
+                    "otra formulación de amoxicilina/ácido clavulánico para evitar la administración innecesaria de dosis altas\n" +
+                    "de ácido clavulánico (ver secciones 4.4 y 5.1). \n");
+            medicine.setAntes("Antes de la administración de amoxicilina/ácido clavulánico, debe revisarse la existencia previa de\n" +
+                    "reacciones de hipersensibilidad a penicilinas, cefalosporinas u otros agentes beta-lactámicos (ver secciones\n" +
+                    "4.3 y 4.8).\n" +
+                    "Se han notificado casos de reacciones de hipersensibilidad (anafilaxia) graves y a veces mortales, en\n" +
+                    "pacientes tratados con penicilinas. Estas reacciones suelen ocurrir en individuos con antecedentes de\n" +
+                    "hipersensibilidad a las penicilinas y en pacientes atópicos. Si ocurriera una reacción alérgica, se debe\n" +
+                    "suprimir el tratamiento con amoxicilina/ácido clavulánico y utilizar una terapia alternativa.\n" +
+                    "En caso de que se confirme que una infección es debida a un microorganismo sensible a amoxicilina debe\n" +
+                    "considerarse cambiar de amoxicilina/ácido clavulánico a amoxicilina de acuerdo con las recomendaciones\n" +
+                    "oficiales. ");
+            medicine.setEfectos("Las reacciones adversas que se notificaron más frecuentemente fueron diarrea, náuseas y vómitos.\n" +
+                    "\n" +
+                    "Tras los ensayos clínicos y la experiencia post-comercialización con amoxicilina/ácido clavulánico se han\n" +
+                    "notificado las reacciones adversas listadas a continuación, clasificadas en base al Sistema MedDRA.\n" +
+                    "Para clasificar la frecuencia de reacciones adversas se han utilizado los siguientes términos:\n" +
+                    "Muy frecuentes (≥1/10)\n" +
+                    "Frecuentes (≥1/100 a <1/10)\n" +
+                    "Poco frecuentes (≥1/1.000 a <1/100)\n" +
+                    "Raras (≥1/10.000 a <1/1.000)\n" +
+                    "Muy raras (<1/10.000)\n" +
+                    "No conocida (no puede estimarse a partir de los datos disponibles)");
+            medicine.setConservacion("No conservar a temperatura superior a 25° C. Conservar en el embalaje original.");
+            medicine.setInformacion("La información detallada y actualizada de este medicamento está disponible en la página Web de la\n" +
+                    "Agencia Española de Medicamentos y Productos Sanitarios (AEMPS) http://www.aemps.gob.es/");
+
+            imageUrl = "https://image.prntscr.com/image/1LI4UdV7TG_0ebx1O4vSGA.png";
+            loadImage(imageUrl);
+
             medNameText.setText(medicine.getName());
             medCodeText.setText("" + medicine.getCode());
+            medQueText.setText(medicine.getQue());
+            medComoText.setText(medicine.getComo());
+            medAntesText.setText(medicine.getAntes());
+            medEfectosText.setText(medicine.getEfectos());
+            medConservacionText.setText(medicine.getConservacion());
+            medInformacionText.setText(medicine.getInformacion());
 
-            medicineQue = "que texto";
-            medicineComo = "como texto";
-            medicineAntes = "antes texto";
-            medicineEfectos = "efectos texto";
-            medicineConservacion = "conservacion texto";
-            medicineInformacion = "informacion texto";
-
-            medQueText.setText(medicineQue);
-            medComoText.setText(medicineComo);
-            medAntesText.setText(medicineAntes);
-            medEfectosText.setText(medicineEfectos);
-            medConservacionText.setText(medicineConservacion);
-            medInformacionText.setText(medicineInformacion);
-        }
-
-        if (medicine != null) {
-            medNameText.setText(medicine.getName());
-            medCodeText.setText("" + medicine.getCode());
-
-            // TODO json parser
-
-            medicineQue = "que texto";
-            medicineComo = "como texto";
-            medicineAntes = "antes texto";
-            medicineEfectos = "efectos texto";
-            medicineConservacion = "conservacion texto";
-            medicineInformacion = "informacion texto";
-
-            medQueText.setText(medicineQue);
-            medComoText.setText(medicineComo);
-            medAntesText.setText(medicineAntes);
-            medEfectosText.setText(medicineEfectos);
-            medConservacionText.setText(medicineConservacion);
-            medInformacionText.setText(medicineInformacion);
-
-        } else if (textToSearch != null) {
-            medNameText.setText(textToSearch);
-            medCodeText.setText("-----");
-            medQueText.setText("-----");
-            medComoText.setText("-----");
-            medAntesText.setText("-----");
-            medEfectosText.setText("-----");
-            medConservacionText.setText("-----");
-            medInformacionText.setText("-----");
-        }
-
-        if (medicine != null) {
-            if (isNewEvent) {
-                saveInformationForHistoric(medicine.getCode(), medicine.getName());
-            }
-            sendRequestoToGetLeafletInformation(LeafletAPIController.SEARCH_BY_CODE, medicine.getCode() + "");
+            speakerStatus(View.VISIBLE);
         } else {
             speakerStatus(View.GONE);
-            sendRequestoToGetLeafletInformation(LeafletAPIController.SEARCH_BY_NAME, textToSearch + "");
+            if (medicine != null) {
+                medNameText.setText(medicine.getName());
+                medCodeText.setText("" + medicine.getCode());
+            } else if (textToSearch != null) {
+                medNameText.setText(textToSearch);
+                medCodeText.setText("Cargando...");
+            }
+
+            medQueText.setText("Cargando...");
+            medComoText.setText("Cargando...");
+            medAntesText.setText("Cargando...");
+            medEfectosText.setText("Cargando...");
+            medConservacionText.setText("Cargando...");
+            medInformacionText.setText("Cargando...");
+
+            if (medicine != null) {
+                if (isNewEvent) {
+                    saveInformationForHistoric(medicine.getCode(), medicine.getName());
+                }
+                sendRequestoToGetLeafletInformation(LeafletAPIController.SEARCH_BY_CODE, medicine.getCode() + "");
+            } else {
+                sendRequestoToGetLeafletInformation(LeafletAPIController.SEARCH_BY_NAME, textToSearch + "");
+            }
         }
 
         return rootview;
@@ -242,7 +263,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         queLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (medicine != null) {
-                    TextToSpeechController.getInstance(getContext()).speak(medicineQue, TextToSpeech.QUEUE_FLUSH);
+                    TextToSpeechController.getInstance(getContext()).speak(medicine.getQue(), TextToSpeech.QUEUE_FLUSH);
                 }
             }
         });
@@ -250,7 +271,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         antesLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (medicine != null) {
-                    TextToSpeechController.getInstance(getContext()).speak(medicineAntes, TextToSpeech.QUEUE_FLUSH);
+                    TextToSpeechController.getInstance(getContext()).speak(medicine.getAntes(), TextToSpeech.QUEUE_FLUSH);
                 }
             }
         });
@@ -258,7 +279,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         comoLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (medicine != null) {
-                    TextToSpeechController.getInstance(getContext()).speak(medicineComo, TextToSpeech.QUEUE_FLUSH);
+                    TextToSpeechController.getInstance(getContext()).speak(medicine.getComo(), TextToSpeech.QUEUE_FLUSH);
                 }
             }
         });
@@ -266,7 +287,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         efectosLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (medicine != null) {
-                    TextToSpeechController.getInstance(getContext()).speak(medicineEfectos, TextToSpeech.QUEUE_FLUSH);
+                    TextToSpeechController.getInstance(getContext()).speak(medicine.getEfectos(), TextToSpeech.QUEUE_FLUSH);
                 }
             }
         });
@@ -274,7 +295,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         conservacionLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (medicine != null) {
-                    TextToSpeechController.getInstance(getContext()).speak(medicineConservacion, TextToSpeech.QUEUE_FLUSH);
+                    TextToSpeechController.getInstance(getContext()).speak(medicine.getConservacion(), TextToSpeech.QUEUE_FLUSH);
                 }
             }
         });
@@ -282,7 +303,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         informacionLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (medicine != null) {
-                    TextToSpeechController.getInstance(getContext()).speak(medicineInformacion, TextToSpeech.QUEUE_FLUSH);
+                    TextToSpeechController.getInstance(getContext()).speak(medicine.getInformacion(), TextToSpeech.QUEUE_FLUSH);
                 }
             }
         });
@@ -335,6 +356,19 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
         Log.e(TAG, "Response: " + leafletText);
 
         // TODO Construir medicamento definitivo
+        medicine.setQue("...");
+        medicine.setComo("...");
+        medicine.setAntes("...");
+        medicine.setEfectos("...");
+        medicine.setConservacion("...");
+        medicine.setInformacion("...");
+
+        medQueText.setText(medicine.getQue());
+        medComoText.setText(medicine.getComo());
+        medAntesText.setText(medicine.getAntes());
+        medEfectosText.setText(medicine.getEfectos());
+        medConservacionText.setText(medicine.getConservacion());
+        medInformacionText.setText(medicine.getInformacion());
 
         if (searchMode == LeafletAPIController.SEARCH_BY_NAME && isNewEvent) {
             saveInformationForHistoric(medicine.getCode(), medicine.getName());
