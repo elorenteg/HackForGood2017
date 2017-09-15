@@ -122,7 +122,7 @@ public class ResultScreenFragment extends Fragment implements LeafletAPIControll
 
         if (imageUrl != null) {
             loadImage(imageUrl);
-        } else if (medicine != null && medicine.getImageURL() != null) {
+        } else if (medicine != null && medicine.getImageURL() != null && !medicine.getImageURL().equals("")) {
             loadImage(medicine.getImageURL());
         } else {
             imageLayout.setVisibility(View.GONE);
