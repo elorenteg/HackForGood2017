@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
+import com.hackforgood.dev.hackforgood2017.controllers.TextToSpeechController;
 
 import java.util.ArrayList;
 
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity
     protected void onStop() {
         super.onStop();
 
-        //TextToSpeechController.getInstance(this).shutdown();
+        TextToSpeechController.getInstance(this).shutdown();
     }
 
     @Override
