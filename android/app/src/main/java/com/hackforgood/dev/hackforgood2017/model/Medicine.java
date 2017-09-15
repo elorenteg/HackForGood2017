@@ -154,10 +154,15 @@ public class Medicine implements Serializable {
             numberText = numberText.substring(0, 7);
             String securityNum = numberText.substring(numberText.length() - 1);
             numberText = numberText.substring(0, numberText.length() - 1);
-            int code = Integer.parseInt(numberText);
-            int securityCode = Integer.parseInt(securityNum);
+            try {
+                int code = Integer.parseInt(numberText);
+                setCode(code);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //int securityCode = Integer.parseInt(securityNum);
             //if (codeIsCorrect(code, securityCode)) {
-            setCode(code);
+            //setCode(code);
             //}
             //else Log.e(TAG, "Code is not correct");
         }
