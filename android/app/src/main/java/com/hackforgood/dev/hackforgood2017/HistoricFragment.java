@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import com.beardedhen.androidbootstrap.AwesomeTextView;
 import com.hackforgood.dev.hackforgood2017.adapters.HistoricAdapter;
 import com.hackforgood.dev.hackforgood2017.model.HistoricItem;
+import com.hackforgood.dev.hackforgood2017.model.Medicine;
+import com.hackforgood.dev.hackforgood2017.utils.FakeMedsUtils;
 import com.hackforgood.dev.hackforgood2017.utils.HistoricUtils;
 
 import java.util.ArrayList;
@@ -36,7 +38,7 @@ public class HistoricFragment extends Fragment {
         setUpElements();
         setUpListeners();
 
-        if (MainActivity.USE_DUMMY_MODE_MEDS) {
+        if (MainActivity.USE_DUMMY_MODE_NO_MEDS) {
             mData = getInformationHistoricFake();
         } else {
             mData = HistoricUtils.getInformationHistoric(getContext());
@@ -68,10 +70,16 @@ public class HistoricFragment extends Fragment {
     private ArrayList<HistoricItem> getInformationHistoricFake() {
         ArrayList<HistoricItem> arrayHistoric = new ArrayList<>();
 
-        int itemCode = 694513;
-        String itemName = "Amoxicilina/Ácido clavulánico Mylan 500 mg/125 mg comprimidos recubiertos con película EFG";
-        HistoricItem item = new HistoricItem(itemCode, itemName);
+        Medicine amoxicilina = FakeMedsUtils.getDummyMedicine(FakeMedsUtils.DUMMY_AMOXICILINA);
+        Medicine cetraxal = FakeMedsUtils.getDummyMedicine(FakeMedsUtils.DUMMY_CETRAXAL);
+        Medicine budesonida = FakeMedsUtils.getDummyMedicine(FakeMedsUtils.DUMMY_BUDESONIDA_ALCON);
+
+        HistoricItem item = new HistoricItem(amoxicilina.getCode(), amoxicilina.getName());
+        HistoricItem item1 = new HistoricItem(cetraxal.getCode(), cetraxal.getName());
+        HistoricItem item2 = new HistoricItem(budesonida.getCode(), budesonida.getName());
         arrayHistoric.add(item);
+        arrayHistoric.add(item1);
+        arrayHistoric.add(item2);
 
         return arrayHistoric;
     }

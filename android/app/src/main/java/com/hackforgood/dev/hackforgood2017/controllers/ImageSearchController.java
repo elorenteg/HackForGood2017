@@ -60,7 +60,6 @@ public class ImageSearchController {
         return uri;
     }
 
-
     public void imageOCRRequest(String imageURL, final ImageOCRResolvedCallback imageOCRResolvedCallback) {
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("https")

@@ -230,7 +230,7 @@ public class MainActivityFragment extends Fragment implements PhotoToServerContr
     public void onImageOCRResolved(ImageOCR imageOCR) {
         //Log.e(TAG, "onImageOCRResolved");
 
-        if (MainActivity.USE_DUMMY_MODE_MEDS) {
+        if (MainActivity.USE_DUMMY_MODE_NO_MEDS) {
             loadMedicineFragment(null, null);
         } else if (imageOCR == null) {
             Log.e(TAG, "ImageOCR is null :(");

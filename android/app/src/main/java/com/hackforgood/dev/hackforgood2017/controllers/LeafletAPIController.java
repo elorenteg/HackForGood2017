@@ -8,6 +8,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.hackforgood.dev.hackforgood2017.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,9 +24,6 @@ public class LeafletAPIController {
         } else if (searchMode == SEARCH_BY_NAME) {
 
         }
-
-        // TODO No hardcodear
-        leafletCode = "600000";
 
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("https")

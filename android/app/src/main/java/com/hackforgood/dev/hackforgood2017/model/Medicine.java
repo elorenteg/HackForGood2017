@@ -27,6 +27,7 @@ public class Medicine implements Serializable {
     private String efectos = "";
     private String conservacion = "";
     private String informacion = "";
+    private String imageURL = "";
 
     public static Medicine deserialize(byte[] data) throws IOException, ClassNotFoundException {
         ByteArrayInputStream in = new ByteArrayInputStream(data);
@@ -136,6 +137,14 @@ public class Medicine implements Serializable {
 
     public void setInformacion(String informacion) {
         this.informacion = informacion;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public void parseInfo(String parsedText) {
@@ -277,6 +286,7 @@ public class Medicine implements Serializable {
         if (!efectos.equals("")) str += "Efectos: " + efectos + "\n";
         if (!conservacion.equals("")) str += "Conservacion: " + conservacion + "\n";
         if (!informacion.equals("")) str += "Informacion: " + informacion + "\n";
+        if (!imageURL.equals("")) str += "ImageURL: " + imageURL + "\n";
         return str;
     }
 
