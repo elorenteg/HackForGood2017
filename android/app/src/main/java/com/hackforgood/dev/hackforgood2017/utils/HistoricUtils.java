@@ -29,11 +29,11 @@ public class HistoricUtils {
             String preferencesValue = SharedPreferencesManager.getStringValue(context, i + "" + HISTORIC_MANAGER_CODE_NAME, "");
 
             if (!preferencesValue.equals("")) {
-                int itemCode = Integer.parseInt(preferencesValue.split("#")[0]);
-                String itemName = preferencesValue.split("#")[1];
-                HistoricItem item = new HistoricItem(itemCode, itemName);
-
-                arrayHistoric.add(item);
+                if (preferencesValue.split("#").length > 1) {
+                    int itemCode = Integer.parseInt(preferencesValue.split("#")[0]);
+                    String itemName = preferencesValue.split("#")[1];
+                    arrayHistoric.add(new HistoricItem(itemCode, itemName));
+                }
             }
         }
         return arrayHistoric;
